@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Finance.Pages.WorkPage.Finance.Assets.AssetsEditorPage"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:controls="clr-namespace:Finance.CustomControl" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Picker x:Name="FlowTypePicker" ItemDisplayBinding="{Binding Name}" Margin="5,0,5,0" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Fill"/>
+
+            <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Margin="0,5,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                <Picker x:Name="TransferPicker" ItemDisplayBinding="{Binding Name}" Margin="5,0,5,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                <CheckBox x:Name="cbIsAutoTransfer" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,5,0" CheckedChanged="cbIsAutoTransfer_CheckedChanged"/>
+                <Label VerticalTextAlignment="Center" FontSize="15" Text="Авто" Margin="-90,0,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Margin="0,5,0,5" HorizontalOptions="Start" VerticalOptions="Center">
+                <CheckBox x:Name="cbStability" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,5,0"/>
+                <Label VerticalTextAlignment="Center" FontSize="15" Text="Постояный" Margin="-90,0,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="lbcbIsStability_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <CheckBox x:Name="cbIsAsset" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,5,0"/>
+                <Label VerticalTextAlignment="Center" FontSize="15" Text="Актив" Margin="-90,0,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="lbcbIsAsset_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+            <Entry Placeholder="Наименование" MaxLength="100" x:Name="AsName" Grid.Row="3" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Сумма" MaxLength="12" x:Name="AsSum" Grid.Row="4" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
+            <controls:Provaider x:Name="AsSumProvider" IsVisible="False" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <ScrollView Grid.Row="5" Grid.Column="0" Margin="5,5,0,0">
+                <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+
+                    <FlexLayout Grid.Column="0" x:Name="asGrVSL" BindableLayout.ItemsSource="{Binding ViewAssetsGroup}" Wrap="Wrap">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <Border Grid.Row="0" Margin="3" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="30"/>
+                                        </Border.StrokeShape>
+                                        <Grid>
+                                            <ImageButton Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_group.png'}" Aspect="AspectFit" HeightRequest="30" WidthRequest="30"/>
+
+                                            <skia:SKLottieView x:Name="cbLottie" Margin="0,0,5,0" Grid.Column="1" RepeatMode="Reverse" HorizontalOptions="Center" Source="Check.json" IsAnimationEnabled="False"
+                                        Style="{DynamicResource LottieDefault}">
+                                                <skia:SKLottieView.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="PressAssetGroup_Tapped"/>
+                                                </skia:SKLottieView.GestureRecognizers>
+                                            </skia:SKLottieView>
+
+                                            <CheckBox IsVisible="Collapse"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <Label Grid.Row="1" VerticalTextAlignment="Center" HorizontalOptions="Center" FontSize="8" Text="{Binding Name}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                
+
+                <Border Margin="3" Grid.Column="1" MaximumHeightRequest="60" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <ImageButton Source="add_file.png" Aspect="AspectFit" HeightRequest="30" WidthRequest="30" Pressed="AddGroupAssetsImageButton_Pressed"/>
+                </Border>
+            </Grid>
+            </ScrollView>
+
+            <controls:Provaider x:Name="AsGrProvider" IsVisible="False" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Editor Placeholder="Краткое описание" x:Name="AsCommit" Grid.Row="6" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
+
+            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

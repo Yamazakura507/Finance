@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Finance.Pages.MenuPage.TimeAssetsMenu"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="TimeAssetsMenu" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView Padding="5,50,0,0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <CollectionView x:Name="collectionView" Grid.Row="0" Grid.Column="0"
+                    x:FieldModifier="public"
+                    SelectionMode="Single" Margin="20,0,0,0" ItemsSource="{Binding}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Margin="3" Source="time.png" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start"/>
+                            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                <Label Margin="5,0,0,0" Text="{Binding DateJournal.Year}" VerticalOptions="Center" HorizontalOptions="Start">
+                                    <Label.Style>
+                                        <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.IsCreateData}" Value="True">
+                                                    <Setter Property="TextColor" Value="LightGreen"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label Margin="0" VerticalOptions="Center" HorizontalOptions="Start">
+                                    <Label.Style>
+                                        <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="1">
+                                                    <Setter Property="Text" Value=" январь"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="2">
+                                                    <Setter Property="Text" Value=" февраль"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="3">
+                                                    <Setter Property="Text" Value=" март"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="4">
+                                                    <Setter Property="Text" Value=" апрель"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="5">
+                                                    <Setter Property="Text" Value=" май"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="6">
+                                                    <Setter Property="Text" Value=" июнь"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="7">
+                                                    <Setter Property="Text" Value=" июль"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="8">
+                                                    <Setter Property="Text" Value=" август"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="9">
+                                                    <Setter Property="Text" Value=" сентябрь"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="10">
+                                                    <Setter Property="Text" Value=" октябрь"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="11">
+                                                    <Setter Property="Text" Value=" ноябрь"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.Month}" Value="12">
+                                                    <Setter Property="Text" Value=" декабрь"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding DateJournal.IsCreateData}" Value="True">
+                                                    <Setter Property="TextColor" Value="LightGreen"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <ImageButton Grid.Row="1" x:Name="addDate" Grid.Column="0" Source="add_file.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="20" Scale="0.5" Pressed="AddTime_Pressed">
+                <ImageButton.Style>
+                    <Style TargetType="ImageButton">
+                        <Style.Triggers>
+                            <Trigger TargetType="ImageButton" Property="IsPressed" Value="True">
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Scale" Value="0.4"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ImageButton.Style>
+            </ImageButton>
+        </Grid>
+    </ScrollView>
+</ContentPage>

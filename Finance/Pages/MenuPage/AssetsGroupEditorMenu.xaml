@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Finance.Pages.MenuPage.AssetsGroupEditorMenu"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="AssetsGroupEditorMenu" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView Padding="5,50,0,0">
+        <CollectionView x:Name="collectionView"
+                    x:FieldModifier="public"
+                    SelectionMode="Single" Margin="20,0,0,0" ItemsSource="{Binding}">
+            <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Grid Padding="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Margin="3" Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_goup.png'}" Grid.Column="0"/>
+                        <Label Margin="5,0,0,0" Text="{Binding Name}" Grid.Column="1" Style="{DynamicResource BoldItemLabel}"/>
+                    </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    </ScrollView>
+</ContentPage>

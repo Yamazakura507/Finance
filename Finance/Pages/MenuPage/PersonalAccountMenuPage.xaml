@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Finance.Pages.MenuPage.PersonalAccountMenuPage"
+             xmlns:stat="clr-namespace:Finance.Classes.AppSettings"
+             xmlns:local="clr-namespace:Finance.Pages.FlyautPage.FlyautModel"
+             xmlns:page="clr-namespace:Finance.Pages.WorkPage"
+             xmlns:pageSuport="clr-namespace:Finance.Pages.WorkPage.Support"
+             xmlns:pageTab="clr-namespace:Finance.Pages.Tabbed"
+			 xmlns:pageCredit="clr-namespace:Finance.Pages.WorkPage.Credit"
+			 xmlns:pageTime="clr-namespace:Finance.Pages.WorkPage.Time"
+			 xmlns:pagePlan="clr-namespace:Finance.Pages.WorkPage.Planing"
+             Title="PersonalAccountMenuPage" Shell.NavBarIsVisible="False">
+    <ScrollView Padding="5,50,0,0">
+        <VerticalStackLayout>
+            <CollectionView x:Name="collectionView"
+                x:FieldModifier="public"
+                SelectionMode="Single" Margin="20,0,0,0">
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type local:FlyautAccountModel}">
+                        <local:FlyautAccountModel Title="Акаунт"
+                                  IconSource="account.png"
+                                  TargetType="{x:Type page:AccountPage}" />
+                        <local:FlyautAccountModel Title="Кредиты"
+                                  IconSource="credit.png"
+                                  TargetType="{x:Type pageCredit:CreditPage}" />
+                        <local:FlyautAccountModel Title="Финансы"
+                                  IconSource="finance.png"
+                                  TargetType="{x:Type pageTab:FinancePageTapped}" />
+                        <local:FlyautAccountModel Title="Время"
+                                  IconSource="time.png"
+                                  TargetType="{x:Type pageTime:TimeCoastList}" />
+                        <local:FlyautAccountModel Title="Планирование"
+                                  IconSource="planing.png"
+                                  TargetType="{x:Type pagePlan:PlaningLisPage}" />
+                        <local:FlyautAccountModel Title="Вопросы"
+                                  IconSource="support.png"
+                                  TargetType="{x:Type pageSuport:SupportPage}" />
+                        <local:FlyautAccountModel Title="Настройки"
+                                  IconSource="settings.png"
+                                  TargetType="{x:Type page:SettingsPage}" />
+                    </x:Array>
+                </CollectionView.ItemsSource>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0,0,0,10">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="True">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding Title}" Value="Акаунт">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding Title}" Value="Вопросы">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal"></VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray900}}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding IconSource}">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <MultiTrigger TargetType="Image">
+                                                <MultiTrigger.Conditions>
+                                                    <BindingCondition Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="True"/>
+                                                    <BindingCondition Binding="{Binding Title}" Value="Акаунт"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="Source" Value="account_admin.png"/>
+                                            </MultiTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Label Grid.Column="1"
+                       Margin="20,0"
+                       Text="{Binding Title}"
+                       VerticalOptions="Center">
+                                <Label.Style>
+                                    <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                        <Style.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Title}" Value="Акаунт">
+                                                <Setter Property="Text" Value="{Binding Source={x:Static stat:InfoAccount.User},Path=Login, StringFormat='Акаунт {0}'}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Title}" Value="Вопросы">
+                                                <Setter Property="Text" Value="{Binding Source={x:Static stat:InfoAccount.CountSupport}, StringFormat='Вопросы({0})'}"/>
+                                            </DataTrigger>
+                                            <MultiTrigger TargetType="Label">
+                                                <MultiTrigger.Conditions>
+                                                    <BindingCondition Binding="{Binding Source={x:Static stat:InfoAccount.CountSupport}}" Value="0"/>
+                                                    <BindingCondition Binding="{Binding Title}" Value="Вопросы"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="Text" Value="{Binding Source={x:Static stat:InfoAccount.User},Path=Login, StringFormat='Вопросы'}"/>
+                                            </MultiTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <HorizontalStackLayout Margin="20,0,00,0" VerticalOptions="Center" HorizontalOptions="Start">
+                <ImageButton Source="exit.png" VerticalOptions="Center" HorizontalOptions="Start" Pressed="Exit_Pressed" WidthRequest="35"/>
+                <Label Text="Выход" VerticalOptions="Center" HorizontalOptions="Start" Margin="10,0" Style="{DynamicResource BoldItemLabel}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="LbExit_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:page="clr-namespace:Finance.Pages.WorkPage.Finance.Assets"
+            xmlns:local="clr-namespace:Finance.Pages.MenuPage"
+             x:Class="Finance.Pages.FlyautPage.TimeAssetsPage" FlyoutLayoutBehavior="Split" Padding="20" Loaded="FlyoutPage_Loaded">
+    <FlyoutPage.Flyout>
+        <local:TimeAssetsMenu x:Name="flyoutPage" MaximumWidthRequest="200"/>
+    </FlyoutPage.Flyout>
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <page:AssetsEditorPage />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

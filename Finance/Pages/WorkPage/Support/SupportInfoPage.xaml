@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:stat="clr-namespace:Finance.Classes.AppSettings"
+             x:Class="Finance.Pages.WorkPage.Support.SupportInfoPage"
+     Title="{Binding DateOfAccess, StringFormat='Обращение от {0:d MMMM yyyy(ddd)}'}" Loaded="ContentPage_Loaded">
+    <ScrollView>
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="Обращение" x:Name="lbAppe" Margin="0,10,0,0" Grid.Row="0" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Editor Placeholder="{Binding Source={x:Reference lbAppe}, Path=Text}" Text="{Binding AppealMessage}" TextChanged="appe_TextChanged" Margin="0,10,0,0" x:Name="appe" MinimumWidthRequest="400" MinimumHeightRequest="100" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" HorizontalOptions="FillAndExpand">
+                <Editor.Style>
+                    <Style TargetType="Editor">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Editor" Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Editor" Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="Flase">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Editor.Style>
+            </Editor>
+
+            <Label Text="Ответ" x:Name="lbAns" Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start">
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsAnswer}" Value="False">
+                                <Setter Property="Text" Value="Обращение ожидает ответа!"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <Editor IsEnabled="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Placeholder="{Binding Source={x:Reference lbAns}, Path=Text}" Text="{Binding AnswerMessage}" Margin="0,10,0,0" x:Name="ans" MinimumWidthRequest="400" MinimumHeightRequest="100" VerticalOptions="Center" Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             x:Class="Finance.Pages.WorkPage.Finance.MoneTransferListPage" Loaded="ContentPage_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <control:Provaider x:Name="ErrProvider" IsVisible="Collapse" Grid.Row="0" HorizontalOptions="Start" Margin="5,0,0,0" VerticalOptions="Center"/>
+
+        <ScrollView x:Name="moneyScroll" Grid.Row="1" Padding="10,5,10,5">
+            <VerticalStackLayout>
+                <VerticalStackLayout x:Name="mtVSL" BindableLayout.ItemsSource="{Binding ViewMoneyTransfer}" Margin="0,10,0,5">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="15"/>
+                                </Border.StrokeShape>
+                                <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="55"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding TransferStatus.Id}" Value="1">
+                                                            <Setter Property="Source" Value="in_cash.png"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding TransferStatus.Id}" Value="2">
+                                                            <Setter Property="Source" Value="translete_cash.png"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding TransferStatus.Id}" Value="3">
+                                                            <Setter Property="Source" Value="pay.png"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding TransferStatus.Id}" Value="4">
+                                                            <Setter Property="Source" Value="future_payments.png"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+
+                                        <Label Text="{Binding TransferStatus.Name}" Grid.Row="0" Grid.Column="1" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <Label Text="{Binding Sum, StringFormat='Сумма {0:F2}'}" Grid.Row="1" Grid.Column="1" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <Label Text="{Binding TimeTransfer, StringFormat='{0:d MMMM yyyy(ddd) HH:mm}'}" Style="{DynamicResource ItemLabel}" FontSize="10" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <ImageButton Source="delete_cash.png" Pressed="DeleteAsset_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                    </Grid>
+                                </ContentView>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Button Text="Ещё" HorizontalOptions="FillAndExpand" Margin="5,0,5,10" VerticalOptions="FillAndExpand" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" Pressed="Button_Pressed" x:Name="btAddItem">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                    Opacity="1"
+                                                    Radius="5"
+                                                    Offset="2,2"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

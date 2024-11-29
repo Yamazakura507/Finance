@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:stat="clr-namespace:Finance.Classes.AppSettings"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             x:Class="Finance.Pages.WorkPage.Time.TimeCoastList" Loaded="ContentPage_Loaded" Title="Журнал учета времени">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" Margin="15,0,0,0" HorizontalOptions="Start" VerticalOptions="Center">
+            <ImageButton Pressed="btAddTime_Pressed" x:Name="btAddTime" Source="add_time.png" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <control:Provaider x:Name="ErrProvider" IsVisible="Collapse" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="10,5,10,5">
+            <VerticalStackLayout x:Name="timeVSL" BindableLayout.ItemsSource="{Binding ViewTime}" Margin="0,10,0,10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="3" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="65"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Margin="5" Grid.Column="0" Source="time.png" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70" />
+
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource BoldItemLabel}"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Time}" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource BoldItemLabel}" FontSize="15"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Commit}" MaxLines="2" LineBreakMode="MiddleTruncation" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource ItemLabel}"/>
+
+                                    <ImageButton Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.RowSpan="3" Source="delete_time.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
+                                </Grid>
+                                <ContentView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Time_Tapped"/>
+                                </ContentView.GestureRecognizers>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

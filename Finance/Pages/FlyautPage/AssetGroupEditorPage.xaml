@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:page="clr-namespace:Finance.Pages.WorkPage.Finance.Assets"
+            xmlns:local="clr-namespace:Finance.Pages.MenuPage"
+             x:Class="Finance.Pages.FlyautPage.AssetGroupEditorPage" FlyoutLayoutBehavior="Split" Padding="20">
+    <FlyoutPage.Flyout>
+        <local:AssetsGroupEditorMenu x:Name="flyoutPage" />
+    </FlyoutPage.Flyout>
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <page:GroupAddPage />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

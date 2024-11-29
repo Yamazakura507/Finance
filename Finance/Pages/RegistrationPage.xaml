@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             x:Class="Finance.Pages.RegistrationPage" Loaded="Loaded">
+
+    <Grid Margin="20,0,20,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" x:Name="lbRegistr"
+            Text="Регистрация"
+            FontSize="55"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" Margin="0,0,0,0"/>
+
+        <Grid Grid.Row="1" x:Name="GL" Margin="0,0,0,0" MaximumWidthRequest="600">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPL"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry x:Name="Login" MaxLength="100" Grid.Column="0" Margin="0,0,5,0" MaximumWidthRequest="400" HorizontalOptions="FillAndExpand"
+   Placeholder="Логин"/>
+
+            <control:Provaider Grid.Column="1" x:Name="loginProvider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid x:Name="GP" Grid.Row="2" Margin="0,10,0,0" MaximumWidthRequest="600">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry x:Name="Password" 
+   IsPassword="True" Placeholder="Пароль" MaxLength="100"
+   HorizontalOptions="FillAndExpand" 
+    MaximumWidthRequest="350" Margin="0,0,5,0" Grid.Column="0"/>
+
+            <skia:SKLottieView x:Name="btlPass" Margin="0,0,5,0" Grid.Column="1" HorizontalOptions="Start"
+               Style="{AppThemeBinding Light={DynamicResource HideBlack}, Dark={DynamicResource HideWhite}}">
+                <skia:SKLottieView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="HideAnimationOnTapped"/>
+                </skia:SKLottieView.GestureRecognizers>
+            </skia:SKLottieView>
+
+            <control:Provaider Grid.Column="2" x:Name="passwordProvaider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid Grid.Row="3" x:Name="GE" Margin="0,10,0,0" MaximumWidthRequest="600" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPE"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry x:Name="Email" Grid.Column="0" MaxLength="100" Margin="0,0,5,0" MaximumWidthRequest="400" HorizontalOptions="FillAndExpand"
+   Placeholder="Email">
+                <Entry.Behaviors>
+                    <toolkit:EmailValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}"                                                
+                                                      ValidStyle="{StaticResource ValidEntryStyle}"                                                     
+                                                      Flags="ValidateOnValueChanged" >
+                    </toolkit:EmailValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+
+            <control:Provaider Grid.Column="1" x:Name="emailProvider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid Grid.Row="4" x:Name="GA" Margin="0,10,0,0" MaximumWidthRequest="600">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSA"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="RegistrBt" Grid.Column="0" MaximumWidthRequest="400"
+                    Text="Регистрация" Pressed="RegistrBtOnPressed" >
+            </Button>
+
+            <control:Provaider Grid.Column="1" x:Name="errorProvider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid  x:Name="GCb" Grid.Row="5" Margin="0,10,0,0"  MaximumWidthRequest="400">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="colSC"/>
+            </Grid.ColumnDefinitions>
+            
+            <CheckBox Grid.Column="0" x:Name="cbStorageUser"
+              IsChecked="{Binding IsChecked,Mode=TwoWay}">
+            </CheckBox>
+            <Label VerticalTextAlignment="Center" FontSize="15" Grid.Column="1" Text="Запомнить меня" Margin="-90,0,0,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="LabelCbOnTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+        <Grid Grid.Row="6" x:Name="GPC" Margin="0,10,0,0" MaximumWidthRequest="600" HorizontalOptions="FillAndExpand" IsVisible="Collapse">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition x:Name="colSPC"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry x:Name="CodeMail" MaxLength="10" Grid.Column="0" Margin="0,0,5,0" MaximumWidthRequest="350" HorizontalOptions="FillAndExpand"
+   Placeholder="Код подтверждения"/>
+
+            <skia:SKLottieView x:Name="btlEmail" Margin="0,0,5,0" Grid.Column="1" HorizontalOptions="Start"
+   Style="{AppThemeBinding Light={DynamicResource EmailWhite}, Dark={DynamicResource EmailBlack}}">
+                <skia:SKLottieView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="EmailButtonOnTapped"/>
+                </skia:SKLottieView.GestureRecognizers>
+            </skia:SKLottieView>
+
+            <control:Provaider Grid.Column="2" x:Name="codeMailProvaider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Finance.Pages.Tabbed.FinancePageTapped"
+            xmlns:financeAssetsPage="clr-namespace:Finance.Pages.WorkPage.Finance.Assets" 
+            xmlns:financePage="clr-namespace:Finance.Pages.WorkPage.Finance"
+            xmlns:financeIncPage="clr-namespace:Finance.Pages.FlyautPage"
+            xmlns:financeDebtorPage="clr-namespace:Finance.Pages.WorkPage.Finance.Debtors"
+              UnselectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+SelectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+BarTextColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}" Title="Финансы" Loaded="TabbedPage_Loaded">
+    <financeAssetsPage:AssetsGroupPage Title="Активы/Пасивы" IconImageSource="assets.png"/>
+    <financeIncPage:TimeIncomePage Title="Доходы/Расходы" IconImageSource="future_debtors_credit.png"/>
+    <financePage:MoneTransferListPage Title="Движение денег" IconImageSource="finance.png"/>
+    <financeDebtorPage:DebtorsListPage Title="Должники" IconImageSource="future_payments.png" />
+</TabbedPage>

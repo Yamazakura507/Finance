@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:creditPage="clr-namespace:Finance.Pages.WorkPage.Credit"
+             x:Class="Finance.Pages.Tabbed.CreditInfoTappedPage"
+             UnselectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+            SelectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+            BarTextColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}" Loaded="TabbedPage_Loaded">
+            <creditPage:CreditInfoPage Title="Кредит" IconImageSource="credit.png" BindingContext="{Binding}"/>
+            <creditPage:LoanPaymentsPage Title="История платежей" IconImageSource="debtors_credits.png" BindingContext="{Binding}"/>
+            <creditPage:FuturePaymentsPage Title="Оставшиеся платежи" IconImageSource="future_payments.png" BindingContext="{Binding}"/>
+</TabbedPage>
