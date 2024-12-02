@@ -28,6 +28,7 @@ public partial class AutorizationPage : ContentPage
 
             #if ANDROID || IOS
                 colSA.Width = colSPL.Width = colSPP.Width = colSli.Width = colSPC.Width = GridLength.Auto;
+                lbCb.Margin = new Thickness(0, 0, 0, 0);
             #else
                 colSA.Width = colSPL.Width = colSPP.Width = colSli.Width = colSPC.Width = 200;
                 GA.Margin = GP.Margin = GL.Margin = GCb.Margin = GPC.Margin = new Thickness(colSPL.Width.Value/2, 10, 0, 0);

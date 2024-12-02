@@ -29,6 +29,7 @@ public partial class AssetsEditorPage : ContentPage
 
         #if ANDROID || IOS
             colSPP.Width = GridLength.Auto;
+            lbCb.Margin = new Thickness(0, 0, 0, 0);
         #else
             ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
             toolbarItem.Clicked += Back_Clicked;

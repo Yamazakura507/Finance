@@ -98,7 +98,7 @@
             <CheckBox Grid.Column="0" x:Name="cbStorageUser"
               IsChecked="{Binding IsChecked,Mode=TwoWay}">
             </CheckBox>
-            <Label VerticalTextAlignment="Center" FontSize="15" Grid.Column="1" Text="Запомнить меня" Margin="-90,0,0,0">
+            <Label VerticalTextAlignment="Center" FontSize="15" Grid.Column="1" Text="Запомнить меня" Margin="-90,0,0,0" x:Name="lbCb">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="LabelCbOnTapped"/>
                 </Label.GestureRecognizers>

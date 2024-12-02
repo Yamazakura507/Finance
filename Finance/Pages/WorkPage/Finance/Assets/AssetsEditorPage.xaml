@@ -32,7 +32,7 @@
             <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Margin="0,5,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                 <Picker x:Name="TransferPicker" ItemDisplayBinding="{Binding Name}" Margin="5,0,5,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
                 <CheckBox x:Name="cbIsAutoTransfer" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,5,0" CheckedChanged="cbIsAutoTransfer_CheckedChanged"/>
-                <Label VerticalTextAlignment="Center" FontSize="15" Text="Авто" Margin="-90,0,0,0">
+                <Label VerticalTextAlignment="Center" FontSize="15" Text="Авто" Margin="-90,0,0,0" x:Name="lbCb">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                     </Label.GestureRecognizers>
@@ -41,14 +41,14 @@
 
             <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Margin="0,5,0,5" HorizontalOptions="Start" VerticalOptions="Center">
                 <CheckBox x:Name="cbStability" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,5,0"/>
-                <Label VerticalTextAlignment="Center" FontSize="15" Text="Постояный" Margin="-90,0,0,0">
+                <Label VerticalTextAlignment="Center" FontSize="15" Text="Постояный" Margin="{Binding Source={x:Reference lbCb}, Path=Margin}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="lbcbIsStability_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
 
                 <CheckBox x:Name="cbIsAsset" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,5,0"/>
-                <Label VerticalTextAlignment="Center" FontSize="15" Text="Актив" Margin="-90,0,0,0">
+                <Label VerticalTextAlignment="Center" FontSize="15" Text="Актив" Margin="{Binding Source={x:Reference lbCb}, Path=Margin}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="lbcbIsAsset_Tapped"/>
                     </Label.GestureRecognizers>
