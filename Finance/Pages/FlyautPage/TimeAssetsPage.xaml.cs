@@ -14,6 +14,10 @@ public partial class TimeAssetsPage : FlyoutPage
 	{
 		InitializeComponent();
 
+        #if ANDROID || IOS
+                this.IsPresented = true;
+        #endif
+
         flyoutPage.collectionView.SelectionChanged += OnSelectionChanged;
     }
 

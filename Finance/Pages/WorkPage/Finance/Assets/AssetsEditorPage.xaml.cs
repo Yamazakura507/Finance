@@ -8,6 +8,7 @@ using Finance.Models;
 using SkiaSharp.Extended.UI.Controls;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Finance.Pages.FlyautPage;
 
 namespace Finance.Pages.WorkPage.Finance.Assets;
 
@@ -30,6 +31,7 @@ public partial class AssetsEditorPage : ContentPage
         #if ANDROID || IOS
             colSPP.Width = GridLength.Auto;
             lbCb.Margin = new Thickness(0, 0, 0, 0);
+            TimeNavBt.IsVisible = true;
         #else
             ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
             toolbarItem.Clicked += Back_Clicked;
@@ -201,4 +203,6 @@ public partial class AssetsEditorPage : ContentPage
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) => cbIsAutoTransfer.IsChecked = !cbIsAutoTransfer.IsChecked;
 
     private void cbIsAutoTransfer_CheckedChanged(object sender, CheckedChangedEventArgs e) => TransferPicker.IsEnabled = !cbIsAutoTransfer.IsChecked;
+
+    private void AndroidVisualTimeBt_Pressed(object sender, EventArgs e) => ((TimeAssetsPage)this.Parent.Parent).IsPresented = true;
 }

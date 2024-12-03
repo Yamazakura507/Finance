@@ -56,26 +56,26 @@ public partial class CreditPage : ContentPage
         IsDeleting = !IsDeleting;
     }
 
-    private void Credit_Tapped(object sender, TappedEventArgs e)
+    async private void Credit_Tapped(object sender, TappedEventArgs e)
     {
-        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async() =>
-        {
-            ContentView cw = (ContentView)sender;
-            View.Credit creditView = (View.Credit)cw.BindingContext;
-            Models.Credit credit = DBModel.GetModel<Models.Credit>(creditView.Id);
+        ContentView cw = (ContentView)sender;
+        View.Credit creditView = (View.Credit)cw.BindingContext;
+        Models.Credit credit = DBModel.GetModel<Models.Credit>(creditView.Id);
 
-            if (IsDeleting)
+        if (IsDeleting)
+        {
+            loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() =>
             {
                 SKLottieView lottie = (SKLottieView)((Grid)cw.Content).Children[0];
                 MainThread.BeginInvokeOnMainThread(() => lottie.IsAnimationEnabled = lottie.IsVisible = true);
 
                 credit.DeleteModel<Models.Credit>();
                 MainThread.BeginInvokeOnMainThread(() => ViewCredits.Remove(creditView));
-            }
-            else
-            {
-                await MainThread.InvokeOnMainThreadAsync(async() => await Navigation.PushAsync(new NavigationPage(new CreditInfoTappedPage() { BindingContext = credit })));
-            }
-        }));
+            }));
+        }
+        else
+        {
+            await Navigation.PushAsync(new NavigationPage(new CreditInfoTappedPage() { BindingContext = credit }));
+        }
     }
 }

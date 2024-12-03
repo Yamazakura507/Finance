@@ -47,7 +47,7 @@ public partial class TimeCoastInfo : ContentPage
         }
     }
 
-    private void Back_Clicked(object? sender, EventArgs e) => this.BackButtonClick();
+    private void Back_Clicked(object? sender, EventArgs e) => this.BackButtonInNavClick();
 
     private void num_TextChanged(object sender, TextChangedEventArgs e) => TextBoxRestrictions.IsIntNumberEntry((Entry)sender);
 
@@ -71,7 +71,7 @@ public partial class TimeCoastInfo : ContentPage
                     });
             }));
 
-            this.BackButtonClick();
+            this.BackButtonInNavClick();
         }
         catch (Exception ex)
         {
@@ -85,7 +85,7 @@ public partial class TimeCoastInfo : ContentPage
 
         if (!TextBoxRestrictions.TextEmptyTextBox(name))
         {
-            nameProvider.WorkProvider(ProviderType.Alert,"Ќаименование об€зательное поле дл€ заполнени€");
+            nameProvider.WorkProvider(ProviderType.Alert, "Ќаименование об€зательное поле дл€ заполнени€");
             result = false;
         }
 

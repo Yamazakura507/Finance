@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Finance.CustomControl"
              x:Class="Finance.Pages.WorkPage.Planing.JobInfo" Loaded="ContentPage_Loaded">
-    <ScrollView>
+    <ScrollView HorizontalOptions="Center">
         <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -31,7 +31,7 @@
           IsChecked="{Binding IsDone}">
                 </CheckBox>
 
-                <Label VerticalTextAlignment="Center" FontSize="15" Text="Выполнено">
+                <Label x:Name="lbCb" Margin="-85,0,0,0" VerticalTextAlignment="Center" FontSize="15" Text="Выполнено">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="LabelCbOnTapped"/>
                     </Label.GestureRecognizers>

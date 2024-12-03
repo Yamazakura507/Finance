@@ -20,6 +20,10 @@ public partial class TasksListPage : ContentPage
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
+        #if ANDROID || IOS
+            AddAsset.Margin = new Thickness(-140,5,5,5);
+        #endif
+
         loading = new Loading();
 
         this.ShowPopup(loading);

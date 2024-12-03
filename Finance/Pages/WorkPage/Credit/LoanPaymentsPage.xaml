@@ -10,8 +10,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start">
-            <ImageButton Source="credit_add.png" x:Name="addBt" Pressed="AddImageButton_Clicked" HorizontalOptions="Start" Aspect="AspectFit" Margin="13,0,5,0"/>
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start">
+            <ImageButton WidthRequest="50" Source="credit_add.png" x:Name="addBt" Pressed="AddImageButton_Clicked" HorizontalOptions="Start" Aspect="AspectFit" Margin="13,0,5,0"/>
             <controls:Provaider x:Name="ErrProvider" IsVisible="False"/>
         </HorizontalStackLayout>
 
@@ -19,7 +19,7 @@
             <VerticalStackLayout x:Name="loanVSL" BindableLayout.ItemsSource="{Binding ViewLoanPayments}" Margin="0,10,0,10">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                        <Border Margin="0,5,0,0" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="15"/>
                             </Border.StrokeShape>
@@ -79,14 +79,14 @@
                                         </Label.Style>
                                     </Label>
 
-                                    <HorizontalStackLayout Grid.Row="2" Grid.Column="1">
-                                        <Label Text="{Binding BeginSum, StringFormat='Основной долг {0:F2}₽'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                        <Label Text="{Binding OverflowSum, StringFormat='/Проценты {0:F2}₽'}" Style="{DynamicResource ItemLabel}" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
+                                    <HorizontalStackLayout Grid.Row="2" Grid.Column="1" x:Name="HzSL">
+                                        <Label Text="{Binding BeginSum, StringFormat='Основной долг {0:F2}₽'}" MaxLines="1" LineBreakMode="MiddleTruncation" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        <Label Text="{Binding OverflowSum, StringFormat='/Проценты {0:F2}₽'}" MaxLines="1" LineBreakMode="MiddleTruncation"  Style="{DynamicResource ItemLabel}" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
                                     </HorizontalStackLayout>
 
                                     <Label Text="{Binding RemnantSum, StringFormat='Остаток {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                    <ImageButton Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Grid.Column="2" MaximumWidthRequest="100" Margin="0,0,10,0" Source="delete_credit.png" Pressed="DeleteImageButton_Clicked" HorizontalOptions="Start"/>
+                                    <ImageButton HeightRequest="50" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Grid.Column="2" MaximumWidthRequest="100" Margin="0,0,10,0" Source="delete_credit.png" Pressed="DeleteImageButton_Clicked" HorizontalOptions="Start"/>
                                 </Grid>
                                 <ContentView.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="LoanPaymens_Tapped"/>

@@ -9,7 +9,8 @@
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
-            <ImageButton Source="non_group.png" Pressed="AddAsset_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <ImageButton Source="non_group.png" WidthRequest="50" Pressed="AddAsset_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <ImageButton WidthRequest="50" Source="time.png" Margin="5,5,5,5" VerticalOptions="Center" HorizontalOptions="Start" Pressed="AndroidVisualTimeBt_Pressed" x:Name="TimeNavBt" IsVisible="Collapse"/>
         </HorizontalStackLayout>
 
 
@@ -17,7 +18,7 @@
             <VerticalStackLayout x:Name="asVSL" BindableLayout.ItemsSource="{Binding ViewAssets}" Margin="0,10,0,10">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                        <Border Margin="0,5,0,0" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="15"/>
                             </Border.StrokeShape>
@@ -52,7 +53,7 @@
                                     </Image>
 
                                     <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
-                                        <Label Text="{Binding Name}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        <Label Text="{Binding Name}" LineBreakMode="MiddleTruncation" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
                                         <Label Text="{Binding FlowType.Name, StringFormat='({0})'}" Style="{DynamicResource ItemLabel}" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
                                         <Image Margin="5" VerticalOptions="Start" HorizontalOptions="Start" Aspect="AspectFit" HeightRequest="30" WidthRequest="30">
@@ -75,7 +76,7 @@
 
                                     <Label Text="{Binding Use}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                    <ImageButton Source="delete_cash.png" Pressed="DeleteAsset_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                    <ImageButton HeightRequest="50" Source="delete_cash.png" Pressed="DeleteAsset_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
                                 </Grid>
                                 <ContentView.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="Asset_Tapped"/>

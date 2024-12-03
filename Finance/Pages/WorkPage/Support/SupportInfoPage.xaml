@@ -25,9 +25,9 @@
                             <DataTrigger TargetType="Editor" Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
-                            <DataTrigger TargetType="Editor" Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="Flase">
+                            <!--<DataTrigger TargetType="Editor" Binding="{Binding Source={x:Static stat:InfoAccount.IsAdmin}}" Value="Flase">
                                 <Setter Property="IsEnabled" Value="True"/>
-                            </DataTrigger>
+                            </DataTrigger>-->
                         </Style.Triggers>
                     </Style>
                 </Editor.Style>

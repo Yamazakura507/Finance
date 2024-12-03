@@ -87,7 +87,7 @@ public partial class Provaider : ContentView
             LottieProvider.Progress = new TimeSpan(0);
 
             #if ANDROID || IOS
-            WindowMessage();
+                WindowMessage();
             #else
                 BrMessage.IsVisible = true;
                 while (BrMessage.Opacity < 1)

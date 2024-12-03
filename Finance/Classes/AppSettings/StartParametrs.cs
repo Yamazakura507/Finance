@@ -1,19 +1,21 @@
-﻿namespace Finance.Classes.AppSettings
+﻿using Finance.Classes.Enums;
+
+namespace Finance.Classes.AppSettings
 {
-    public class StartParametrs
+    public static class StartParametrs
     {
-        public int IdAutorizateUser 
+        public static int IdAutorizateUser 
         {
             get
             {
-                return Preferences.Default.Get("IdAutorizateUser", 0);
+                return Preferences.Get(nameof(IdAutorizateUser), 0);
             } 
             set 
             {
-                Preferences.Default.Set("IdAutorizateUser", value);
+                Preferences.Set(nameof(IdAutorizateUser), value);
             }
         }
 
-        public static void ClearParametr() => Preferences.Default.Clear();
+        public static void ClearParametr() => Preferences.Clear();
     }
 }

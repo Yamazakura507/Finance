@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:Finance.CustomControl"
              x:Class="Finance.Pages.WorkPage.Credit.LoanPaymentsInfoPage"
              Loaded="ContentPage_Loaded">
-    <ScrollView>
+    <ScrollView HorizontalOptions="Center">
         <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

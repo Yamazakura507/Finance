@@ -4,6 +4,7 @@ using Finance.Classes;
 using Finance.Classes.AppSettings;
 using Finance.Classes.Enums;
 using Finance.CustomControl;
+using Finance.Pages.FlyautPage;
 
 namespace Finance.Pages.WorkPage.Finance.Assets;
 
@@ -30,6 +31,13 @@ public partial class GroupAddPage : ContentPage
 
         if (this.BindingContext is null)
         {
+            #if ANDROID || IOS
+                if (this.Parent.Parent.GetType() == typeof(AssetGroupEditorPage))
+                {
+                    GroupNavBt.IsVisible = true;
+                }
+            #endif
+
             ToolbarItem toolbarItemSave = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.save), Text = "Добавить финансовую группу" };
             toolbarItemSave.Clicked += AddAssetsGroup_Clicked;
             this.ToolbarItems.Add(toolbarItemSave);
@@ -38,6 +46,10 @@ public partial class GroupAddPage : ContentPage
         }
         else 
         {
+            #if ANDROID || IOS
+                GroupNavBt.IsVisible = true;
+            #endif
+
             ToolbarItem toolbarItemSave = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.delete_cash), Text = "Удалить финансовую группу" };
             toolbarItemSave.Clicked += DeleteAssetsGroup_Clicked;
             this.ToolbarItems.Add(toolbarItemSave);
@@ -121,4 +133,6 @@ public partial class GroupAddPage : ContentPage
             if (this.BindingContext != null) ((Models.AssetsGroup)this.BindingContext).Icon = await ConverFiles.ConvertImageSourceToBytesAsync(addBtImg.Source);
         }
     }
+
+    private void AndroidVisualGroupBt_Pressed(object sender, EventArgs e) => ((AssetGroupEditorPage)this.Parent.Parent).IsPresented = true;
 }

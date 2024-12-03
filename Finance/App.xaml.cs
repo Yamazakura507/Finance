@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
+using Finance.Classes;
+using Finance.Classes.AppSettings;
 using Finance.CustomControl;
 using Finance.Pages.Tabbed;
 
@@ -12,8 +14,9 @@ namespace Finance
         public App()
         {
             InitializeComponent();
-			
-			MyAppShell = new MainTabbedPage();
+
+            MyAppShell = Autorizate(StartParametrs.IdAutorizateUser) ? new Pages.FlyautPage.PersonalAccountPage() : new MainTabbedPage();
+
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             Connectivity_ConnectivityChanged(null, null);
             MainPage = MyAppShell;
@@ -37,6 +40,24 @@ namespace Finance
                  }));
 
                 GC.Collect();
+            }
+        }
+
+        public static bool Autorizate(int idUser)
+        {
+            try
+            {
+                if (Convert.ToBoolean(DBModel.ResultRequest($"SELECT COUNT(*) <> 0 FROM `Users` u WHERE u.`Id` = '{idUser}'")))
+                {
+                    InfoAccount.IdUser = idUser;
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

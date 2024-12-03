@@ -10,7 +10,6 @@ namespace Finance.Pages;
 public partial class RegistrationPage : ContentPage
 {
     Loading loading;
-    StartParametrs parametrs = new StartParametrs();
     private string rand = null;
 
     public RegistrationPage()
@@ -86,7 +85,7 @@ public partial class RegistrationPage : ContentPage
                 }
                 else 
                 {
-                    if (cbStorageUser.IsChecked) parametrs.IdAutorizateUser = idUser;
+                    if (cbStorageUser.IsChecked) StartParametrs.IdAutorizateUser = idUser;
                     MainThread.BeginInvokeOnMainThread(new Action(() => this.Messege("Вы зарегестрированы!", ProviderType.Info)));
 
                     this.MailGoodRegistration(Email.Text, new Dictionary<string, string>()
@@ -94,7 +93,7 @@ public partial class RegistrationPage : ContentPage
                         { "@Login", Login.Text }
                     });
 
-                    ((TabbedPage)App.Current.MainPage).CurrentPage = new AutorizationPage();
+                    MainThread.BeginInvokeOnMainThread(() => App.Current.MainPage = App.Autorizate(StartParametrs.IdAutorizateUser) ? new FlyautPage.PersonalAccountPage() : new Tabbed.MainTabbedPage());
                 }
             }
             catch (Exception ex)

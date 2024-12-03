@@ -9,396 +9,408 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView Margin="0,0,0,10">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <Border Grid.Column="0" Grid.Row="0" x:Name="Income" Background="#0800ff1e" Margin="5" Stroke="#8000ff1e" MinimumWidthRequest="200">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10"/>
-                </Border.StrokeShape>
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        <HorizontalStackLayout x:Name="TimeNavBt" Grid.Row="0" HeightRequest="55" IsVisible="Collapse">
+            <ImageButton Source="time.png" WidthRequest="50" Margin="5" VerticalOptions="Center" HorizontalOptions="Start" Pressed="AndroidVisualTimeBt_Pressed"/>
+        </HorizontalStackLayout>
+        
+        <ScrollView Margin="0,0,0,10" Grid.Row="1" HorizontalOptions="Center">
+            <Grid HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                    <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <Image Source="future_debtors_credit.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
-                        <Label Text="{Binding Sum, StringFormat='Доходы {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Start" Margin="0,10" HorizontalOptions="Start"/>
-                    </HorizontalStackLayout>
+                <Border Grid.Column="0" Grid.Row="0" x:Name="Income" Background="#0800ff1e" Margin="5" Stroke="#8000ff1e" MinimumWidthRequest="200">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <Image Source="stability.png" Grid.Row="1" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
-                    <Label Text="{Binding SumStability, StringFormat='Постояный {0:F2}₽'}" Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumStability}" Value="0">
-                                        <Setter Property="Text" Value="Постояный доход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Image Source="no_stability.png" Grid.Row="2" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
-                    <Label Text="{Binding SumNotStability, StringFormat='Разовый {0:F2}₽'}" Grid.Row="2" Grid.Column="1" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumNotStability}" Value="0">
-                                        <Setter Property="Text" Value="Разовый доход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Image Source="future_debtors_credit.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
+                            <Label Text="{Binding Sum, StringFormat='Доходы {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Start" Margin="0,10" HorizontalOptions="Start"/>
+                        </HorizontalStackLayout>
 
-                    <Image Source="debtors_time.png" Grid.Row="3" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
-                    <Label Text="{Binding SumActive, StringFormat='Активный {0:F2}₽'}" Grid.Row="3" Grid.Column="1" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumActive}" Value="0">
-                                        <Setter Property="Text" Value="Активный доход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Image Source="assets.png" Grid.Row="4" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
-                    <Label Text="{Binding SumPasive, StringFormat='Пасивный {0:F2}₽'}" Grid.Row="4" Grid.Column="1" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumPasive}" Value="0">
-                                        <Setter Property="Text" Value="Пасивный доход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
+                        <Image Source="stability.png" Grid.Row="1" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
+                        <Label Text="{Binding SumStability, StringFormat='Постояный {0:F2}₽'}" Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumStability}" Value="0">
+                                            <Setter Property="Text" Value="Постояный доход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Image Source="no_stability.png" Grid.Row="2" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
+                        <Label Text="{Binding SumNotStability, StringFormat='Разовый {0:F2}₽'}" Grid.Row="2" Grid.Column="1" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumNotStability}" Value="0">
+                                            <Setter Property="Text" Value="Разовый доход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
 
-                    <Label Text="{Binding SumActiveStability, StringFormat='Постояный активный {0:F2}₽'}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumActiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Постояный активный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding SumNotActiveStability, StringFormat='Разовый активный {0:F2}₽'}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumNotActiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Разовый активный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding SumPasiveStability, StringFormat='Постояный пасивный {0:F2}₽'}" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumPasiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Постояный пасивный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding SumNotPasiveStability, StringFormat='Разовый пасивный {0:F2}₽'}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumNotPasiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Разовый пасивный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </Grid>
-            </Border>
+                        <Image Source="debtors_time.png" Grid.Row="3" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
+                        <Label Text="{Binding SumActive, StringFormat='Активный {0:F2}₽'}" Grid.Row="3" Grid.Column="1" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumActive}" Value="0">
+                                            <Setter Property="Text" Value="Активный доход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Image Source="assets.png" Grid.Row="4" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
+                        <Label Text="{Binding SumPasive, StringFormat='Пасивный {0:F2}₽'}" Grid.Row="4" Grid.Column="1" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumPasive}" Value="0">
+                                            <Setter Property="Text" Value="Пасивный доход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
 
-            <Border Grid.Column="1" Grid.Row="0" x:Name="Expenses" Background="#08ff0000" Margin="5" Stroke="#80ff0000" MinimumWidthRequest="200">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10"/>
-                </Border.StrokeShape>
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    
-                    <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <Image Source="finance_group.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
-                        <Label Text="{Binding Sum, StringFormat='Расходы {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Center" Margin="0,10" HorizontalOptions="Start"/>
-                    </HorizontalStackLayout>
+                        <Label Text="{Binding SumActiveStability, StringFormat='Постояный активный {0:F2}₽'}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumActiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Постояный активный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label Text="{Binding SumNotActiveStability, StringFormat='Разовый активный {0:F2}₽'}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumNotActiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Разовый активный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label Text="{Binding SumPasiveStability, StringFormat='Постояный пасивный {0:F2}₽'}" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumPasiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Постояный пасивный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label Text="{Binding SumNotPasiveStability, StringFormat='Разовый пасивный {0:F2}₽'}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumNotPasiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Разовый пасивный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </Grid>
+                </Border>
 
-                    <Image Source="stability.png" Grid.Row="1" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
+                <Border Grid.Column="1" Grid.Row="0" x:Name="Expenses" Background="#08ff0000" Margin="5" Stroke="#80ff0000" MinimumWidthRequest="200">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Image Source="finance_group.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
+                            <Label Text="{Binding Sum, StringFormat='Расходы {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Center" Margin="0,10" HorizontalOptions="Start"/>
+                        </HorizontalStackLayout>
+
+                        <Image Source="stability.png" Grid.Row="1" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
                         <Label Text="{Binding SumStability, StringFormat='Постояный {0:F2}₽'}" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Margin="0,10,0,0" HorizontalOptions="Start">
                             <Label.Style>
                                 <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
                                     <Style.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding SumStability}" Value="0">
                                             <Setter Property="Text" Value="Постояный расход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Label.Style>
                         </Label>
-                    <Image Source="no_stability.png" Grid.Column="0" Grid.Row="2" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
-                    <Label Text="{Binding SumNotStability, StringFormat='Разовый {0:F2}₽'}" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumNotStability}" Value="0">
-                                        <Setter Property="Text" Value="Разовый расход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
+                        <Image Source="no_stability.png" Grid.Column="0" Grid.Row="2" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
+                        <Label Text="{Binding SumNotStability, StringFormat='Разовый {0:F2}₽'}" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumNotStability}" Value="0">
+                                            <Setter Property="Text" Value="Разовый расход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
 
-                    <Image Source="pay.png" Grid.Column="0" Grid.Row="3" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
-                    <Label Text="{Binding SumActive, StringFormat='Активный {0:F2}₽'}" Grid.Row="3" Grid.Column="1" VerticalOptions="Center" Margin="0,10,0,0" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumActive}" Value="0">
-                                        <Setter Property="Text" Value="Активный расход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Image Source="pasive.png" Grid.Column="0" Grid.Row="4" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
-                    <Label Text="{Binding SumPasive, StringFormat='Пасивный {0:F2}₽'}" Grid.Row="4" Grid.Column="1" VerticalOptions="Center" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumPasive}" Value="0">
-                                        <Setter Property="Text" Value="Пасивный расход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
+                        <Image Source="pay.png" Grid.Column="0" Grid.Row="3" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
+                        <Label Text="{Binding SumActive, StringFormat='Активный {0:F2}₽'}" Grid.Row="3" Grid.Column="1" VerticalOptions="Center" Margin="0,10,0,0" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumActive}" Value="0">
+                                            <Setter Property="Text" Value="Активный расход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Image Source="pasive.png" Grid.Column="0" Grid.Row="4" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
+                        <Label Text="{Binding SumPasive, StringFormat='Пасивный {0:F2}₽'}" Grid.Row="4" Grid.Column="1" VerticalOptions="Center" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumPasive}" Value="0">
+                                            <Setter Property="Text" Value="Пасивный расход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
 
-                    <Label Text="{Binding SumActiveStability, StringFormat='Постояный активный {0:F2}₽'}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumActiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Постояный активный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding SumNotActiveStability, StringFormat='Разовый активный {0:F2}₽'}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumNotActiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Разовый активный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding SumPasiveStability, StringFormat='Постояный пасивный {0:F2}₽'}" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumPasiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Постояный пасивный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding SumNotPasiveStability, StringFormat='Разовый пасивный {0:F2}₽'}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding SumNotPasiveStability}" Value="0">
-                                        <Setter Property="Text" Value="Разовый пасивный отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </Grid>
-            </Border>
+                        <Label Text="{Binding SumActiveStability, StringFormat='Постояный активный {0:F2}₽'}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumActiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Постояный активный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label Text="{Binding SumNotActiveStability, StringFormat='Разовый активный {0:F2}₽'}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumNotActiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Разовый активный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label Text="{Binding SumPasiveStability, StringFormat='Постояный пасивный {0:F2}₽'}" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumPasiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Постояный пасивный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Label Text="{Binding SumNotPasiveStability, StringFormat='Разовый пасивный {0:F2}₽'}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding SumNotPasiveStability}" Value="0">
+                                            <Setter Property="Text" Value="Разовый пасивный отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </Grid>
+                </Border>
 
-            <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" x:Name="Itog" Background="#08ffdd00" Margin="5" Stroke="#80ffdd00" MinimumWidthRequest="400">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10"/>
-                </Border.StrokeShape>
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" x:Name="Itog" Background="#08ffdd00" Margin="5" Stroke="#80ffdd00" MinimumWidthRequest="400">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <Image Source="finance.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
-                        <Label Text="{Binding Profit, StringFormat='Доход за дату {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Center" Margin="0,10" HorizontalOptions="Start"/>
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Image Source="finance.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
+                            <Label Text="{Binding Profit, StringFormat='Доход за дату {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Center" Margin="0,10" HorizontalOptions="Start"/>
+                        </HorizontalStackLayout>
 
-                    <Image Source="in_cash.png" Grid.Row="1" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
-                    <Label Text="{Binding ProfitForEvrifing, StringFormat='Общий доход {0:F2}₽'}" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Margin="0,10,0,0" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding ProfitForEvrifing}" Value="0">
-                                        <Setter Property="Text" Value="Общий доход отсутствует"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Image Source="debtor.png" Grid.Column="0" Grid.Row="2" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
-                    <Label Text="{Binding DebtorSum, StringFormat='Выдано в долг {0:F2}₽'}" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" Margin="0,3" HorizontalOptions="Start">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding DebtorSum}" Value="0">
-                                        <Setter Property="Text" Value="Долгов не выдано"/>
-                                        <Setter Property="HorizontalOptions" Value="Fill"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </Grid>
-            </Border>
+                        <Image Source="in_cash.png" Grid.Row="1" Grid.Column="0" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
+                        <Label Text="{Binding ProfitForEvrifing, StringFormat='Общий доход {0:F2}₽'}" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Margin="0,10,0,0" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ProfitForEvrifing}" Value="0">
+                                            <Setter Property="Text" Value="Общий доход отсутствует"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Image Source="debtor.png" Grid.Column="0" Grid.Row="2" Aspect="AspectFit" HeightRequest="20" Margin="0,3"/>
+                        <Label Text="{Binding DebtorSum, StringFormat='Выдано в долг {0:F2}₽'}" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" Margin="0,3" HorizontalOptions="Start">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding DebtorSum}" Value="0">
+                                            <Setter Property="Text" Value="Долгов не выдано"/>
+                                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </Grid>
+                </Border>
 
-            <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" x:Name="GroupsAsset" Background="#080099ff" Margin="5" Padding="15,0,0,5" Stroke="#800099ff" MinimumWidthRequest="400">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10"/>
-                </Border.StrokeShape>
+                <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" x:Name="GroupsAsset" Background="#080099ff" Margin="5" Padding="15,0,0,5" Stroke="#800099ff" MinimumWidthRequest="400">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <HorizontalStackLayout Grid.Row="0" Margin="-5,0,0,0">
-                        <Image VerticalOptions="Center"  Source="registration.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
-                        <Label Text="Активные группы за дату" VerticalOptions="Center" Margin="0,10" HorizontalOptions="Start" Style="{DynamicResource BoldItemLabel}"/>
-                    </HorizontalStackLayout>
-                    
-                    <VerticalStackLayout x:Name="asGrVSL" BindableLayout.ItemsSource="{Binding ViewAssetsGroup}" HorizontalOptions="Start" Grid.Row="1">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                        <HorizontalStackLayout Grid.Row="0" Margin="-5,0,0,0">
+                            <Image VerticalOptions="Center"  Source="registration.png" Aspect="AspectFit" HeightRequest="30" Margin="0,0,5,0"/>
+                            <Label Text="Активные группы за дату" VerticalOptions="Center" Margin="0,10" HorizontalOptions="Start" Style="{DynamicResource BoldItemLabel}"/>
+                        </HorizontalStackLayout>
 
-                                    <HorizontalStackLayout Grid.Row="0" VerticalOptions="Center" Margin="5,0,0,0">
-                                        <Image VerticalOptions="Center"  Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_group.png'}" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
-                                        <Label FontSize="10" Text="{Binding Name}" Margin="5,10,0,0" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
+                        <VerticalStackLayout x:Name="asGrVSL" BindableLayout.ItemsSource="{Binding ViewAssetsGroup}" HorizontalOptions="Start" Grid.Row="1">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
 
-                                    <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Margin="10,0,0,0">
-                                        <HorizontalStackLayout>
-                                            <HorizontalStackLayout.Style>
-                                                <Style TargetType="HorizontalStackLayout">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding Source={x:Reference ascnt}, Path=Text.Length}" Value="0">
-                                                            <Setter Property="IsVisible" Value="Hidden"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </HorizontalStackLayout.Style>
-                                            <Image Source="assets.png" Margin="5,5,0,0" VerticalOptions="Center" HeightRequest="15"/>
-                                            <Label FontSize="10" x:Name="ascnt" Text="{Binding CountAssets, StringFormat='({0}) активов на', TargetNullValue=''}" Margin="5,5,0,0" VerticalOptions="Center"/>
-                                            <Label FontSize="10" Text="{Binding SumAssets, StringFormat='{0:F2}₽', TargetNullValue=''}" Margin="5,5,0,0" VerticalOptions="Center"/>
+                                        <HorizontalStackLayout Grid.Row="0" VerticalOptions="Center" Margin="5,0,0,0">
+                                            <Image VerticalOptions="Center"  Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_group.png'}" Aspect="AspectFit" HeightRequest="20" Margin="0,10,0,0"/>
+                                            <Label FontSize="10" Text="{Binding Name}" Margin="5,10,0,0" VerticalOptions="Center"/>
                                         </HorizontalStackLayout>
 
-                                        <HorizontalStackLayout>
-                                            <HorizontalStackLayout.Style>
-                                                <Style TargetType="HorizontalStackLayout">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding Source={x:Reference pascnt}, Path=Text.Length}" Value="0">
-                                                            <Setter Property="IsVisible" Value="Hidden"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </HorizontalStackLayout.Style>
-                                            <Image Source="pasive.png" Margin="5,5,0,0" VerticalOptions="Center" HeightRequest="15"/>
-                                            <Label x:Name="pascnt" FontSize="10" Text="{Binding CountPasive, StringFormat='({0}) пасивов на', TargetNullValue=''}" Margin="9,5,0,0" VerticalOptions="Center"/>
-                                            <Label FontSize="10" Text="{Binding SumPasive, StringFormat='{0:F2}₽', TargetNullValue=''}" Margin="5,5,0,0" VerticalOptions="Center"/>
-                                        </HorizontalStackLayout>
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </Grid>
-            </Border>
-        </Grid>
-    </ScrollView>
+                                        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Margin="10,0,0,0">
+                                            <HorizontalStackLayout>
+                                                <HorizontalStackLayout.Style>
+                                                    <Style TargetType="HorizontalStackLayout">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding Source={x:Reference ascnt}, Path=Text.Length}" Value="0">
+                                                                <Setter Property="IsVisible" Value="Hidden"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </HorizontalStackLayout.Style>
+                                                <Image Source="assets.png" Margin="5,5,0,0" VerticalOptions="Center" HeightRequest="15"/>
+                                                <Label FontSize="10" x:Name="ascnt" Text="{Binding CountAssets, StringFormat='({0}) активов на', TargetNullValue=''}" Margin="5,5,0,0" VerticalOptions="Center"/>
+                                                <Label FontSize="10" Text="{Binding SumAssets, StringFormat='{0:F2}₽', TargetNullValue=''}" Margin="5,5,0,0" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout>
+                                                <HorizontalStackLayout.Style>
+                                                    <Style TargetType="HorizontalStackLayout">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding Source={x:Reference pascnt}, Path=Text.Length}" Value="0">
+                                                                <Setter Property="IsVisible" Value="Hidden"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </HorizontalStackLayout.Style>
+                                                <Image Source="pasive.png" Margin="5,5,0,0" VerticalOptions="Center" HeightRequest="15"/>
+                                                <Label x:Name="pascnt" FontSize="10" Text="{Binding CountPasive, StringFormat='({0}) пасивов на', TargetNullValue=''}" Margin="9,5,0,0" VerticalOptions="Center"/>
+                                                <Label FontSize="10" Text="{Binding SumPasive, StringFormat='{0:F2}₽', TargetNullValue=''}" Margin="5,5,0,0" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

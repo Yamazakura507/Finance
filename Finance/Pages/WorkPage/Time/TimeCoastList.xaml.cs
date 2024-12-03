@@ -34,7 +34,7 @@ public partial class TimeCoastList : ContentPage
             }
             catch (Exception ex)
             {
-                ErrProvider.WorkProvider(ProviderType.Error,ex.Message);
+                MainThread.BeginInvokeOnMainThread(() => ErrProvider.WorkProvider(ProviderType.Error,ex.Message));
             }
         }));
 
@@ -51,13 +51,10 @@ public partial class TimeCoastList : ContentPage
     async private void Time_Tapped(object sender, TappedEventArgs e)
     {
         var view = (View.TimeCoast)((ContentView)sender).BindingContext;
+        var model = DBModel.GetModel<Models.TimeCoast>(view.Id);
 
-        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() =>
-        {
-            var model = DBModel.GetModel<Models.TimeCoast>(view.Id);
-            MainThread.BeginInvokeOnMainThread(async() => await Navigation.PushAsync(new TimeCoastInfo() { BindingContext = model }));
-        }));
+        await Navigation.PushAsync(new NavigationPage(new TimeCoastInfo() { BindingContext = model }));
     }
 
-    async private void btAddTime_Pressed(object sender, EventArgs e) => await Navigation.PushAsync(new TimeCoastInfo());
+    async private void btAddTime_Pressed(object sender, EventArgs e) => await Navigation.PushAsync(new NavigationPage(new TimeCoastInfo()));
 }

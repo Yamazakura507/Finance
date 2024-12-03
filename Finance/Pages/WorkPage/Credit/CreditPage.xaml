@@ -12,9 +12,9 @@
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start">
-            <ImageButton Source="credit_add.png" Clicked="AddImageButton_Clicked" HorizontalOptions="Start"/>
-            <ImageButton Source="delete_credit.png" Clicked="DeleteImageButton_Clicked" HorizontalOptions="Start" Margin="5,0,0,0"/>
-            <controls:Provaider x:Name="ErrProvider" IsVisible="False"/>
+            <ImageButton WidthRequest="50" Source="credit_add.png" Clicked="AddImageButton_Clicked" HorizontalOptions="Start"/>
+            <ImageButton WidthRequest="50" Source="delete_credit.png" Clicked="DeleteImageButton_Clicked" HorizontalOptions="Start" Margin="5,0,0,0"/>
+            <controls:Provaider WidthRequest="50" x:Name="ErrProvider" IsVisible="False"/>
         </HorizontalStackLayout>
 
         <ScrollView Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start">

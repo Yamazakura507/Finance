@@ -10,26 +10,38 @@
             <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView>
-        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition x:Name="colSPP"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
-            <ImageButton Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='add_file.png'}" x:Name="addBtImg" Pressed="addBtImg_Pressed" Aspect="AspectFit" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="GrName" Grid.Row="0" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
-            <controls:Provaider x:Name="GrNameProvider" IsVisible="False" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+        <HorizontalStackLayout x:Name="GroupNavBt" Grid.Row="0" HeightRequest="55" IsVisible="Collapse">
+            <ImageButton Source="finance_group.png" WidthRequest="50" Margin="5" VerticalOptions="Center" HorizontalOptions="Start" Pressed="AndroidVisualGroupBt_Pressed"/>
+        </HorizontalStackLayout>
 
-            <Editor Placeholder="Краткое описание" Text="{Binding Commit}" x:Name="GrCommit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
-        </Grid>
-    </ScrollView>
+        <ScrollView HorizontalOptions="Center" Grid.Row="1">
+            <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition x:Name="colSPP"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ImageButton Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='add_file.png'}" x:Name="addBtImg" Pressed="addBtImg_Pressed" Aspect="AspectFit" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0"/>
+
+                <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="GrName" Grid.Row="0" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                <controls:Provaider x:Name="GrNameProvider" IsVisible="False" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+                <Editor Placeholder="Краткое описание" Text="{Binding Commit}" x:Name="GrCommit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

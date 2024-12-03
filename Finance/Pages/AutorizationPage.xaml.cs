@@ -11,7 +11,6 @@ public partial class AutorizationPage : ContentPage
 {
     Loading loading;
 
-    StartParametrs parametrs;
     private string rand = null;
     private Users users = null;
 
@@ -24,8 +23,6 @@ public partial class AutorizationPage : ContentPage
     {
         try
         {
-            parametrs = new StartParametrs();
-
             #if ANDROID || IOS
                 colSA.Width = colSPL.Width = colSPP.Width = colSli.Width = colSPC.Width = GridLength.Auto;
                 lbCb.Margin = new Thickness(0, 0, 0, 0);
@@ -41,8 +38,6 @@ public partial class AutorizationPage : ContentPage
             LottieAnimation.HideAnimationStop(btsRebasePassword);
             LottieAnimation.HideAnimationStop(btlCodeCont);
             cbStorageUser.IsChecked = true;
-
-            Autorizate(parametrs.IdAutorizateUser);
         }
         catch (Exception ex)
         {
@@ -61,7 +56,6 @@ public partial class AutorizationPage : ContentPage
         try 
         {
             return Convert.ToBoolean(DBModel.ResultRequest($"SELECT COUNT(*) <> 0 FROM `Users` u WHERE u.`Id` = '{idUser}'"));
-            return true; //Результат проверки
         }
         catch (Exception ex) 
         {
@@ -69,13 +63,13 @@ public partial class AutorizationPage : ContentPage
         }
     }
 
-    async public void Autorizate(int idUser)
+    public void Autorizate(int idUser)
     {
         try
         {
             if (CheckAutoAutorizate(idUser))
             {
-                if(cbStorageUser.IsChecked) parametrs.IdAutorizateUser = idUser;
+                if (cbStorageUser.IsChecked) StartParametrs.IdAutorizateUser = idUser;
                 errorProvider.WorkProvider(ProviderType.Info, "У вас имеется раняя авторизация");
 
                 InfoAccount.IdUser = idUser;

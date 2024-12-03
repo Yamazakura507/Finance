@@ -9,7 +9,7 @@ public partial class SupportInfoPage : ContentPage
 {
     private bool isLoaded = false;
     private int id;
-    Loading loading { get; set; }
+    Loading loading;
 
     public SupportInfoPage(int id)
 	{
@@ -19,14 +19,15 @@ public partial class SupportInfoPage : ContentPage
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
-#if ANDROID || IOS
-        colSPP.Width = GridLength.Auto;
-#else
-            ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
-            toolbarItem.Clicked += Back_Clicked;
-            this.ToolbarItems.Add(toolbarItem);
-            colSPP.Width = 200;
-#endif
+        #if ANDROID || IOS
+                colSPP.Width = GridLength.Auto;
+        #else
+                    ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
+                    toolbarItem.Clicked += Back_Clicked;
+                    this.ToolbarItems.Add(toolbarItem);
+                    colSPP.Width = 200;
+        #endif
+
         loading = new Loading();
 
         this.ShowPopup(loading);

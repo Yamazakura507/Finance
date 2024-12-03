@@ -28,6 +28,8 @@ public partial class AssetsListPage : ContentPage
             ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
             toolbarItem.Clicked += Back_Clicked;
             this.ToolbarItems.Add(toolbarItem);
+        #elif ANDROID || IOS
+            TimeNavBt.IsVisible = true;
         #endif
 
         loading = new Loading();
@@ -76,4 +78,6 @@ public partial class AssetsListPage : ContentPage
 
         if (!String.IsNullOrEmpty(asset.Use)) this.Messege(asset.Use,ProviderType.Info);
     }
+
+    private void AndroidVisualTimeBt_Pressed(object sender, EventArgs e) => ((TimeAssetsPage)this.Parent.Parent).IsPresented = true;
 }

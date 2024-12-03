@@ -24,6 +24,12 @@ public partial class AccountPage : ContentPage
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
+        #if ANDROID || IOS
+            ColZero.Width = chartResPrE.WidthRequest = chartResPr.WidthRequest = chartExc.WidthRequest = chartInc.WidthRequest = 350;
+            Grid.SetColumn(chartLout, 0);
+            Grid.SetRow(chartLout, 3);
+        #endif
+
         loading = new Loading();
 
         this.ShowPopup(loading);
@@ -106,6 +112,11 @@ public partial class AccountPage : ContentPage
                         Entries = profitEvrefing,
                         BackgroundColor = SKColor.Empty
                     };
+
+                    #if ANDROID || IOS
+                        chartInc.Chart.LabelTextSize = chartExc.Chart.LabelTextSize = chartResPr.Chart.LabelTextSize = 40;
+                        chartResPrE.Chart.LabelTextSize = 30;
+                    #endif
 
                     BindableLayout.SetItemsSource(quadrantsVSL, ViewQuadrants);
                 });

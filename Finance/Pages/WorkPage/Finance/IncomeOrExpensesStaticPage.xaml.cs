@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Views;
 using Finance.Classes;
 using Finance.Classes.AppSettings;
 using Finance.CustomControl;
+using Finance.Pages.FlyautPage;
 using Finance.View;
 
 namespace Finance.Pages.WorkPage.Finance;
@@ -19,6 +20,13 @@ public partial class IncomeOrExpensesStaticPage : ContentPage
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
+        #if ANDROID || IOS
+            TimeNavBt.IsVisible = true;
+            Grid.SetColumn(Expenses, 0);
+            Grid.SetRow(Expenses, 1);
+            Itog.MinimumWidthRequest = GroupsAsset.MinimumWidthRequest = Income.MinimumWidthRequest = Expenses.MinimumWidthRequest = 300;
+        #endif
+
         loading = new Loading();
 
         this.ShowPopup(loading);
@@ -59,4 +67,6 @@ public partial class IncomeOrExpensesStaticPage : ContentPage
             });
         }));
     }
+
+    private void AndroidVisualTimeBt_Pressed(object sender, EventArgs e) => ((TimeIncomePage)this.Parent.Parent).IsPresented = true;
 }

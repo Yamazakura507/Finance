@@ -13,15 +13,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
-            <ImageButton Source="finance_group.png" Pressed="AddGr_Pressed" x:Name="AddGr" Aspect="AspectFit" Margin="5" VerticalOptions="Center" HorizontalOptions="Start"/>
-            <ImageButton Source="non_group.png" Pressed="AddAsset_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="5" VerticalOptions="Center" HorizontalOptions="Start"/>
-            <ImageButton Source="registration.png" Pressed="EditGrAssets_Pressed" x:Name="EditGrAssets" Aspect="AspectFit" Margin="5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <ImageButton WidthRequest="50" Source="finance_group.png" Pressed="AddGr_Pressed" x:Name="AddGr" Aspect="AspectFit" Margin="5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <ImageButton WidthRequest="50" Source="non_group.png" Pressed="AddAsset_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <ImageButton WidthRequest="50" Source="registration.png" Pressed="EditGrAssets_Pressed" x:Name="EditGrAssets" Aspect="AspectFit" Margin="{Binding Source={x:Reference AddAsset}, Path=Margin}" VerticalOptions="Center" HorizontalOptions="Start"/>
 
-            <controls:Provaider x:Name="ErrProvider" IsVisible="False" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Margin="{Binding Source={x:Reference AddGr}, Path=Margin}" HorizontalOptions="Start" VerticalOptions="Center"/>
         </HorizontalStackLayout>
 
 
