@@ -25,7 +25,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <control:Provaider IsVisible="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TypeProvider="Info" Message="Для смены или дополнения квадрантов напишите поддержке на вкладке вопросы" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center">
+                <ImageButton WidthRequest="50" Source="diagram.png" HorizontalOptions="Start" VerticalOptions="Center" Pressed="AllDiagram_Pressed" x:Name="AllDiagram" Aspect="AspectFit" Margin="15,5,5,5"/>
+                <control:Provaider IsVisible="True" TypeProvider="Info" Message="Для смены или дополнения квадрантов напишите поддержке на вкладке вопросы" HorizontalOptions="Start" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
 
             <VerticalStackLayout x:Name="chartLout" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalOptions="Center">
                     <cart:ChartView x:Name="chartInc" HeightRequest="300" WidthRequest="600"/>

@@ -21,15 +21,17 @@ public partial class AssetsGroupPage : ContentPage
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
-        loading = new Loading();
-
-        this.ShowPopup(loading);
-
-        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() =>
+        try
         {
-            try
+            loading = new Loading();
+
+            this.ShowPopup(loading);
+
+            loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() =>
             {
-                string sql = String.Format(@"SELECT ag.*, 
+                try
+                {
+                    string sql = String.Format(@"SELECT ag.*, 
                                 SUM(case WHEN a.`IsAsset` then a.`Sum` end) SumAssets, 
                                 SUM(case WHEN not a.`IsAsset` then -a.`Sum` end) SumPasive, 
                                 SUM(case WHEN a.`IsAsset` then 1 end) CountAssets, 
@@ -40,19 +42,25 @@ public partial class AssetsGroupPage : ContentPage
                             WHERE ag.`IdUser` = '{0}' OR ag.`IdUser` is NULL
                             GROUP BY ag.`Id`,ag.`Name`,ag.`Commit`,ag.`Icon`,ag.`IdUser`;", InfoAccount.IdUser);
 
-                ViewAssetsGroup = DBModel.GetCollectionModel<View.AssetsGroup>(sql);
+                    ViewAssetsGroup = DBModel.GetCollectionModel<View.AssetsGroup>(sql);
 
-                if (ViewAssetsGroup is null || ViewAssetsGroup.Count() == 0) throw new Exception("” вас отсутствуют групировки финансов");
-                else
-                {
-                    MainThread.BeginInvokeOnMainThread(() => BindableLayout.SetItemsSource(asGrVSL, ViewAssetsGroup));
+                    if (ViewAssetsGroup is null || ViewAssetsGroup.Count() == 0) throw new Exception("” вас отсутствуют групировки финансов");
+                    else
+                    {
+                        MainThread.BeginInvokeOnMainThread(() => BindableLayout.SetItemsSource(asGrVSL, ViewAssetsGroup));
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                MainThread.BeginInvokeOnMainThread(() => ErrProvider.WorkProvider(ProviderType.Error, ex.Message));
-            }
-        }));
+                catch (Exception ex)
+                {
+                    MainThread.BeginInvokeOnMainThread(() => ErrProvider.WorkProvider(ProviderType.Error, ex.Message));
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            ErrProvider.WorkProvider(ProviderType.Error, ex.Message);
+        }
+        
     }
 
     private async void AddGr_Pressed(object sender, EventArgs e)

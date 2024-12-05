@@ -38,6 +38,10 @@ public partial class AccountPage : ContentPage
         {
             try
             {
+                bool checkDiagram = Convert.ToBoolean(DBModel.ResultRequest($"SELECT COUNT(DISTINCT ag.`Id`) > 0 FROM `AssetsGroup` ag INNER JOIN `GroupingAssets` ga ON ga.`IdGroupAssets` = ag.`Id` WHERE ag.`IdUser` = '{InfoAccount.IdUser}'"));
+
+                await MainThread.InvokeOnMainThreadAsync(() => AllDiagram.IsVisible = checkDiagram);
+
                 var income = DBModel.GetCollectionModel<Revenues>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, 24, default, new Dictionary<string, bool>() { { "IdDate", false } });
 
                 var active = income.Where(i => i.IsRevenues).Select(i => new ChartEntry((float)i.Sum)
@@ -131,4 +135,6 @@ public partial class AccountPage : ContentPage
     private void Quadrants_Tapped(object sender, TappedEventArgs e) => this.Messege(((Quadrants)((ContentView)sender).BindingContext).Commit, ProviderType.Info);
 
     private void SupportBt_Pressed(object sender, EventArgs e) => this.Messege(((Quadrants)((ImageButton)sender).BindingContext).DownLimit, ProviderType.Info);
+
+    async private void AllDiagram_Pressed(object sender, EventArgs e) => await Navigation.PushAsync(new NavigationPage(new GroupCharPage()));
 }

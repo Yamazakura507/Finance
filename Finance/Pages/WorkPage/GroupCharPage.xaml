@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:cart="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             x:Class="Finance.Pages.WorkPage.GroupCharPage"
+             Title="Диаграммы групп" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView Margin="10" HorizontalOptions="Center" >
+        <FlexLayout BindableLayout.ItemsSource="{Binding ViewGroupChart}" x:Name="groupChartList" Wrap="Wrap" HorizontalOptions="Center">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="3" Stroke="{Binding StrokeBord}" BackgroundColor="{Binding BackBord}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <ContentView Margin="3" BackgroundColor="Transparent">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="300"/>
+                                </Grid.RowDefinitions>
+
+                                <Image Margin="5" Grid.Column="0" Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_group.png'}" Grid.Row="0" Aspect="AspectFit" HeightRequest="40" WidthRequest="40"/>
+
+                                <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                <cart:ChartView HeightRequest="{Binding HeightChart}" WidthRequest="{Binding WidthChart}" Chart="{Binding ChartData}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                            </Grid>
+                        </ContentView>
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+    </ScrollView>
+</ContentPage>
