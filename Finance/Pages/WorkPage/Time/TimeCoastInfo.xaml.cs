@@ -32,7 +32,7 @@ public partial class TimeCoastInfo : ContentPage
         if (this.BindingContext is null)
         {
             ToolbarItem toolbarItemSave = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.save), Text = "Добавить отрезок времени" };
-            toolbarItemSave.Clicked += AddAssetsGroup_Clicked;
+            toolbarItemSave.Clicked += AddTimeCoast_Clicked;
             this.ToolbarItems.Add(toolbarItemSave);
         }
         else
@@ -51,7 +51,7 @@ public partial class TimeCoastInfo : ContentPage
 
     private void num_TextChanged(object sender, TextChangedEventArgs e) => TextBoxRestrictions.IsIntNumberEntry((Entry)sender);
 
-    private void AddAssetsGroup_Clicked(object? sender, EventArgs e)
+    private void AddTimeCoast_Clicked(object? sender, EventArgs e)
     {
         try
         {
@@ -65,7 +65,7 @@ public partial class TimeCoastInfo : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    await ms.ExecSqlAsync($"INSERT INTO `TimeCoast`(`Name`, `Commit`, `IdUser`, `Minute`) values ('{name.Text}','@Commit','{InfoAccount.IdUser}','{(DateEnd.Date - DateStart.Date).TotalMinutes + TimeStart.Time.TotalMinutes}')", new MySqlParameter[]
+                    await ms.ExecSqlAsync($"INSERT INTO `TimeCoast`(`Name`, `Commit`, `IdUser`, `Minute`) values ('{name.Text}',@Commit,'{InfoAccount.IdUser}','{(DateEnd.Date - DateStart.Date).TotalMinutes + TimeStart.Time.TotalMinutes}')", new MySqlParameter[]
                     {
                         new MySqlParameter("@Commit", string.IsNullOrEmpty(commit.Text) ? DBNull.Value : commit.Text)
                     });

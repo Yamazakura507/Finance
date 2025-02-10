@@ -26,47 +26,49 @@
 
 
         <ScrollView Grid.Row="1" Grid.Column="0" Padding="10,5,10,5">
-            <VerticalStackLayout x:Name="asGrVSL" BindableLayout.ItemsSource="{Binding ViewAssetsGroup}" Margin="0,10,0,10">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="15"/>
-                            </Border.StrokeShape>
-                            <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+            <VerticalStackLayout>
+                <VerticalStackLayout x:Name="asGrVSL" BindableLayout.ItemsSource="{Binding ViewAssetsGroup}" Margin="0,10,0,10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="15"/>
+                                </Border.StrokeShape>
+                                <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Image Margin="5" Grid.Column="0" Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_group.png'}" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70"/>
+                                        <Image Margin="5" Grid.Column="0" Source="{Binding Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='non_group.png'}" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70"/>
 
                                         <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-                                        <Label Text="{Binding SumAssets, StringFormat='Активы {0:F2}₽', TargetNullValue='Активы отсутствуют'}" FontSize="15" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
-                                        <Label Text="{Binding CountAssets, StringFormat='({0:F0})', TargetNullValue=''}" Style="{DynamicResource BoldItemLabel}" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
-                                        <Label Text="{Binding SumPasive, StringFormat='/Пасивы {0:F2}₽', TargetNullValue='/Пасивы отсутствуют'}" FontSize="15" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
-                                        <Label Text="{Binding CountPasive, StringFormat='({0:F0})', TargetNullValue=''}" Style="{DynamicResource BoldItemLabel}" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
-                                    </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+                                            <Label Text="{Binding SumAssets, StringFormat='Активы {0:F2}₽', TargetNullValue='Активы отсутствуют'}" FontSize="15" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
+                                            <Label Text="{Binding CountAssets, StringFormat='({0:F0})', TargetNullValue=''}" Style="{DynamicResource BoldItemLabel}" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
+                                            <Label Text="{Binding SumPasive, StringFormat='/Пасивы {0:F2}₽', TargetNullValue='/Пасивы отсутствуют'}" FontSize="15" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
+                                            <Label Text="{Binding CountPasive, StringFormat='({0:F0})', TargetNullValue=''}" Style="{DynamicResource BoldItemLabel}" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="0"/>
+                                        </HorizontalStackLayout>
 
-                                    <Label Text="{Binding Commit}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                </Grid>
-                                <ContentView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="AssetsGroup_Tapped"/>
-                                </ContentView.GestureRecognizers>
-                            </ContentView>
-                        </Border>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                                        <Label Text="{Binding Commit}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                    </Grid>
+                                    <ContentView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="AssetsGroup_Tapped"/>
+                                    </ContentView.GestureRecognizers>
+                                </ContentView>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
