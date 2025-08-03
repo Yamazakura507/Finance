@@ -683,5 +683,14 @@ namespace Finance.Properties {
                 return ((byte[])(obj));
             }
         }
+		
+		///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] futures {
+            get {
+                object obj = ResourceManager.GetObject("futures", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

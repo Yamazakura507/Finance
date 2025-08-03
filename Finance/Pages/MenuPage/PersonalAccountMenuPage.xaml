@@ -27,6 +27,9 @@
                         <local:FlyautAccountModel Title="Финансы"
                                   IconSource="finance.png"
                                   TargetType="{x:Type pageTab:FinancePageTapped}" />
+                        <local:FlyautAccountModel Title="Фьючерсы"
+                                  IconSource="futures.png"
+                                  TargetType="{x:Type pageTab:FinancePageTapped}" />
                         <local:FlyautAccountModel Title="Время"
                                   IconSource="time.png"
                                   TargetType="{x:Type pageTime:TimeCoastList}" />

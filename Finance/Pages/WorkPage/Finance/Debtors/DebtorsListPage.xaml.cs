@@ -31,7 +31,7 @@ public partial class DebtorsListPage : ContentPage
             try
             {
 
-                ViewDebtors = DBModel.GetCollectionModel<View.Debtor>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } });
+                ViewDebtors = DBModel.GetCollectionModel<View.Debtor>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },default,default, new Dictionary<string, bool>() { { "IdStatusDebtor",  true} });
 
                 if (ViewDebtors is null || ViewDebtors.Count() == 0) throw new Exception("У вас отсутствуют должники");
                 else

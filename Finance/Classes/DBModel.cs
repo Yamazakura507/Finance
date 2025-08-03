@@ -64,7 +64,10 @@ namespace Finance.Classes
 
                     IsGet = true;
 
-                    Parallel.ForEach(dt.AsEnumerable(), dr => collection.Add(dr.ToObject(new T())));
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        collection.Add(dt.Rows[i].ToObject(new T()));
+                    }
 
                     IsGet = false;
                 }
@@ -93,7 +96,45 @@ namespace Finance.Classes
 
                     IsGet = true;
 
-                    Parallel.ForEach(dt.AsEnumerable(), dr => collection.Add(dr.ToObject<T>(new T())));
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        collection.Add(dt.Rows[i].ToObject(new T()));
+                    }
+
+                    IsGet = false;
+                }
+
+                return collection;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Работает быстрее чем GetCollectionModel, но игнорирует процес сортировки!
+        /// </summary>
+        /// <typeparam name="T">Тип модели</typeparam>
+        /// <param name="sqlQuery">Запрос к базе</param>
+        /// <returns>Динамическую колекцию соответствующую выгрузке из базы</returns>
+        public static ObservableCollection<T> GetParallelCollectionModel<T>(string sqlQuery) where T : new()
+        {
+            CheckPolice(true, typeof(T));
+
+            try
+            {
+                ObservableCollection<T> collection = new ObservableCollection<T>();
+
+                using (var ms = new Mysql())
+                {
+                    var dt = ms.GetTable(sqlQuery.Trim());
+
+                    if (dt is null) return null;
+
+                    IsGet = true;
+
+                    Parallel.ForEach(dt.AsEnumerable(), dr => collection.Add(dr.ToObjectParallel(new T())));
 
                     IsGet = false;
                 }
@@ -186,23 +227,34 @@ namespace Finance.Classes
         {
             try
             {
+                if (typeTb == typeof(View.AssetsGroupChart)) return;
+
                 if (InfoAccount.IdUser > 0)
                 {
-                    DataTable dtPolice = new DataTable();
+                    string? msg = null;
 
                     using (var ms = new Mysql())
                     {
-                        dtPolice = ms.GetTable($@"SELECT tn.`ObjectName`, tn.`Name`, obr.`Name` PoliceName FROM `RestrictionsUser` ru 
-                                                    INNER JOIN `GroupingRestriction` gr ON gr.`IdRestriction` = ru.`IdRestrictions` 
-                                                    INNER JOIN `ObjectRestrict` obr ON obr.`Id` = gr.`IdObjectRestriction` 
-                                                    INNER JOIN `GroupingObject` gro ON gr.`IdGroup` = gro.`IdGroup` 
-                                                    INNER JOIN `TableName` tn ON tn.`Id` = gro.`IdObject`
-                                                WHERE ru.`IdUser` = '{InfoAccount.IdUser}' AND tn.`ObjectName` = '{typeTb.Name}'", true);
+                        msg = ms.GetValue($@"SELECT GROUP_CONCAT(m.`msg` SEPARATOR '\n') msg 
+                                                FROM (
+                                                    SELECT CASE 
+                                                                WHEN COUNT(*) = 0 
+                                                                    THEN 'У вас нет прав {(isRead ? "чтения" : "записи")} объекта {typeTb.Name}!\nДля получения прав обратитесь в подержку' 
+                                                                WHEN COUNT(*) <> COUNT(CASE WHEN 'WAR' LIKE CONCAT('%',obr.`Name`,'%') THEN 1 END) 
+                                                                    THEN CONCAT('У вас нет прав {(isRead ? "чтения" : "записи")} объекта ',tn.Name,'!\nДля получения прав обратитесь в подержку')
+                                                                WHEN '{isAdmin}' AND COUNT(*) <> COUNT(CASE WHEN obr.`Name` LIKE 'A' THEN 1 END) 
+                                                                    THEN CONCAT('У вас нет прав администрирования объекта ',tn.Name,'!\nДля получения прав обратитесь в подержку')
+                                                                ELSE NULL END AS msg
+                                                    FROM `RestrictionsUser` ru 
+                                                        INNER JOIN `GroupingRestriction` gr ON gr.`IdRestriction` = ru.`IdRestrictions` 
+                                                        INNER JOIN `ObjectRestrict` obr ON obr.`Id` = gr.`IdObjectRestriction` 
+                                                        INNER JOIN `GroupingObject` gro ON gr.`IdGroup` = gro.`IdGroup` 
+                                                        INNER JOIN `TableName` tn ON tn.`Id` = gro.`IdObject`
+                                                    WHERE ru.`IdUser` = '{InfoAccount.IdUser}' AND tn.`ObjectName` = '{typeTb.Name}'
+                                                    ) m").ToString();
                     }
 
-                    if (dtPolice is null) throw new Exception($"Увас нет прав {(isRead ? "чтения" : "записи")} объекта {typeTb.Name}!\nДля получения прав обратитесь в подержку");
-                    if (!dtPolice.AsEnumerable().All(i =>  (isRead ? "WAR" : "WA").Contains(i["PoliceName"].ToString()))) throw new Exception($"Увас нет прав {(isRead ? "чтения" : "записи")} объекта {dtPolice.Rows[0]["Name"]}!\nДля получения прав обратитесь в подержку");
-                    if (isAdmin && dtPolice.AsEnumerable().All(i =>  i["PoliceName"].ToString().Contains("A"))) throw new Exception($"Увас нет прав администрирования объекта {dtPolice.Rows[0]["Name"]}!\nДля получения прав обратитесь в подержку");
+                    if (!String.IsNullOrEmpty(msg)) throw new Exception(msg);
                 }
             }
             catch (Exception ex)
@@ -228,7 +280,7 @@ namespace Finance.Classes
             }
         }
 
-        public static object ResultRequest(string sql, Dictionary<string, object> whereClause = null)
+        public static object ResultRequest(string sql)
         {
             try
             {
@@ -236,7 +288,7 @@ namespace Finance.Classes
 
                 using (var ms = new Mysql())
                 {
-                    obj = ms.GetValue(sql, whereClause);
+                    obj = ms.GetValue(sql);
                 }
 
                 return obj == DBNull.Value ? null : obj;
@@ -246,8 +298,6 @@ namespace Finance.Classes
                 throw ex;
             }
         }
-
-        private static string ToFirstUpper(string str) => char.ToUpper(str[0]) + str.Substring(1);
 
         public static string ConvertToMySqlDate(DateTime value) => value.ToString("yyyy-MM-dd HH:mm:ss").Replace(" ", "T");
         public static string ConvertToMySqlDecimal(decimal value) => value.ToString().Replace(",", ".");

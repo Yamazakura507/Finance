@@ -116,6 +116,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="Mysql">
+	    <HintPath>..\..\..\Lib\Mysql\bin\Release\net8.0\Mysql.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Properties\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>

@@ -24,6 +24,23 @@ namespace Finance.Classes
         {
             T item = obj;
 
+            foreach (DataColumn column in dataRow.Table.Columns.Cast<DataColumn>()) 
+            {
+                PropertyInfo property = GetProperty(typeof(T), column.ColumnName);
+
+                if (property != null && dataRow[column] != DBNull.Value && dataRow[column].ToString() != "NULL")
+                {
+                    property.SetValue(item, ChangeType(dataRow[column], property.PropertyType), null);
+                }
+            };
+
+            return item;
+        }
+
+        public static T ToObjectParallel<T>(this DataRow dataRow, T obj)
+        {
+            T item = obj;
+
             Parallel.ForEach(dataRow.Table.Columns.Cast<DataColumn>(), column =>
             {
                 PropertyInfo property = GetProperty(typeof(T), column.ColumnName);

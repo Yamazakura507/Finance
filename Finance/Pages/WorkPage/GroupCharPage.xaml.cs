@@ -34,11 +34,10 @@ public partial class GroupCharPage : ContentPage
         {
             try
             {
-                ViewGroupChart = DBModel.GetCollectionModel<View.AssetsGroupChart>($@"CREATE TEMPORARY TABLE IF NOT EXISTS `GroupChart` AS (SELECT ag.* FROM `AssetsGroup` ag
+                ViewGroupChart = DBModel.GetParallelCollectionModel<View.AssetsGroupChart>($@"CREATE TEMPORARY TABLE IF NOT EXISTS `GroupChart` AS (SELECT ag.* FROM `AssetsGroup` ag
                                                                     INNER JOIN `GroupingAssets` ga ON ga.`IdGroupAssets` = ag.`Id`
                                                                     WHERE ag.`IdUser` = '{InfoAccount.IdUser}'
-                                                                    GROUP BY ag.`Id`
-                                                                    ORDER BY ag.`Name` ASC);
+                                                                    GROUP BY ag.`Id`);
                                                                   SELECT * FROM `GroupChart`;");
 
                 await MainThread.InvokeOnMainThreadAsync(() => BindableLayout.SetItemsSource(groupChartList, ViewGroupChart));
