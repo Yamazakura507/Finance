@@ -1,6 +1,7 @@
 using CommunityToolkit.Maui.Views;
 using Finance.Classes;
 using Finance.Classes.AppSettings;
+using Finance.Classes.Enums;
 using Finance.CustomControl;
 using Finance.Models;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ public partial class TimeAssetsMenu : ContentPage
         {
             try
             {
-                ViewDate = DBModel.GetCollectionModel<DateUser>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } });
+                ViewDate = DBModel.GetCollectionModel<DateUser>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },default,default, new Dictionary<string, OrderType>() { { "IdDate", OrderType.Desc } });
 
                 if (ViewDate is null || ViewDate.Count == 0) return;
 

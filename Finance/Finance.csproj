@@ -122,6 +122,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\Tabbed\ScalpUpInfoPage.xaml.cs">
+	    <DependentUpon>ScalpUpInfoPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Finance\Futures\OrderInfoPage.xaml.cs">
+	    <DependentUpon>OrderInfoPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Finance\Futures\ScalpUpInfo.xaml.cs">
+	    <DependentUpon>ScalpUpInfo.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Finance\Futures\ScalpUpListPage.xaml.cs">
+	    <DependentUpon>ScalpUpListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Finance\Futures\OrdersListPage.xaml.cs">
+	    <DependentUpon>OrdersListPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Properties\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -137,6 +152,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\Tabbed\ScalpUpInfoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\OrderInfoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\ScalpUpInfo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\ScalpUpListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\OrdersListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\GroupCharPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

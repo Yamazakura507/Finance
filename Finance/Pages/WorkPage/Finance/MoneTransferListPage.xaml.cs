@@ -31,9 +31,9 @@ public partial class MoneTransferListPage : ContentPage
         {
             try
             {
-                ViewMoneyTransfer = DBModel.GetCollectionModel<View.MoneyTransfers>($"SELECT mt.* FROM `MoneyTransfers` mt INNER JOIN `Assets` a ON a.`IdUser` = '{InfoAccount.IdUser}' AND a.`Id` = mt.`IdAssets` ORDER BY mt.`TimeTransfer` DESC LIMIT 10");
+                ViewMoneyTransfer = DBModel.GetCollectionModel<View.MoneyTransfers>($"SELECT mt.* FROM `MoneyTransfers` mt INNER JOIN `Assets` a ON a.`IdUser` = '{InfoAccount.IdUser}' AND a.`Id` = mt.`IdAssets` ORDER BY mt.`TimeTransfer` DESC LIMIT {StartParametrs.LenListPage}");
                 count = Convert.ToInt32(DBModel.ResultRequest($"SELECT COUNT(mt.`Id`) FROM `MoneyTransfers` mt INNER JOIN `Assets` a ON a.`IdUser` = '{InfoAccount.IdUser}' AND a.`Id` = mt.`IdAssets`"));
-                offset = 10;
+                offset = StartParametrs.LenListPage;
 
                 if (ViewMoneyTransfer is null || ViewMoneyTransfer.Count() == 0) throw new Exception("” вас отсутствуют денежные операции");
                 else
@@ -41,7 +41,7 @@ public partial class MoneTransferListPage : ContentPage
                     await MainThread.InvokeOnMainThreadAsync(() => 
                     { 
                         BindableLayout.SetItemsSource(mtVSL, ViewMoneyTransfer);
-                        btAddItem.IsVisible = count > 10;
+                        btAddItem.IsVisible = count > StartParametrs.LenListPage;
                     });
                 }
             }
@@ -74,8 +74,8 @@ public partial class MoneTransferListPage : ContentPage
         {
             try
             {
-                var items = DBModel.GetCollectionModel<View.MoneyTransfers>($"SELECT mt.* FROM `MoneyTransfers` mt INNER JOIN `Assets` a ON a.`IdUser` = '{InfoAccount.IdUser}' AND a.`Id` = mt.`IdAssets` ORDER BY mt.`TimeTransfer` DESC LIMIT 10 OFFSET {offset}");
-                offset += 10;
+                var items = DBModel.GetCollectionModel<View.MoneyTransfers>($"SELECT mt.* FROM `MoneyTransfers` mt INNER JOIN `Assets` a ON a.`IdUser` = '{InfoAccount.IdUser}' AND a.`Id` = mt.`IdAssets` ORDER BY mt.`TimeTransfer` DESC LIMIT {StartParametrs.LenListPage} OFFSET {offset}");
+                offset += StartParametrs.LenListPage;
 
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {

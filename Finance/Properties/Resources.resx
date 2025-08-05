@@ -281,4 +281,16 @@
   <data name="futures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\futures.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+    <data name="scalp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\scalp.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+      <data name="scalp_enterais" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\scalp_enterais.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+        <data name="bull" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\bull.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+        <data name="bear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\bear.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

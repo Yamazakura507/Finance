@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:futurePage="clr-namespace:Finance.Pages.WorkPage.Finance.Futures"
+             x:Class="Finance.Pages.Tabbed.ScalpUpInfoPage"
+             UnselectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+            SelectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+            BarTextColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}" Loaded="TabbedPage_Loaded">
+            <futurePage:ScalpUpInfo Title="Массив" IconImageSource="scalp.png" BindingContext="{Binding}"/>
+            <futurePage:OrdersListPage Title="Сделки" IconImageSource="scalp_enterais.png" BindingContext="{Binding}"/>
+            <futurePage:ScalpUpListPage Title="Активы" IconImageSource="scalp_enterais.png" BindingContext="{Binding}"/>
+</TabbedPage>

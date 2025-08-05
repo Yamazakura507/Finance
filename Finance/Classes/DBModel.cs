@@ -3,6 +3,7 @@ using MySqlConnector;
 using Finance.Classes.AppSettings;
 using System.Collections.ObjectModel;
 using System.Data;
+using Finance.Classes.Enums;
 
 namespace Finance.Classes
 {
@@ -44,7 +45,7 @@ namespace Finance.Classes
             }
         }
 
-        public static ObservableCollection<T> GetCollectionModel<T>(Dictionary<string, object>? WhereCollection = null, int Limit = 0, int Offset = 0, Dictionary<string, bool>? OrderCollection = null) where T : new()
+        public static ObservableCollection<T> GetCollectionModel<T>(Dictionary<string, object>? WhereCollection = null, int Limit = 0, int Offset = 0, Dictionary<string, OrderType>? OrderCollection = null) where T : new()
         {
             try
             {
@@ -56,7 +57,7 @@ namespace Finance.Classes
                 {
                     var sql = @$"SELECT * FROM `{typeof(T).Name}`
                     WHERE {(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"`{i.Key}` = '{i.Value}'")))} 
-                    {(OrderCollection is null ? null : $" ORDER BY {String.Join(", ", OrderCollection.Select(i => $"`{i.Key}` {(i.Value ? "asc" : "desc")}"))}")} 
+                    {(OrderCollection is null ? null : $" ORDER BY {String.Join(", ", OrderCollection.Select(i => $"`{i.Key}` {(i.Value == OrderType.Asc ? "asc" : "desc")}"))}")} 
                     {(Limit == 0 ? null : Offset == 0 ? $"LIMIT {Limit}" : $"LIMIT {Limit} OFFSET {Offset}")}";
                         var dt = ms.GetTable(sql.Trim());
 
@@ -219,7 +220,7 @@ namespace Finance.Classes
             catch (Exception ex)
             {
                 GC.Collect();
-                throw ex;
+                return default(T);
             }
         }
 
@@ -297,6 +298,13 @@ namespace Finance.Classes
             {
                 throw ex;
             }
+        }
+
+        public static int Counter<T>(Dictionary<string, object>? WhereCollection = null, bool isUserCheck = true, bool distinct = false)
+        {
+            string sql = $"SELECT COUNT({(distinct ? "DISTINCT " : null)}t.`Id`) FROM `{typeof(T).Name}` t WHERE {(isUserCheck ? $"t.`IdUser` = '{InfoAccount.IdUser}' AND " : null)}{(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"t.`{i.Key}` = '{i.Value}'")))}";
+
+            return new Mysql().GetValue<int>(sql);
         }
 
         public static string ConvertToMySqlDate(DateTime value) => value.ToString("yyyy-MM-dd HH:mm:ss").Replace(" ", "T");

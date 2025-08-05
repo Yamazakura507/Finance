@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Finance.CustomControl"
+             x:Class="Finance.Pages.WorkPage.Finance.Futures.OrderInfoPage" Loaded="ContentPage_Loaded">
+    <ScrollView HorizontalOptions="Center">
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="AsName" Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Цена входа" MaxLength="12" Text="{Binding PriceEntry}" x:Name="AsSum" Grid.Row="2" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
+            <controls:Provaider x:Name="AsSumProvider" IsVisible="False" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <ScrollView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,25,0,0">
+                <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center" x:Name="vScVSL">
+                    <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                        <Label.Style>
+                            <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
+                                        <Setter Property="TextColor" Value="LawnGreen"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
+                                        <Setter Property="TextColor" Value="OrangeRed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Text="{Binding MarginBeforeTax, StringFormat='Маржа до налога {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                        <Label.Style>
+                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="True">
+                                        <Setter Property="TextColor" Value="LawnGreen"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="False">
+                                        <Setter Property="TextColor" Value="OrangeRed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Text="{Binding Commissing, StringFormat='Комисия {0:F2}'}" TextColor="OrangeRed" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                        <Label.Style>
+                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="True">
+                                        <Setter Property="TextColor" Value="OrangeRed"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="False">
+                                        <Setter Property="TextColor" Value="LawnGreen"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

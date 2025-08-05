@@ -16,6 +16,18 @@ namespace Finance.Classes.AppSettings
             }
         }
 
+        public static int LenListPage
+        {
+            get
+            {
+                return Preferences.Get(nameof(LenListPage), 10);
+            }
+            set
+            {
+                Preferences.Set(nameof(LenListPage), value);
+            }
+        }
+
         public static void ClearParametr() => Preferences.Clear();
     }
 }

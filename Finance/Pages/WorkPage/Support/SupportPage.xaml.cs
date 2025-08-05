@@ -28,9 +28,9 @@ public partial class SupportPage : ContentPage
             try
             {
                 if (InfoAccount.IsAdmin)
-                    ViewSupport = DBModel.GetCollectionModel<View.Support>(default,default,default,new Dictionary<string, bool>() { { "DateOfAccess", false }, { "IsAnswer", false } });
+                    ViewSupport = DBModel.GetCollectionModel<View.Support>(default,default,default,new Dictionary<string, OrderType>() { { "DateOfAccess", OrderType.Desc }, { "IsAnswer", OrderType.Desc } });
                 else
-                    ViewSupport = DBModel.GetCollectionModel<View.Support>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },default,default, new Dictionary<string, bool>() { { "DateOfAccess", false }, { "IsAnswer", true } });
+                    ViewSupport = DBModel.GetCollectionModel<View.Support>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },default,default, new Dictionary<string, OrderType>() { { "DateOfAccess", OrderType.Desc }, { "IsAnswer", OrderType.Desc } });
 
                 if (ViewSupport is null || ViewSupport.Count() == 0) return;
                 else MainThread.BeginInvokeOnMainThread(() => BindableLayout.SetItemsSource(supportVSL, ViewSupport));

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             x:Class="Finance.Pages.WorkPage.Finance.Futures.ScalpUpListPage" Title="Журнал планирования" Loaded="ContentPage_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
+            <ImageButton WidthRequest="50" Source="finance_group.png" Pressed="AddPlan_Pressed" x:Name="AddScalp" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+
+        <ScrollView Grid.Row="1" Grid.Column="0" Padding="10,5,10,5">
+            <VerticalStackLayout x:Name="scalpVSL" BindableLayout.ItemsSource="{Binding ViewScalping}" Margin="0,10,0,10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsProfit}" Value="True">
+                                            <Setter Property="Shadow">
+                                                <Setter.Value>
+                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="LawnGreen"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsProfit}" Value="False">
+                                            <Setter Property="Shadow">
+                                                <Setter.Value>
+                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="OrangeRed"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="55"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70" Source="scalp.png"/>
+
+                                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        <Label Text="{Binding CountOrder, StringFormat='({0})'}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                        <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                            <Label.Style>
+                                                <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
+                                                            <Setter Property="TextColor" Value="LawnGreen"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
+                                                            <Setter Property="TextColor" Value="OrangeRed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                        <Label Text="{Binding MarginBeforeTax, StringFormat='({0:F2})'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                            <Label.Style>
+                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="True">
+                                                            <Setter Property="TextColor" Value="LawnGreen"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="False">
+                                                            <Setter Property="TextColor" Value="OrangeRed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                    </HorizontalStackLayout>
+
+                                    <Label Text="{Binding Commissing, StringFormat='Комисия {0:F2}'}" TextColor="OrangeRed" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                        <Label.Style>
+                                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="True">
+                                                        <Setter Property="TextColor" Value="OrangeRed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="False">
+                                                        <Setter Property="TextColor" Value="LawnGreen"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+
+                                    <Label Text="{Binding Description}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                    <ImageButton Source="delete_cash.png" HeightRequest="50" Pressed="DeletePlan_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                </Grid>
+                                <ContentView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Plan_Tapped"/>
+                                </ContentView.GestureRecognizers>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -10,6 +10,7 @@
 			 xmlns:pageCredit="clr-namespace:Finance.Pages.WorkPage.Credit"
 			 xmlns:pageTime="clr-namespace:Finance.Pages.WorkPage.Time"
 			 xmlns:pagePlan="clr-namespace:Finance.Pages.WorkPage.Planing"
+             xmlns:pageFutures="clr-namespace:Finance.Pages.WorkPage.Finance.Futures"
              Title="PersonalAccountMenuPage" Shell.NavBarIsVisible="False">
     <ScrollView Padding="5,50,0,0">
         <VerticalStackLayout>
@@ -29,7 +30,7 @@
                                   TargetType="{x:Type pageTab:FinancePageTapped}" />
                         <local:FlyautAccountModel Title="Фьючерсы"
                                   IconSource="futures.png"
-                                  TargetType="{x:Type pageTab:FinancePageTapped}" />
+                                  TargetType="{x:Type pageFutures:ScalpUpListPage}" />
                         <local:FlyautAccountModel Title="Время"
                                   IconSource="time.png"
                                   TargetType="{x:Type pageTime:TimeCoastList}" />

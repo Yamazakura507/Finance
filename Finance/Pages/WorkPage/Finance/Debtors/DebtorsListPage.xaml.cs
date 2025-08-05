@@ -5,11 +5,15 @@ using Finance.Classes.Enums;
 using Finance.CustomControl;
 using Finance.Pages.FlyautPage;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 
 namespace Finance.Pages.WorkPage.Finance.Debtors;
 
 public partial class DebtorsListPage : ContentPage
 {
+    int offset = 0;
+    int count = 0;
+
     public int? IdDate { get; set; } = null;
 
     ObservableCollection<View.Debtor> ViewDebtors;
@@ -31,12 +35,18 @@ public partial class DebtorsListPage : ContentPage
             try
             {
 
-                ViewDebtors = DBModel.GetCollectionModel<View.Debtor>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },default,default, new Dictionary<string, bool>() { { "IdStatusDebtor",  true} });
+                ViewDebtors = DBModel.GetCollectionModel<View.Debtor>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },StartParametrs.LenListPage,default, new Dictionary<string, OrderType>() { { "IdStatusDebtor", OrderType.Asc } });
+                count = DBModel.Counter<Models.Debtor>();
+                offset = StartParametrs.LenListPage;
 
                 if (ViewDebtors is null || ViewDebtors.Count() == 0) throw new Exception("У вас отсутствуют должники");
                 else
                 {
-                    MainThread.BeginInvokeOnMainThread(() => BindableLayout.SetItemsSource(debVSL, ViewDebtors));
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        BindableLayout.SetItemsSource(debVSL, ViewDebtors);
+                        btAddItem.IsVisible = count > StartParametrs.LenListPage;
+                    });
                 }
             }
             catch (Exception ex) 
@@ -63,5 +73,31 @@ public partial class DebtorsListPage : ContentPage
         var debtor = (View.Debtor)((ContentView)sender).BindingContext;
 
         await Navigation.PushAsync(new NavigationPage(new EditorDebtor() { BindingContext = DBModel.GetModel<Models.Debtor>(debtor.Id) }));
+    }
+
+    private void btAddItem_Pressed(object sender, EventArgs e)
+    {
+        loading = new Loading();
+
+        this.ShowPopup(loading);
+
+        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
+        {
+            try
+            {
+                var items = DBModel.GetCollectionModel<View.Debtor>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, StartParametrs.LenListPage, offset, new Dictionary<string, OrderType>() { { "IdStatusDebtor", OrderType.Asc } });
+                offset += StartParametrs.LenListPage;
+
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    for (int i = 0; i < items.Count; i++) ViewDebtors.Add(items[i]);
+                    btAddItem.IsVisible = count >= offset;
+                });
+            }
+            catch (Exception ex)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => ErrProvider.WorkProvider(ProviderType.Error, ex.Message));
+            }
+        }));
     }
 }

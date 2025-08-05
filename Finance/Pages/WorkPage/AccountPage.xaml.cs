@@ -42,7 +42,7 @@ public partial class AccountPage : ContentPage
 
                 await MainThread.InvokeOnMainThreadAsync(() => AllDiagram.IsVisible = checkDiagram);
 
-                var income = DBModel.GetCollectionModel<Revenues>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, 24, default, new Dictionary<string, bool>() { { "IdDate", false } });
+                var income = DBModel.GetCollectionModel<Revenues>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, 24, default, new Dictionary<string, OrderType>() { { "IdDate", OrderType.Desc } });
 
                 var active = income.Where(i => i.IsRevenues).Select(i => new ChartEntry((float)i.Sum)
                 {
@@ -62,7 +62,7 @@ public partial class AccountPage : ContentPage
                     Color = SKColor.Parse("#80ff0000")
                 });
 
-                var result = DBModel.GetCollectionModel<Result>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, 12, default, new Dictionary<string, bool>() { { "IdDate", false } });
+                var result = DBModel.GetCollectionModel<Result>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, 12, default, new Dictionary<string, OrderType>() { { "IdDate", OrderType.Desc } });
 
                 var profit = result.Select(i => new ChartEntry((float)i.Profit)
                 {

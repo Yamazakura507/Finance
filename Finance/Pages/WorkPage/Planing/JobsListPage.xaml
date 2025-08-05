@@ -11,7 +11,7 @@
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
             <ImageButton WidthRequest="50" Source="debtors_time.png" Pressed="AddJobs_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
-            <control:Provaider WidthRequest="50" IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
         </HorizontalStackLayout>
 
 

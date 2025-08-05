@@ -692,5 +692,41 @@ namespace Finance.Properties {
                 return ((byte[])(obj));
             }
         }
+		
+		///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] scalp {
+            get {
+                object obj = ResourceManager.GetObject("scalp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] scalp_enterais {
+            get {
+                object obj = ResourceManager.GetObject("scalp_enterais", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] bull {
+            get {
+                object obj = ResourceManager.GetObject("bull", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] bear {
+            get {
+                object obj = ResourceManager.GetObject("bear", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
