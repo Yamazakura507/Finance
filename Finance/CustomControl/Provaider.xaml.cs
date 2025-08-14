@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using Finance.Classes;
 using Finance.Classes.Enums;
 using SkiaSharp.Extended.UI.Controls;
@@ -43,7 +44,7 @@ public partial class Provaider : ContentView
     };
 
     public static readonly BindableProperty MessageProperty = BindableProperty.Create(nameof(Message), typeof(string), typeof(Provaider), string.Empty);
-
+    
     public string Message
     {
         get => (string)GetValue(Provaider.MessageProperty);

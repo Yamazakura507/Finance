@@ -2,74 +2,366 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Finance.CustomControl"
+             xmlns:class="clr-namespace:Finance.Classes"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Finance.Pages.WorkPage.Finance.Futures.OrderInfoPage" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter"/>
+        <converters:IsNumberCompressionConverter x:Key="isCommpressionConverter"/>
+        <converters:IsNumberCommpressionZeroConverter x:Key="isZeroConvert"/>
+        <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        <converters:SumConverter x:Key="sumConverter" />
+        <converters:DivConverter x:Key="divConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.Style>
+        <Style TargetType="ContentPage">
+            <Style.Triggers>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                    <Setter Property="Title" Value="{Binding ScalpingActive.Name}"/>
+                </DataTrigger>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                    <Setter Property="Title" Value="{Binding Name}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentPage.Style>
+
     <ScrollView HorizontalOptions="Center">
-        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition x:Name="colSPP"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition x:Name="colSPP"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="55"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton WidthRequest="50" Source="assets.png" Pressed="ActiveOrder_Pressed" x:Name="ActiveOrder" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+                <Label x:Name="AsNameActive" Text="{Binding ScalpingActive.Name, TargetNullValue='Нет привязки актива', FallbackValue='Нет привязки актива'}" Margin="0,0,5,0" Grid.Row="2" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+                <ImageButton WidthRequest="20" IsVisible="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}, ConverterParameter='True'}" MinimumWidthRequest="20" Source="cross.png" Pressed="ClearActiveOrder_Pressed" x:Name="ClearActiveOrder" Aspect="AspectFit" Margin="5,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            </HorizontalStackLayout>
+                
+            <controls:Provaider Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ErrProvider" IsVisible="False" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="AsName" Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
-            <controls:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Placeholder="Наименование" Text="{Binding Name}" Completed="entry_Completed" MaxLength="100" x:Name="AsName" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center">
+                    <Entry.Style>
+                        <Style TargetType="Entry">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="PlaceholderColor" Value="LightGoldenrodYellow"/>
+                                    <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                    <Setter Property="Placeholder" Value="{Binding ScalpingActive.Name, StringFormat='{0} - актив'}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource Gray200}, Dark={DynamicResource Gray500}}"/>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Placeholder" Value="Наименование"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        </Style>
+                    </Entry.Style>
+                </Entry>
+                <controls:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="2" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <Entry Placeholder="Цена входа" MaxLength="12" Text="{Binding PriceEntry}" x:Name="AsSum" Grid.Row="2" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
-            <controls:Provaider x:Name="AsSumProvider" IsVisible="False" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Text="Цена открытия" Margin="0,0,5,0" Grid.Row="3" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry Placeholder="Цена входа" MaxLength="12" Text="{Binding PriceEntry}" Completed="entry_Completed" x:Name="AsEntrySum" Grid.Row="3" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
+                <controls:Provaider x:Name="AsEntrySumProvider" IsVisible="False" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <ScrollView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,25,0,0">
-                <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center" x:Name="vScVSL">
-                    <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
-                                        <Setter Property="TextColor" Value="LawnGreen"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
-                                        <Setter Property="TextColor" Value="OrangeRed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding MarginBeforeTax, StringFormat='Маржа до налога {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="True">
-                                        <Setter Property="TextColor" Value="LawnGreen"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="False">
-                                        <Setter Property="TextColor" Value="OrangeRed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Text="{Binding Commissing, StringFormat='Комисия {0:F2}'}" TextColor="OrangeRed" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                <Style.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="True">
-                                        <Setter Property="TextColor" Value="OrangeRed"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="False">
-                                        <Setter Property="TextColor" Value="LawnGreen"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </VerticalStackLayout>
-            </ScrollView>
+                <Label Text="Цена закрытия" Margin="0,0,5,0" Grid.Row="4" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry Placeholder="Цена выхода" MaxLength="12" Text="{Binding PriceExit}" Completed="entry_Completed" x:Name="AsExitSum" Grid.Row="4" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged">
+                    <Entry.Style>
+                        <Style TargetType="Entry">
+                            <Style.Triggers>
+                                <Trigger TargetType="Entry" Property="IsFocused" Value="False">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource isCommpressionConverter}">
+                                                <Binding Path="PriceExit"/>
+                                                <Binding Path="PointZero"/>
+                                                <Binding Path="IdBeastStatus"/><!--проверка на лонг, шорт-->
+                                                <Binding Source="#072900"/><!--цвет если первый аргумент больше второго-->
+                                                <Binding Source="#2d2e00"/><!--цвет если первый аргумент равен второму-->
+                                                <Binding Source="#2b0300"/><!--цвет если первый аргумент меньше второго-->
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Entry.Style>
+                </Entry>
+                <controls:Provaider x:Name="AsExitSumProvider" IsVisible="False" Grid.Row="4" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Количество лотов" Margin="0,0,5,0" Grid.Row="5" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Количество лотов" MaxLength="4" Text="{Binding CountLot}" Completed="entry_Completed" x:Name="AsCountLotEntry" Grid.Row="5" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="count_TextChanged"/>
+            <controls:Provaider x:Name="AsEntryCountLotProvider" IsVisible="False" Grid.Row="5" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <FlexLayout Direction="Row" Margin="0,15,0,15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image WidthRequest="40" x:Name="BeastStatusImage" Margin="0,0,5,0" HorizontalOptions="End" VerticalOptions="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdBeastStatus}" Value="1">
+                                    <Setter Property="Source" Value="bull.png"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdBeastStatus}" Value="2">
+                                    <Setter Property="Source" Value="bear.png"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Picker x:Name="pickerBeastStatus" HorizontalOptions="Fill" SelectedIndexChanged="pickerBeastStatus_SelectedIndexChanged" VerticalOptions="Center" ItemDisplayBinding="{Binding Name}" Margin="0,0,0,0"/>
+            </FlexLayout>
+            <controls:Provaider IsVisible="True" x:Name="AsBeastStatusProvider" TypeProvider="Info" Message="{Binding BeastStatus.Description}" Grid.Row="6" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Маржинальность" Margin="0,0,5,0" Grid.Row="7" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Маржинальность" Text="{Binding CountInFutures}" MaxLength="100" Completed="entry_Completed" x:Name="AsCntInFut" Grid.Row="7" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="count_TextChanged">
+                <Entry.Style>
+                    <Style TargetType="Entry">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="PlaceholderColor" Value="LightGoldenrodYellow"/>
+                                <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                <Setter Property="Placeholder" Value="{Binding ScalpingActive.CountInFutures, StringFormat='{0} - актив'}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource Gray200}, Dark={DynamicResource Gray500}}"/>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Placeholder" Value="Маржинальность"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Entry.Style>
+            </Entry>
+            <controls:Provaider x:Name="AsCntInFutProvider" IsVisible="False" Grid.Row="7" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <FlexLayout Direction="Row" Margin="0,5,0,10" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image WidthRequest="40" x:Name="AsTypeComImg" Margin="0,0,5,0" HorizontalOptions="Start" VerticalOptions="Center">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                    <Setter Property="Source" Value="{Binding ScalpingActive.TypeCommission.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                    <Setter Property="Source" Value="{Binding TypeCommission.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='valutcontract.png', FallbackValue='valutcontract.png'}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Picker x:Name="pickerTypeCommission" SelectedIndexChanged="pickerTypeCommission_SelectedIndexChanged" HorizontalOptions="Fill" VerticalOptions="Center" ItemDisplayBinding="{Binding Name}" Margin="0,15,0,5">
+                    <Picker.Style>
+                        <Style TargetType="Picker">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Picker" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Picker" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="BackgroundColor" Value="{Binding BackgroundColor, Source={x:Reference pickerBeastStatus}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Picker.Style>
+                </Picker>
+            </FlexLayout>
+            <controls:Provaider IsVisible="True" x:Name="AsTypeComProvider" TypeProvider="Info" Grid.Row="8" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center">
+                <controls:Provaider.Style>
+                    <Style TargetType="controls:Provaider">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="controls:Provaider" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                <Setter Property="Message">
+                                    <Setter.Value>
+                                        <MultiBinding StringFormat="{}Коммисия биржи:&#13;Комисия открытия позиции: {0:P4}&#13;Комисия закрытия позиции: {1:P4}&#13;Общая комисия по позиции: {3:F2}({2:P4})">
+                                            <Binding Path="ScalpingActive.TypeCommission.OpenCommission"/>
+                                            <Binding Path="ScalpingActive.TypeCommission.CloseCommission"/>
+                                            <MultiBinding Converter="{StaticResource sumConverter}">
+                                                <Binding Path="ScalpingActive.TypeCommission.OpenCommission"/>
+                                                <Binding Path="ScalpingActive.TypeCommission.CloseCommission"/>
+                                            </MultiBinding>
+                                            <MultiBinding Converter="{StaticResource divConverter}">
+                                                <Binding Path="Commissing"/>
+                                                <Binding Path="Broker.Commission"/>
+                                            </MultiBinding>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger TargetType="controls:Provaider" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                <Setter Property="Message">
+                                    <Setter.Value>
+                                        <MultiBinding StringFormat="{}Коммисия биржи:&#13;Комисия открытия позиции: {0:P4}&#13;Комисия закрытия позиции: {1:P4}&#13;Общая комисия по позиции: {3:F2}({2:P4})">
+                                            <Binding Path="TypeCommission.OpenCommission"/>
+                                            <Binding Path="TypeCommission.CloseCommission"/>
+                                            <MultiBinding Converter="{StaticResource sumConverter}">
+                                                <Binding Path="TypeCommission.OpenCommission"/>
+                                                <Binding Path="TypeCommission.CloseCommission"/>
+                                            </MultiBinding>
+                                            <MultiBinding Converter="{StaticResource divConverter}">
+                                                <Binding Path="Commissing"/>
+                                                <Binding Path="Broker.Commission"/>
+                                            </MultiBinding>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:Provaider.Style>
+            </controls:Provaider>
+
+            <FlexLayout Direction="Row" Margin="0,5,0,10" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image WidthRequest="40" x:Name="BrokerImg" Source="{Binding Broker.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='broker.png'}" Margin="0,0,5,0" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Picker x:Name="pickerBroker" HorizontalOptions="Fill" SelectedIndexChanged="pickerBroker_SelectedIndexChanged" VerticalOptions="Center" ItemDisplayBinding="{Binding PikerName}" Margin="0,0,0,0"/>
+            </FlexLayout>
+            <controls:Provaider x:Name="AsBrokerProvider" IsVisible="{Binding Broker.Description, Converter={StaticResource isNullConverter}, ConverterParameter='True'}" TypeProvider="Info" Message="{Binding Broker.Description, TargetNullValue='Отсутствует описание'}" Grid.Row="9" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Гаран. обесп." Margin="0,0,5,0" Grid.Row="10" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Гаран. обесп." Text="{Binding GOPirPeace}" TextChanged="sum_TextChanged" MaxLength="100" Completed="entry_Completed" x:Name="AsGO" Grid.Row="10" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center">
+                <Entry.Style>
+                    <Style TargetType="Entry">
+                        <Style.Triggers>
+                            <MultiTrigger TargetType="Entry">
+                                <MultiTrigger.Conditions>
+                                    <BindingCondition Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False"/>
+                                    <BindingCondition Binding="{Binding IdBeastStatus}" Value="1"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="PlaceholderColor" Value="LightGoldenrodYellow"/>
+                                    <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                    <Setter Property="Placeholder" Value="{Binding ScalpingActive.GOLong, StringFormat='{0} - актив'}"/>
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+                            <MultiTrigger TargetType="Entry">
+                                <MultiTrigger.Conditions>
+                                    <BindingCondition Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False"/>
+                                    <BindingCondition Binding="{Binding IdBeastStatus}" Value="2"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="PlaceholderColor" Value="LightGoldenrodYellow"/>
+                                    <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                    <Setter Property="Placeholder" Value="{Binding ScalpingActive.GOShort, StringFormat='{0} - актив'}"/>
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource Gray200}, Dark={DynamicResource Gray500}}"/>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Placeholder" Value="Гаран. обесп."/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Entry.Style>
+            </Entry>
+            <controls:Provaider x:Name="AsGOProvider" IsVisible="False" Grid.Row="10" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Picker x:Name="pickerStatusScalp" SelectedIndexChanged="pickerStatusScalp_SelectedIndexChanged" HorizontalOptions="Fill" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" ItemDisplayBinding="{Binding Name}" Margin="0,15,0,5"/>
+            <controls:Provaider IsVisible="True" x:Name="statusScalpProvider" Message="{Binding StatusScalping.Description}" TypeProvider="Info" Grid.Row="11" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Шаг цены" Margin="0,0,5,0" Grid.Row="12" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Шаг цены" Text="{Binding PriceStep}" TextChanged="sum_TextChanged" MaxLength="100" Completed="entry_Completed" x:Name="AsPrSt" Grid.Row="12" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center">
+                <Entry.Style>
+                    <Style TargetType="Entry">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="PlaceholderColor" Value="LightGoldenrodYellow"/>
+                                <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                <Setter Property="Placeholder" Value="{Binding ScalpingActive.PriceStep, StringFormat='{0} - актив'}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource Gray200}, Dark={DynamicResource Gray500}}"/>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Placeholder" Value="Шаг цены"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Entry.Style>
+            </Entry>
+            <controls:Provaider x:Name="AsPrStProvider" IsVisible="False" Grid.Row="10" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center" x:Name="vScVSL" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="3">
+                <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,25,0,0">
+                    <Label.Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding Margin, Converter={StaticResource isZeroConvert}, ConverterParameter=True, Mode=TwoWay}" Value="1">
+                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding Margin, Converter={StaticResource isZeroConvert}, ConverterParameter=True, Mode=TwoWay}" Value="-1">
+                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Text="{Binding MarginBeforeTax, StringFormat='Маржа до налога {0:F2}'}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0">
+                    <Label.Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding MarginBeforeTax, Converter={StaticResource isZeroConvert}}" Value="1">
+                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding MarginBeforeTax, Converter={StaticResource isZeroConvert}}" Value="-1">
+                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Text="{Binding Commissing, StringFormat='Комисия {0:F2}'}" TextColor="OrangeRed" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0">
+                    <Label.Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding Commissing, Converter={StaticResource isZeroConvert}}" Value="1">
+                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding Commissing, Converter={StaticResource isZeroConvert}}" Value="0">
+                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Text="{Binding PointZero, StringFormat='Точка безубыточности {0:F2}'}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0"/>
+                <Label Style="{DynamicResource ItemLabel}" IsVisible="{Binding TaxSum, Converter={StaticResource isNullConverter}, ConverterParameter='True'}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}Налог - {0}({1} - {2:P})">
+                            <Binding Path="Tax.Name"/>
+                            <Binding Path="TaxSum"/>
+                            <Binding Path="Tax.TaxPercent"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Text="{Binding DateExit, StringFormat='Дата закрытия {0:dd MMMM yyyy}', TargetNullValue=''}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0"/>
+            </VerticalStackLayout>
         </Grid>
-    </ScrollView>
+        </ScrollView>
 </ContentPage>

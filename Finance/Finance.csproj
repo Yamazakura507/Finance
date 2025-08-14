@@ -125,8 +125,14 @@
 	  <Compile Update="Pages\Tabbed\ScalpUpInfoPage.xaml.cs">
 	    <DependentUpon>ScalpUpInfoPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\WorkPage\Finance\Futures\ScalpActiveInfoPage.xaml.cs">
+	    <DependentUpon>ScalpActiveInfoPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\WorkPage\Finance\Futures\OrderInfoPage.xaml.cs">
 	    <DependentUpon>OrderInfoPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Finance\Futures\ScalpActiveListPage.xaml.cs">
+	    <DependentUpon>ScalpActiveListPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Finance\Futures\ScalpUpInfo.xaml.cs">
 	    <DependentUpon>ScalpUpInfo.xaml</DependentUpon>
@@ -155,7 +161,13 @@
 	  <MauiXaml Update="Pages\Tabbed\ScalpUpInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\ScalpActiveInfoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\OrderInfoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\ScalpActiveListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\ScalpUpInfo.xaml">

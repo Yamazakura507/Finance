@@ -5,7 +5,6 @@ namespace Finance.Models
     public class Tax : DBModel
     {
         private int id;
-        private int idUser;
         private string name;
         private decimal taxPercent;
         private DateTime date;
@@ -65,24 +64,6 @@ namespace Finance.Models
                 date = value;
             }
         }
-
-        public int IdUser
-        {
-            get => !IsGet ? GetParametrs<int>("IdUser", this.GetType()) : idUser;
-            set
-            {
-                if (!IsGet)
-                {
-                    SetParametrs<Tax>("IdUser", value);
-                }
-
-                Users = GetModel<Users>(value);
-                idUser = value;
-            }
-        }
-
-        public Users Users { get; private set; }
-
         public override T GetParametrs<T>(string param, Type typeTb, int? Id = null)
         {
             return base.GetParametrs<T>(param, typeTb, id);

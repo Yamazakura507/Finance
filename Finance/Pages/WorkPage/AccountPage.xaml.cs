@@ -34,13 +34,13 @@ public partial class AccountPage : ContentPage
 
         this.ShowPopup(loading);
 
-        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
+        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() =>
         {
             try
             {
                 bool checkDiagram = Convert.ToBoolean(DBModel.ResultRequest($"SELECT COUNT(DISTINCT ag.`Id`) > 0 FROM `AssetsGroup` ag INNER JOIN `GroupingAssets` ga ON ga.`IdGroupAssets` = ag.`Id` WHERE ag.`IdUser` = '{InfoAccount.IdUser}'"));
 
-                await MainThread.InvokeOnMainThreadAsync(() => AllDiagram.IsVisible = checkDiagram);
+                MainThread.BeginInvokeOnMainThread(() => AllDiagram.IsVisible = checkDiagram);
 
                 var income = DBModel.GetCollectionModel<Revenues>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, 24, default, new Dictionary<string, OrderType>() { { "IdDate", OrderType.Desc } });
 
@@ -84,14 +84,14 @@ public partial class AccountPage : ContentPage
                 {
                     ValueLabel = i.ProfitForEvrifing.ToString(),
                     Label = i.DateStr,
-                    TextColor = SKColor.Parse("#80C2EEFF"),
-                    ValueLabelColor = SKColor.Parse("#80C2EEFF"),
+                    TextColor = SKColor.Parse("#fbffb3"),
+                    ValueLabelColor = SKColor.Parse(i.ProfitForEvrifing < 0 ? "#ffb8b3" : i.ProfitForEvrifing > 0 ? "#bbffb3" : "#fbffb3"),
                     Color = colors[result.IndexOf(i)]
                 });
 
                 ViewQuadrants = new ObservableCollection<Quadrants>(DBModel.GetCollectionModel<QuadrantsUser>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }).Select(i => i.Quadrants));
 
-                await MainThread.InvokeOnMainThreadAsync(() =>
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
                     chartInc.Chart = new LineChart()
                     {

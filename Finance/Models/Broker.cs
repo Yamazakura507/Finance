@@ -7,8 +7,9 @@ namespace Finance.Models
         private int id;
         private int idUser;
         private string name;
-        private decimal commissing;
+        private decimal commission;
         private string description;
+        private byte[] icon;
 
         public delegate void MessageEventHandler(string message);
         public static event MessageEventHandler ErrorEvent;
@@ -39,16 +40,16 @@ namespace Finance.Models
             }
         }
 
-        public decimal Commissing
+        public decimal Commission
         {
-            get => !IsGet ? GetParametrs<decimal>("Commissing", this.GetType()) : commissing;
+            get => !IsGet ? GetParametrs<decimal>("Commission", this.GetType()) : commission;
             set
             {
                 if (!IsGet)
                 {
-                    SetParametrs<Broker>("Commissing", value);
+                    SetParametrs<Broker>("Commission", value);
                 }
-                commissing = value;
+                commission = value;
             }
         }
 
@@ -77,6 +78,19 @@ namespace Finance.Models
 
                 Users = GetModel<Users>(value);
                 idUser = value;
+            }
+        }
+
+        public byte[] Icon
+        {
+            get => !IsGet ? GetParametrs<byte[]>("Icon", this.GetType()) : icon;
+            set
+            {
+                if (!IsGet)
+                {
+                    SetParametrs<AssetsGroup>("Icon", value is null ? DBNull.Value : value);
+                }
+                icon = value;
             }
         }
 

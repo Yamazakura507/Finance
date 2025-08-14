@@ -7,7 +7,7 @@
     <Grid>
         <skia:SKLottieView Style="{DynamicResource LottieDefault}" 
                 x:Name="loadingLottie" 
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand" IsAnimationEnabled="True"
                 MaximumHeightRequest="9999" MaximumWidthRequest="9999"/>
     </Grid>
 </toolkit:Popup>

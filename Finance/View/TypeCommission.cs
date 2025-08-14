@@ -1,9 +1,7 @@
-﻿using Finance.Classes;
-using System.Drawing;
-
+﻿
 namespace Finance.View
 {
-    public class Broker : DBModel
+    public class TypeCommission
     {
         public int Id
         {
@@ -17,19 +15,17 @@ namespace Finance.View
             set;
         }
 
-        public decimal Commission
+        public decimal OpenCommission
         {
             get;
             set;
         }
 
-        public string Description
+        public decimal CloseCommission
         {
             get;
             set;
         }
-
-        public string PikerName { get { return $"{Name}({Commission.ToString("F2")} руб.)"; } set { } }
 
         public byte[] Icon
         {

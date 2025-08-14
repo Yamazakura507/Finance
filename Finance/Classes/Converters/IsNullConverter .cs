@@ -1,17 +1,19 @@
 ﻿using System.Globalization;
 
-namespace Finance.Classes
+namespace Finance.Classes.Converters
 {
     public class IsNullConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value == null || value == DBNull.Value);
+            bool isNull = value == null || value == DBNull.Value;
+
+            return parameter is null ? isNull : !isNull;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new InvalidOperationException("IsNullConverter can only be used OneWay.");
+            throw new InvalidOperationException("IsNullConverter можно использовать только в односторонем режиме(OneWay).");
         }
     }
 }

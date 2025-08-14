@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Finance.CustomControl"
+             xmlns:class="clr-namespace:Finance.Classes"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Finance.Pages.WorkPage.Finance.Futures.ScalpActiveInfoPage" Loaded="ContentPage_Loaded" Title="{Binding Name}">
+    <ContentPage.Resources>
+        <converters:SumConverter x:Key="sumConverter" />
+        <converters:IsNullConverter x:Key="isNullConverter" />
+        <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+    </ContentPage.Resources>
+
+        <ScrollView HorizontalOptions="Center">
+            <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition x:Name="colSPP"/>
+                </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <controls:Provaider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ErrProvider" IsVisible="False" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" Completed="entry_Completed" x:Name="AsName" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="1" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="ГО покупателя" Margin="0,0,5,0" Grid.Row="2" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="ГО покупателя" MaxLength="12" Text="{Binding GOLong}" x:Name="AsGOLongSum" Grid.Row="2" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
+            <controls:Provaider x:Name="AsGOLongProvider" IsVisible="False" Grid.Row="2" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="ГО продовца" Margin="0,0,5,0" Grid.Row="3" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="ГО продовца" MaxLength="12" Text="{Binding GOShort}" x:Name="AsGOShortSum" Grid.Row="3" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
+            <controls:Provaider x:Name="AsGOShortProvider" IsVisible="False" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Шаг цены" Margin="0,0,5,0" Grid.Row="4" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Шаг цены" MaxLength="12" Text="{Binding PriceStep}" x:Name="AsPriceStepSum" Grid.Row="4" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
+            <controls:Provaider x:Name="AsPriceStepProvider" IsVisible="False" Grid.Row="4" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Маржинальность" Margin="0,0,5,0" Grid.Row="5" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Маржинальность" Text="{Binding CountInFutures}" Keyboard="Numeric" MaxLength="100" x:Name="AsCntInFut" Grid.Row="5" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="count_TextChanged"/>
+            <controls:Provaider x:Name="AsCntInFutProvider" IsVisible="False" Grid.Row="5" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <FlexLayout Direction="Row" Margin="0,5,0,10" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image x:Name="AsTypeComImg" WidthRequest="40" Margin="0,0,5,0" HorizontalOptions="Start" VerticalOptions="Center" Source="{Binding TypeCommission.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='valutcontract.png', FallbackValue='valutcontract.png'}"/>
+                <Picker x:Name="pickerTypeCommission" SelectedIndexChanged="pickerTypeCommission_SelectedIndexChanged" HorizontalOptions="Fill" VerticalOptions="Center" ItemDisplayBinding="{Binding Name}" Margin="0,15,0,5"/>
+            </FlexLayout>
+            <controls:Provaider x:Name="AsTypeComProvider" IsVisible="True" TypeProvider="Info" Grid.Row="6" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center">
+                <controls:Provaider.Style>
+                    <Style TargetType="controls:Provaider">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="controls:Provaider" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="False">
+                                <Setter Property="Message">
+                                    <MultiBinding StringFormat="{}Коммисия биржи:&#13;Комисия открытия позиции: {0:P4}&#13;Комисия закрытия позиции: {1:P4}&#13;Общая комисия по позиции: {2:P4}">
+                                        <Binding Path="TypeCommission.OpenCommission"/>
+                                        <Binding Path="TypeCommission.CloseCommission"/>
+                                        <MultiBinding Converter="{StaticResource sumConverter}">
+                                            <Binding Path="TypeCommission.OpenCommission"/>
+                                            <Binding Path="TypeCommission.CloseCommission"/>
+                                        </MultiBinding>
+                                    </MultiBinding>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:Provaider.Style>
+            </controls:Provaider>
+
+            </Grid>
+        </ScrollView>
+</ContentPage>

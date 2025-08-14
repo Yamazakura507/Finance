@@ -1,18 +1,22 @@
 ﻿using Finance.Classes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Finance.View
 {
-    public class ScalpingEntries : DBModel
+    public class ScalpingEntries : DBModel, INotifyPropertyChanged
     {
         private int idStatusScalping;
         private int idBroker;
         private int? idTypeCommission;
         private int idTax;
-        private int idScalping;
         private int? idScalpingActive;
         private decimal margin;
         private decimal marginBeforeTax;
         private decimal commission;
+        private Models.StatusScalping statusScalping;
+        private DateTime? dateExit;
+        private Color color;
 
 
         public delegate void MessageEventHandler(string message);
@@ -62,8 +66,15 @@ namespace Finance.View
 
         public DateTime? DateExit
         {
-            get;
-            set;
+            get => dateExit;
+            private set
+            {
+                if (dateExit != value)
+                {
+                    dateExit = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public int IdTax
@@ -86,6 +97,16 @@ namespace Finance.View
             }
         }
 
+        public int? IdTypeCommission
+        {
+            get => idTypeCommission;
+            set
+            {
+                TypeCommission = GetModel<TypeCommission>(value);
+                idTypeCommission = value;
+            }
+        }
+
         public int IdBeastStatus
         {
             get;
@@ -97,7 +118,7 @@ namespace Finance.View
             get => idBroker;
             set
             {
-                Broker = GetModel<Broker>(value);
+                Broker = GetModel<View.Broker>(value);
                 idBroker = value;
             }
         }
@@ -142,7 +163,7 @@ namespace Finance.View
             }
         }
 
-        public Models.TypeCommission TypeCommission { get; private set;}
+        public TypeCommission TypeCommission { get; private set;}
 
         public Tax Tax { get; private set;}
 
@@ -150,7 +171,27 @@ namespace Finance.View
 
         public ScalpingActive ScalpingActive { get; private set;}
 
-        public Models.StatusScalping StatusScalping { get; private set;}
+        public Models.StatusScalping StatusScalping
+        {
+            get => statusScalping;
+            private set
+            {
+                if (idStatusScalping != value.Id)
+                {
+                    statusScalping = value;
+                    DateExit = !IsGet ? GetParametrs<DateTime?>("DateExit", this.GetType(), Id) : dateExit;
+
+                    switch (value.Id)
+                    {
+                        case 1: ShadowColorBrush = IsProfit ? Colors.LawnGreen : Colors.OrangeRed; break;
+                        case 2: ShadowColorBrush = Colors.Yellow; break;
+                        case 3: ShadowColorBrush = Colors.Cyan; break;
+                    }
+
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public Broker Broker { get; private set;}
 
@@ -159,5 +200,26 @@ namespace Finance.View
         public bool IsProfitBeforeTax { get; set; }
         public bool IsCommission { get; set; }
 
+
+        public Color ShadowColorBrush 
+        {
+            get => color;
+            private set
+            {
+                if (color != value)
+                {
+                    color = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

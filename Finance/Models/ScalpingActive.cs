@@ -55,27 +55,27 @@ namespace Finance.Models
             }
         }
 
-        public decimal GoShort
+        public decimal GOShort
         {
-            get => !IsGet ? GetParametrs<decimal>("GoShort", this.GetType()) : goShort;
+            get => !IsGet ? GetParametrs<decimal>("GOShort", this.GetType()) : goShort;
             set
             {
                 if (!IsGet)
                 {
-                    SetParametrs<ScalpingActive>("GoShort", value);
+                    SetParametrs<ScalpingActive>("GOShort", value);
                 }
                 goShort = value;
             }
         }
 
-        public decimal GoLong
+        public decimal GOLong
         {
-            get => !IsGet ? GetParametrs<decimal>("GoLong", this.GetType()) : goLong;
+            get => !IsGet ? GetParametrs<decimal>("GOLong", this.GetType()) : goLong;
             set
             {
                 if (!IsGet)
                 {
-                    SetParametrs<ScalpingActive>("GoLong", value);
+                    SetParametrs<ScalpingActive>("GOLong", value);
                 }
                 goLong = value;
             }

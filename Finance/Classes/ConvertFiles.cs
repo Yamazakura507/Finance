@@ -1,4 +1,6 @@
-﻿using SkiaSharp;
+﻿using CommunityToolkit.Maui.Views;
+using SkiaSharp;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Reflection;
@@ -152,6 +154,41 @@ namespace Finance.Classes
             }
 
             return color;
+        }
+
+        public static string OrderString(this Enums.OrderType orderType)
+        {
+            return Enum.GetName(orderType.GetType(), orderType);
+        }
+
+        public static void PickerSelector<T,G>(this Page page,Picker picker, string parametrName) where G : new()
+        {
+            if (picker.SelectedItem is null || page.BindingContext is null) return;
+
+            CustomControl.Loading loading = new CustomControl.Loading();
+
+            page.ShowPopup(loading);
+
+            loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() =>
+                ((G)page.BindingContext).SetRefrashValue(picker.SelectedItem.RefrashValue<T, int>("Id"), parametrName)));
+
+            Refrasher.RefrasModelContext<G>(page);
+        }
+
+        public static T ContextConvert<T>(this object sender)
+        {
+            if (sender.GetType() == typeof(MenuFlyoutItem))
+            {
+                return (T)((MenuFlyoutItem)sender).Parent.Parent.BindingContext;
+            }
+            else if (sender.GetType() == typeof(SwipeItem))
+            {
+                return (T)((SwipeItem)sender).Parent.Parent.BindingContext;
+            }
+            else
+            {
+                return (T)((ImageButton)sender).BindingContext;
+            }
         }
     }
 }

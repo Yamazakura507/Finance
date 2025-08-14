@@ -1,4 +1,5 @@
 ﻿using Finance.Classes;
+using System.Drawing;
 
 namespace Finance.Models
 {
@@ -8,6 +9,7 @@ namespace Finance.Models
         private string name;
         private decimal openCommissing;
         private decimal closeCommissing;
+        private byte[] icon;
 
         public delegate void MessageEventHandler(string message);
         public static event MessageEventHandler ErrorEvent;
@@ -29,38 +31,51 @@ namespace Finance.Models
         {
             get => !IsGet ? GetParametrs<string>("Name", this.GetType()) : name;
             set
-            {       
-                    if (!IsGet)
-                    {
-                        SetParametrs<TypeCommission>("Name", value);
-                    }
-                    name = value;
+            {
+                if (!IsGet)
+                {
+                    SetParametrs<TypeCommission>("Name", value);
+                }
+                name = value;
             }
         }
 
-        public decimal OpenCommissing
+        public decimal OpenCommission
         {
-            get => !IsGet ? GetParametrs<decimal>("OpenCommissing", this.GetType()) : openCommissing;
+            get => !IsGet ? GetParametrs<decimal>("OpenCommission", this.GetType()) : openCommissing;
             set
             {
                 if (!IsGet)
                 {
-                    SetParametrs<TypeCommission>("OpenCommissing", value);
+                    SetParametrs<TypeCommission>("OpenCommission", value);
                 }
                 openCommissing = value;
             }
         }
 
-        public decimal CloseCommissing
+        public decimal CloseCommission
         {
-            get => !IsGet ? GetParametrs<decimal>("CloseCommissing", this.GetType()) : closeCommissing;
+            get => !IsGet ? GetParametrs<decimal>("CloseCommission", this.GetType()) : closeCommissing;
             set
             {
                 if (!IsGet)
                 {
-                    SetParametrs<TypeCommission>("CloseCommissing", value);
+                    SetParametrs<TypeCommission>("CloseCommission", value);
                 }
                 closeCommissing = value;
+            }
+        }
+
+        public byte[] Icon
+        {
+            get => !IsGet ? GetParametrs<byte[]>("Icon", this.GetType()) : icon;
+            set
+            {
+                if (!IsGet)
+                {
+                    SetParametrs<AssetsGroup>("Icon", value is null ? DBNull.Value : value);
+                }
+                icon = value;
             }
         }
 

@@ -728,5 +728,26 @@ namespace Finance.Properties {
                 return ((byte[])(obj));
             }
         }
+		
+		internal static byte[] cross {
+            get {
+                object obj = ResourceManager.GetObject("cross", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] broker {
+            get {
+                object obj = ResourceManager.GetObject("broker", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] copy {
+            get {
+                object obj = ResourceManager.GetObject("copy", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

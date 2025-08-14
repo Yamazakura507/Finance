@@ -86,7 +86,7 @@
                 </VerticalStackLayout>
 
             <VerticalStackLayout  Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
-                <cart:ChartView x:Name="chartResPrE" HeightRequest="250" WidthRequest="500" HorizontalOptions="Center"/>
+                <cart:ChartView x:Name="chartResPrE" HeightRequest="300" WidthRequest="500" HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

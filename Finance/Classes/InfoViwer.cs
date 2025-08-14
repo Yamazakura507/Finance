@@ -6,57 +6,81 @@ namespace Finance.Classes
 {
     public static class InfoViwer
     {
-        private static bool Answer { get; set; } = false;
-        private static string AnswerStr { get; set; } = null;
-        private static string AnswerBt { get; set; } = null;
-
-
-        async private static void Messege(Page page,string messege, string title, string cancel = "ОК", string accept = null, bool isInput = false, bool isSheet = false, string[] sheets = null, string placeholder = null, int maxLenght = -1, Keyboard keyboard = null, string initilValue = null)
+        async private static Task<object> Messege(Page page,string messege, string title, string cancel = "ОК", string accept = null, bool isInput = false, bool isSheet = false, string[] sheets = null, string placeholder = null, int maxLenght = -1, Keyboard keyboard = null, string initilValue = null)
         {
             if (isSheet) 
             {
-                AnswerBt = await page.DisplayActionSheet(title, cancel, accept, sheets);
-                return;
+                return await page.DisplayActionSheet(title, cancel, accept, sheets);
             }
 
             if (accept is null)
             {
                 await page.DisplayAlert(title, messege, cancel);
+                return null;
             }
             else 
             {
                 if (isInput)
                 {
-                    AnswerStr = await page.DisplayPromptAsync(title, messege, accept, cancel, placeholder, maxLenght, keyboard, initilValue);
+                    return await page.DisplayPromptAsync(title, messege, accept, cancel, placeholder, maxLenght, keyboard, initilValue);
                 }
                 else 
                 {
-                    Answer = await page.DisplayAlert(title, messege, accept, cancel);
+                    return await page.DisplayAlert(title, messege, accept, cancel);
                 }
             }
         }
 
-        public static void Messege(this Page page,string messege, ProviderType providerType)
+        async public static Task Messege(this Page page,string messege, ProviderType providerType)
         {
-            Messege(page, messege, providerType == ProviderType.Error ? "ОШИБКА" : providerType == ProviderType.Alert ? "ПРЕДУПРЕЖДЕНИЕ" : "СООБЩЕНИЕ");
+            await Messege(page, messege, providerType == ProviderType.Error ? "ОШИБКА" : providerType == ProviderType.Alert ? "ПРЕДУПРЕЖДЕНИЕ" : "СООБЩЕНИЕ");
         }
 
-        public static string SheetMessege(this Page page, string title, string[] sheets, bool isDelete = false)
+        async public static Task<string> SheetMessege(this Page page, string title, string[] sheets, bool isDelete = false)
         {
-            Messege(page, null, title, "ОТМЕНА", isDelete ? "УДАЛИТЬ" : null, default, true, sheets);
-            return AnswerBt;
+            return (await Messege(page, null, title, "ОТМЕНА", isDelete ? "УДАЛИТЬ" : null, default, true, sheets)).ToString();
         }
 
-        public static string InputMessege(this Page page, string messege, string placeholder = null, int maxLenght = -1, Keyboard keyboard = null, string initilValue = null)
+        async public static Task<string> InputMessege(this Page page, string messege, string placeholder = null, int maxLenght = -1, Keyboard keyboard = null, string initilValue = null)
         {
-            Messege(page, messege, "ВВОД", "ОТМЕНА", "ОК", true, default, default, placeholder, maxLenght, keyboard, initilValue);
-            return AnswerStr;
+            return (await Messege(page, messege, "ВВОД", "ОТМЕНА", "ОК", true, default, default, placeholder, maxLenght, keyboard, initilValue)).ToString();
         }
 
-        public static bool QuestionMessege(this Page page,string messege, string cancel = "ОТМЕНА", string accept = "ОК")
+        async public static Task<bool> QuestionMessege(this Page page,string messege, string cancel = "ОТМЕНА", string accept = "ОК")
         {
-            Messege(page, messege, "ВОПРОС", cancel, accept);
-            return Answer;
+            return Convert.ToBoolean(await Messege(page, messege, "ВОПРОС", cancel, accept));
+        }
+
+        /// <summary>
+        /// Диалог на выбор набора данных, обрабатывает только модель у которой есть Id
+        /// </summary>
+        /// <typeparam name="T">тип модели</typeparam>
+        /// <param name="page">страница</param>
+        /// <param name="title">подпись диалога</param>
+        /// <param name="provaider">провайдер ошибки</param>
+        /// <returns>Id выбраной модели, 0 вслучае ошибки или отмены</returns>
+        async public static Task<int> SheetPicker<T>(this Page page, string title, CustomControl.Provaider provaider, string sheetColumnName = "Name")
+        {
+            string[] sheets = DBModel.GetColumn<T, string>(sheetColumnName).ToArray();
+
+            string sheetSelect = null;
+
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                try
+                {
+                    sheetSelect = await page.SheetMessege(title, sheets);
+                }
+                catch (Exception ex)
+                {
+                    sheetSelect = null;
+                    provaider.WorkProvider(ProviderType.Error, ex.Message);
+                }
+            });
+
+            if (sheetSelect is null || sheetSelect == "ОТМЕНА") return 0;
+
+            return DBModel.Serch<T, int>("Id", new KeyValuePair<string, object>(sheetColumnName, sheetSelect));
         }
     }
 }

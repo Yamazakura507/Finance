@@ -8,7 +8,6 @@ namespace Finance.Models
         private string name;
         private string commit;
         private decimal desiredResult;
-        private int idUser;
 
         public delegate void MessageEventHandler(string message);
         public static event MessageEventHandler ErrorEvent;

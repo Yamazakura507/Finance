@@ -1,9 +1,10 @@
 ﻿//using Java.Util.Logging;
-using MySqlConnector;
 using Finance.Classes.AppSettings;
+using Finance.Classes.Enums;
+using MySqlConnector;
 using System.Collections.ObjectModel;
 using System.Data;
-using Finance.Classes.Enums;
+using System.Data.Common;
 
 namespace Finance.Classes
 {
@@ -27,7 +28,7 @@ namespace Finance.Classes
                 throw ex;
             }
         }
-        
+
         public virtual void UpdateModel<T>(Dictionary<string, object> parametrs, int? Id = null, Dictionary<string, object>? WhereCollection = null)
         {
             try
@@ -57,8 +58,8 @@ namespace Finance.Classes
                 {
                     var sql = @$"SELECT * FROM `{typeof(T).Name}`
                     WHERE {(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"`{i.Key}` = '{i.Value}'")))} 
-                    {(OrderCollection is null ? null : $" ORDER BY {String.Join(", ", OrderCollection.Select(i => $"`{i.Key}` {(i.Value == OrderType.Asc ? "asc" : "desc")}"))}")} 
-                    {(Limit == 0 ? null : Offset == 0 ? $"LIMIT {Limit}" : $"LIMIT {Limit} OFFSET {Offset}")}";
+                    {(OrderCollection is null ? null : $" ORDER BY {String.Join(", ", OrderCollection.Select(i => $"`{i.Key}` {(i.Value.OrderString())}"))}")} 
+                    {(Limit == 0 ? Offset == 0 ? null : $"OFFSET {Offset}" : Offset == 0 ? $"LIMIT {Limit}" : $"LIMIT {Limit} OFFSET {Offset}")}";
                         var dt = ms.GetTable(sql.Trim());
 
                     if (dt is null) return null;
@@ -224,11 +225,13 @@ namespace Finance.Classes
             }
         }
 
+        private static Type[] ignorePoliceType = { typeof(View.AssetsGroupChart),  typeof(View.CALL.view_future_payments_tmp)};
+
         public static void CheckPolice(bool isRead, Type typeTb, bool isAdmin = false)
         {
             try
             {
-                if (typeTb == typeof(View.AssetsGroupChart)) return;
+                if (ignorePoliceType.Contains(typeTb)) return;
 
                 if (InfoAccount.IdUser > 0)
                 {
@@ -305,6 +308,31 @@ namespace Finance.Classes
             string sql = $"SELECT COUNT({(distinct ? "DISTINCT " : null)}t.`Id`) FROM `{typeof(T).Name}` t WHERE {(isUserCheck ? $"t.`IdUser` = '{InfoAccount.IdUser}' AND " : null)}{(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"t.`{i.Key}` = '{i.Value}'")))}";
 
             return new Mysql().GetValue<int>(sql);
+        }
+
+        public static List<G> GetColumn<T,G>(string column, Dictionary<string, object>? WhereCollection = null, bool isUserCheck = false, bool distinct = false)
+        {
+            List<object> listColumn;
+
+            using (Mysql ms = new Mysql())
+            {
+                var sql = $"SELECT {(distinct ? "DISTINCT " : null)}`{column}` FROM `{typeof(T).Name}` WHERE {(isUserCheck ? $"t.`IdUser` = '{InfoAccount.IdUser}' AND " : null)}{(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"t.`{i.Key}` = '{i.Value}'")))}";
+               listColumn = ms.GetColumn($"SELECT {(distinct ? "DISTINCT " : null)}`{column}` FROM `{typeof(T).Name}` t WHERE {(isUserCheck ? $"t.`IdUser` = '{InfoAccount.IdUser}' AND " : null)}{(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"t.`{i.Key}` = '{i.Value}'")))}");
+            }
+
+            return listColumn.Cast<G>().ToList();
+        }
+
+        public static G Serch<T,G>(string returnColumn, KeyValuePair<string, object> serchPair, bool is_like = false)
+        {
+            G result;
+
+            using (Mysql ms = new Mysql())
+            {
+                result = ms.GetValue<G>($"SELECT `{returnColumn}` FROM `{typeof(T).Name}` WHERE {serchPair.Key} {(is_like ? $"LIKE '%{serchPair.Value}%'" : $"= '{serchPair.Value}'")} LIMIT 1");
+            }
+
+            return result;
         }
 
         public static string ConvertToMySqlDate(DateTime value) => value.ToString("yyyy-MM-dd HH:mm:ss").Replace(" ", "T");

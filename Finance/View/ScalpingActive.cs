@@ -1,10 +1,13 @@
 ﻿using Finance.Classes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Finance.View
 {
-    public class ScalpingActive : DBModel
+    public class ScalpingActive : INotifyPropertyChanged
     {
         private int idTypeCommission;
+        private TypeCommission typeCommission;
 
         public int Id
         {
@@ -24,13 +27,13 @@ namespace Finance.View
             set;
         }
 
-        public decimal GoShort
+        public decimal GOShort
         {
             get;
             set;
         }
 
-        public decimal GoLong
+        public decimal GOLong
         {
             get;
             set;
@@ -47,11 +50,30 @@ namespace Finance.View
             get => idTypeCommission;
             set
             {
-                TypeCommission = GetModel<Models.TypeCommission>(value);
+                TypeCommission = DBModel.GetModel<TypeCommission>(value);
                 idTypeCommission = value;
             }
         }
 
-        public Models.TypeCommission TypeCommission { get; private set;}
+        public TypeCommission TypeCommission 
+        { 
+            get => typeCommission; 
+            private set 
+            {
+                if (idTypeCommission != value.Id)
+                {
+                    typeCommission = value;
+                    OnPropertyChanged();
+                }
+            } 
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

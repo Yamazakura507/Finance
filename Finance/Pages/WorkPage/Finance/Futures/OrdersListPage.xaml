@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Finance.CustomControl"
              xmlns:class="clr-namespace:Finance.Classes"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Finance.Pages.WorkPage.Finance.Futures.OrdersListPage" Loaded="ContentPage_Loaded">
     <ContentPage.Resources>
-        <class:IsNullConverter x:Key="isNullConverter"/>
+        <converters:IsNullConverter x:Key="isNullConverter"/>
+        <converters:IsNumberExpressionConverter x:Key="isNumberExpressionConverter"/>
+        <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
     </ContentPage.Resources>
     
     <Grid>
@@ -19,207 +23,227 @@
             <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
         </HorizontalStackLayout>
 
-
         <ScrollView Grid.Row="1" Grid.Column="0" Padding="10,5,10,5">
             <VerticalStackLayout>
                 <VerticalStackLayout x:Name="debVSL" BindableLayout.ItemsSource="{Binding ViewOrders}" Margin="0,10,0,10">
-                <BindableLayout.ItemTemplate>
+                    <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="0,5,0,5" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Style.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatusScalping}" Value="3">
-                                            <Setter Property="Shadow">
-                                                <Setter.Value>
-                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="Cyan"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatusScalping}" Value="2">
-                                            <Setter Property="Shadow">
-                                                <Setter.Value>
-                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="Yellow"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </DataTrigger>
-                                        <MultiTrigger TargetType="Border">
-                                            <MultiTrigger.Conditions>
-                                                <BindingCondition Binding="{Binding IsProfit}" Value="True"/>
-                                                <BindingCondition Binding="{Binding IdStatusScalping}" Value="1"/>
-                                            </MultiTrigger.Conditions>
-                                            <Setter Property="Shadow">
-                                                <Setter.Value>
-                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="LawnGreen"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </MultiTrigger>
-                                        <MultiTrigger TargetType="Border">
-                                            <MultiTrigger.Conditions>
-                                                <BindingCondition Binding="{Binding IsProfit}" Value="False"/>
-                                                <BindingCondition Binding="{Binding IdStatusScalping}" Value="1"/>
-                                            </MultiTrigger.Conditions>
-                                            <Setter Property="Shadow">
-                                                <Setter.Value>
-                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="OrangeRed"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </MultiTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="15"/>
-                            </Border.StrokeShape>
-                            
-                            <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                            <Border Margin="0,5,0,5" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <Border.Shadow>
+                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="{Binding ShadowColorBrush}"/>
+                                </Border.Shadow>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="55"/>
-                                    </Grid.ColumnDefinitions>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="15"/>
+                                </Border.StrokeShape>
 
-                                    <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70">
-                                        <Image.Style>
-                                            <Style TargetType="Image">
-                                                <Style.Triggers>
-                                                    <DataTrigger TargetType="Image" Binding="{Binding IdBeastStatus}" Value="1">
-                                                        <Setter Property="Source" Value="bull.png"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Image" Binding="{Binding IdBeastStatus}" Value="2">
-                                                        <Setter Property="Source" Value="bear.png"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Image.Style>
-                                    </Image>
+                                <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                    <FlyoutBase.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem IconImageSource="copy.png" Text="Копировать" Clicked="CopyMenuFlyoutItem_Clicked"/>
+                                            <MenuFlyoutItem IconImageSource="future_debtors_credit.png" Text="Изменить статус сделки" Clicked="CloseOrderMenuFlyoutItem_Clicked"/>
+                                            <MenuFlyoutItem IconImageSource="delete_cash.png" Text="Удалить" Clicked="DeleteTask_Pressed"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.ContextFlyout>
 
-                                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
-                                        <Label Text="{Binding Name}" LineBreakMode="MiddleTruncation" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding Name, Converter={StaticResource isNullConverter}}" Value="True">
-                                                            <Setter Property="Text" Value="{Binding ScalpingActive.Name}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                        <Label Text="{Binding CountInFutures, StringFormat='(x{0} -'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding CountInFutures, Converter={StaticResource isNullConverter}}" Value="True">
-                                                            <Setter Property="Text" Value="{Binding ScalpingActive.CountInFutures, StringFormat='(x{0} -'}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                        <Label Text="{Binding StatusScalping.Name, StringFormat=' {0} -'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
-                                        <Label Text="{Binding CountLot, StringFormat=' {0} шт.)'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
-                                    </HorizontalStackLayout>
+                                    <SwipeView>
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem Text="Удалить"
+                                                   IconImageSource="delete_cash.png"
+                                                   BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                                                   Invoked="DeleteTask_Pressed"/>
+                                                <SwipeItem Text="Статус"
+                                                   IconImageSource="future_debtors_credit.png"
+                                                   BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                                                   Invoked="CloseOrderMenuFlyoutItem_Clicked"/>
+                                                <SwipeItem Text="Копировать"
+                                                   IconImageSource="copy.png"
+                                                   BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                   Invoked="CopyMenuFlyoutItem_Clicked"/>
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+                                        
+                                        <Grid>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Order_Tapped"/>
+                                            </Grid.GestureRecognizers>
 
-                                    <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
-                                        <Label Text="{Binding DateExit, StringFormat='{0:dd MMMM yyyy}', TargetNullValue='Активна'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                        <Label Text="{Binding Broker.Name, StringFormat='({0})', TargetNullValue='Активна'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                    </HorizontalStackLayout>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                    <HorizontalStackLayout Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
-                                        <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
-                                                            <Setter Property="TextColor" Value="LawnGreen"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
-                                                            <Setter Property="TextColor" Value="OrangeRed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                        <Label Text="{Binding MarginBeforeTax, StringFormat='({0:F2} -'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="True">
-                                                            <Setter Property="TextColor" Value="LawnGreen"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="False">
-                                                            <Setter Property="TextColor" Value="OrangeRed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                        <Label Text="{Binding Commissing, StringFormat=' {0:F2})'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="True">
-                                                            <Setter Property="TextColor" Value="OrangeRed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="False">
-                                                            <Setter Property="TextColor" Value="LawnGreen"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                    </HorizontalStackLayout>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="55"/>
+                                            </Grid.ColumnDefinitions>
 
-                                    <HorizontalStackLayout Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
-                                        <Label Text="{Binding PriceEntry, StringFormat='{0:F2} -'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
-                                                            <Setter Property="TextColor" Value="LawnGreen"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
-                                                            <Setter Property="TextColor" Value="OrangeRed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                        <Label Text="{Binding PriceExit, StringFormat=' {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0">
-                                            <Label.Style>
-                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
-                                                            <Setter Property="TextColor" Value="LawnGreen"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
-                                                            <Setter Property="TextColor" Value="OrangeRed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Label.Style>
-                                        </Label>
-                                        <Label Text="{Binding PointZero, StringFormat='(безубыток {0:F2})'}" TextColor="Cyan" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                    </HorizontalStackLayout>
+                                            <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="5" HeightRequest="70" WidthRequest="70">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IdBeastStatus}" Value="1">
+                                                                <Setter Property="Source" Value="bull.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IdBeastStatus}" Value="2">
+                                                                <Setter Property="Source" Value="bear.png"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
 
-                                    <ImageButton HeightRequest="50" Source="delete_cash.png" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" Aspect="AspectFit" Margin="0,0,10,0"/>
-                                </Grid>
-                                <ContentView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="Order_Tapped"/>
-                                </ContentView.GestureRecognizers>
-                            </ContentView>
-                        </Border>
+                                            <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start">
+                                                <Image WidthRequest="25" Source="{Binding Broker.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='broker.png'}" Margin="0,0,5,0" HorizontalOptions="End" VerticalOptions="Start"/>
+                                                <Image WidthRequest="25" Margin="0,0,5,0" HorizontalOptions="End" VerticalOptions="Start">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                                                    <Setter Property="Source" Value="{Binding TypeCommission.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='valutcontract.png', FallbackValue='valutcontract.png'}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                                                        <Setter Property="Source" Value="{Binding ScalpingActive.TypeCommission.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='valutcontract.png', FallbackValue='valutcontract.png'}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                                <Label Text="{Binding Name}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding Name, Converter={StaticResource isNullConverter}}" Value="True">
+                                                                    <Setter Property="Text" Value="{Binding ScalpingActive.Name}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                                <Label Text="{Binding CountInFutures, StringFormat='(x{0}-'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding CountInFutures, Converter={StaticResource isNullConverter}}" Value="True">
+                                                                    <Setter Property="Text" Value="{Binding ScalpingActive.CountInFutures, StringFormat='(x{0}-'}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                                <Label Text="{Binding StatusScalping.Name, StringFormat='{0}-'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
+                                                <Label Text="{Binding CountLot, StringFormat='{0} шт.)'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                                <Label Text="{Binding DateExit, StringFormat='{0:dd MMMM yyyy} (', TargetNullValue='Активна ('}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                                <Label Text="{Binding Broker.Name, StringFormat='{0}-'}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
+                                                <Label Text="{Binding TypeCommission.Name, StringFormat='{0})', TargetNullValue='Тип контракта)', FallbackValue='Тип контракта)'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                                                    <Setter Property="Text" Value="{Binding TypeCommission.Name, StringFormat='{0})', TargetNullValue='Тип контракта)', FallbackValue='Тип контракта)'}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                                                    <Setter Property="Text" Value="{Binding ScalpingActive.TypeCommission.Name, StringFormat='{0})', TargetNullValue='Тип контракта)', FallbackValue='Тип контракта)'}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                                <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
+                                                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
+                                                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                                <Label Text="{Binding MarginBeforeTax, StringFormat='({0:F2}/'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="True">
+                                                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfitBeforeTax}" Value="False">
+                                                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                                <Label Text="{Binding Commissing, StringFormat='{0:F2})'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="True">
+                                                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsCommission}" Value="False">
+                                                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                                <Label Text="{Binding PriceEntry, StringFormat='{0:F2}-'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
+                                                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
+                                                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                                <Label Text="{Binding PriceExit, StringFormat='{0:F2}'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="True">
+                                                                    <Setter Property="TextColor" Value="LawnGreen"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsProfit}" Value="False">
+                                                                    <Setter Property="TextColor" Value="OrangeRed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                                <Label Text="{Binding PointZero, StringFormat='-безуб. {0:F2}'}" TextColor="Cyan" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
+                                            </HorizontalStackLayout>
+
+                                            <ImageButton HeightRequest="50" Source="delete_cash.png" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                        </Grid>
+                                    </SwipeView>
+                                </ContentView>
+                            </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>

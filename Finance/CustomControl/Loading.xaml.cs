@@ -6,6 +6,7 @@ namespace Finance.CustomControl;
 
 public partial class Loading : Popup
 {
+    public bool IsProcess { get; private set; } = false;
     public bool IsNetworking = false;
     public BackgroundWorker LoadingBackgorundWorker = new BackgroundWorker();
 
@@ -42,11 +43,15 @@ public partial class Loading : Popup
 
     void bw_DoWork(object sender, DoWorkEventArgs e)
     {
+        IsProcess = true;
+
         loadingLottie.Source = loadingsFiles[new Random().Next(0, loadingsFiles.Length)];
         Thread thread = (Thread)e.Argument;
 
         thread.Start();
         thread.Join();
+
+        IsProcess = false;
     }
 
     void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
