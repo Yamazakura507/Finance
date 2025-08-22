@@ -1,69 +1,26 @@
-﻿using Finance.Classes;
-
+﻿
 namespace Finance.Models
 {
-    public class Scalping : DBModel
+    public class Scalping : Abstract.AbstractModelStatus<Scalping>
     {
-        private int id;
-        private string name;
-        private string description;
         private decimal margin;
         private decimal marginBeforeTax;
         private decimal commissing;
-        private int idUser;
 
-        public delegate void MessageEventHandler(string message);
-        public static event MessageEventHandler ErrorEvent;
-
-        public int Id
-        {
-            get => !IsGet ? GetParametrs<int>("Id", this.GetType()) : id;
-            set
-            {
-                if (!IsGet)
-                {
-                    SetParametrs<Scalping>("Id", value);
-                }
-                id = value;
-            }
-        }
-
-        public string Name
-        {
-            get => !IsGet ? GetParametrs<string>("Name", this.GetType()) : name;
-            set
-            {       
-                    if (!IsGet)
-                    {
-                        SetParametrs<Scalping>("Name", value);
-                    }
-                    name = value;
-            }
-        }
-
-        public string Description
-        {
-            get => !IsGet ? GetParametrs<string>("Description", this.GetType()) : description;
-            set
-            {
-                if (!IsGet)
-                {
-                    SetParametrs<Scalping>("Description", value);
-                }
-                description = value;
-            }
-        }
 
         public decimal Margin
         {
             get => !IsGet ? GetParametrs<decimal>("Margin", this.GetType()) : margin;
             set
             {
-                if (!IsGet)
+                if (margin != value)
                 {
-                    SetParametrs<Scalping>("Margin", value);
+                    if (!IsGet)
+                    {
+                        SetParametrs<Scalping>("Margin", value);
+                    }
+                    margin = value;
                 }
-                margin = value;
             }
         }
 
@@ -72,11 +29,14 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("MarginBeforeTax", this.GetType()) : marginBeforeTax;
             set
             {
-                if (!IsGet)
+                if (marginBeforeTax != value)
                 {
-                    SetParametrs<Scalping>("MarginBeforeTax", value);
+                    if (!IsGet)
+                    {
+                        SetParametrs<Scalping>("MarginBeforeTax", value);
+                    }
+                    marginBeforeTax = value;
                 }
-                marginBeforeTax = value;
             }
         }
 
@@ -85,34 +45,15 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("Commissing", this.GetType()) : commissing;
             set
             {
-                if (!IsGet)
+                if (commissing != value)
                 {
-                    SetParametrs<Scalping>("Commissing", value);
+                    if (!IsGet)
+                    {
+                        SetParametrs<Scalping>("Commissing", value);
+                    }
+                    commissing = value;
                 }
-                commissing = value;
             }
-        }
-
-        public int IdUser
-        {
-            get => !IsGet ? GetParametrs<int>("IdUser", this.GetType()) : idUser;
-            set
-            {
-                if (!IsGet)
-                {
-                    SetParametrs<Scalping>("IdUser", value);
-                }
-
-                Users = GetModel<Users>(value);
-                idUser = value;
-            }
-        }
-
-        public Users Users { get; private set; }
-
-        public override T GetParametrs<T>(string param, Type typeTb, int? Id = null)
-        {
-            return base.GetParametrs<T>(param, typeTb, id);
         }
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)
@@ -121,30 +62,6 @@ namespace Finance.Models
                 base.SetParametrs<T>(param, value, id);
             else
                 return;
-        }
-
-        public override void DeleteModel<T>(int? Id = null, Dictionary<string, object>? WhereCollection = null)
-        {
-            if (Id is null && WhereCollection is null)
-            {
-                base.DeleteModel<Scalping>(this.Id);
-            }
-            else
-            {
-                base.DeleteModel<Scalping>(Id, WhereCollection);
-            }
-        }
-
-        public override void UpdateModel<T>(Dictionary<string, object> parametrs, int? Id = null, Dictionary<string, object>? WhereCollection = null)
-        {
-            if (Id is null && WhereCollection is null)
-            {
-                base.UpdateModel<Scalping>(parametrs, this.Id);
-            }
-            else
-            {
-                base.UpdateModel<Scalping>(parametrs, Id, WhereCollection);
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-using CommunityToolkit.Maui.Views;
+п»їusing CommunityToolkit.Maui.Views;
 using Finance.Classes;
 using Finance.Classes.AppSettings;
 using Finance.Classes.Enums;
@@ -61,13 +61,13 @@ public partial class SupportPage : ContentPage
 
                 this.SupportMail(InfoAccount.User.Email, new Dictionary<string, string>() { { "@Login", InfoAccount.User.Login }, { "@SupportMessage", NewSupport.Text } });
             }
-            catch (Exception ex) { this.Messege("Не удалось отправить обращение",ProviderType.Error); }
+            catch (Exception ex) { this.Messege("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РїСЂР°РІРёС‚СЊ РѕР±СЂР°С‰РµРЅРёРµ",ProviderType.Error); }
         }));
     }
 
     private void DeleteButton_Pressed(object sender, EventArgs e)
     {
-        var support = ((View.Support)((ContentView)((Grid)((ImageButton)sender).Parent).Parent).BindingContext);
+        View.Support support = sender.ContextConvert<View.Support>();
         loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() => DBModel.GetModel<Models.Support>(support.Id).DeleteModel<Models.Support>()));
 
         ViewSupport.Remove(support);
@@ -84,5 +84,18 @@ public partial class SupportPage : ContentPage
             {
                 this.Messege(ex.Message,ProviderType.Info);
             }
+    }
+
+    private void MenuFlyoutItem_Clicked_IsRead(object sender, EventArgs e)
+    {
+        View.Support support = sender.ContextConvert<View.Support>();
+        loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(() => 
+        {
+            bool isRead = ((MenuFlyoutItem)sender).Text.Contains("вњ”");
+            DBModel.GetModel<Models.Support>(support.Id).IsReadAnswer = isRead;
+            support.IsReadAnswer = isRead;
+
+            InfoAccount.CountSupport -= isRead ? 1 : -1;
+        }));
     }
 }

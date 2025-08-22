@@ -76,7 +76,7 @@ public partial class AssetsListPage : ContentPage
     {
         var asset = (View.Assets)((ContentView)sender).BindingContext;
 
-        if (!String.IsNullOrEmpty(asset.Use)) this.Messege(asset.Use,ProviderType.Info);
+        if (!String.IsNullOrEmpty(asset.Description)) this.Messege(asset.Description, ProviderType.Info);
     }
 
     private void AndroidVisualTimeBt_Pressed(object sender, EventArgs e) => ((TimeAssetsPage)this.Parent.Parent).IsPresented = true;

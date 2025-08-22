@@ -3,25 +3,10 @@ using System.Xml.Serialization;
 
 namespace Finance.View
 {
-    public class TimeCoast
+    public class TimeCoast : Abstract.AbstractViewStatus<TimeCoast>
     {
         private int minute;
 
-        public int Id
-        {
-            get;
-            set;
-        }
-        public string Name
-        {
-            get;
-            set;
-        }
-        public string Commit
-        {
-            get;
-            set;
-        }
         public int Minute
         {
             get => minute;

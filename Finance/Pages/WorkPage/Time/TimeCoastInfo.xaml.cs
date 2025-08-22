@@ -65,7 +65,7 @@ public partial class TimeCoastInfo : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    await ms.ExecSqlAsync($"INSERT INTO `TimeCoast`(`Name`, `Commit`, `IdUser`, `Minute`) values ('{name.Text}',@Commit,'{InfoAccount.IdUser}','{(DateEnd.Date - DateStart.Date).TotalMinutes + TimeStart.Time.TotalMinutes}')", new MySqlParameter[]
+                    await ms.ExecSqlAsync($"INSERT INTO `TimeCoast`(`Name`, `Description`, `IdUser`, `Minute`) values ('{name.Text}',@Commit,'{InfoAccount.IdUser}','{(DateEnd.Date - DateStart.Date).TotalMinutes + TimeStart.Time.TotalMinutes}')", new MySqlParameter[]
                     {
                         new MySqlParameter("@Commit", string.IsNullOrEmpty(commit.Text) ? DBNull.Value : commit.Text)
                     });

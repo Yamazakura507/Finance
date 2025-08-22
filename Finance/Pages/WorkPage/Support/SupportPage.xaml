@@ -56,69 +56,96 @@
                                 <RoundRectangle CornerRadius="15"/>
                             </Border.StrokeShape>
                             <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="✔Пометить прочитаным" IsEnabled="{Binding IsAnswer}" Clicked="MenuFlyoutItem_Clicked_IsRead"/>
+                                        <MenuFlyoutItem Text="❌Пометить не прочитаным" IsEnabled="{Binding IsAnswer}" Clicked="MenuFlyoutItem_Clicked_IsRead"/>
+                                        <MenuFlyoutItem Text="🗑️Удалить" Clicked="DeleteButton_Pressed"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="60"/>
-                                        <ColumnDefinition Width="70"/>
-                                    </Grid.ColumnDefinitions>
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="🗑️Удалить"
+                                                       IconImageSource="delete_support.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                                                       Invoked="DeleteButton_Pressed"/>
+                                            <SwipeItem Text="✔Прочит." IsVisible="{Binding IsAnswer}"
+                                                       IconImageSource="support.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                       Invoked="MenuFlyoutItem_Clicked_IsRead"/>
+                                            <SwipeItem Text="❌Не прочит." IsVisible="{Binding IsAnswer}"
+                                                       IconImageSource="support.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                       Invoked="MenuFlyoutItem_Clicked_IsRead"/>        
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
 
-                                    <Image Margin="5" Grid.Column="0" Source="future_debtors_credit.png" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70">
-                                        <Image.Style>
-                                            <Style TargetType="Image">
-                                                <Style.Triggers>
-                                                    <DataTrigger TargetType="Image" Binding="{Binding IsAnswer}" Value="True">
-                                                        <Setter Property="Source" Value="support_out.png"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Image" Binding="{Binding IsAnswer}" Value="False">
-                                                        <Setter Property="Source" Value="support_in.png"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Image.Style>
-                                    </Image>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
 
-                                    <Label Text="{Binding AppealMessage, StringFormat='Сообщение - {0}'}" LineBreakMode="MiddleTruncation" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
-                                        <Label.Style>
-                                            <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
-                                                <Style.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IsAnswer}" Value="True">
-                                                        <Setter Property="MaxLines" Value="2"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IsAnswer}" Value="False">
-                                                        <Setter Property="MaxLines" Value="4"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Label.Style>
-                                    </Label>
-                                    <Label Text="{Binding AnswerMessage, StringFormat='Ответ - {0}'}" IsVisible="{Binding IsAnswer}" Style="{DynamicResource ItemLabel}" FontAttributes="Bold" LineBreakMode="MiddleTruncation" MaxLines="2" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,5,0,0"/>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="70"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Label Text="✔" IsVisible="Collapse" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalOptions="Center" HorizontalOptions="Start">
-                                        <Label.Style>
-                                            <Style TargetType="Label">
-                                                <Style.Triggers>
-                                                    <MultiTrigger TargetType="Label">
-                                                        <MultiTrigger.Conditions>
-                                                            <BindingCondition Binding="{Binding IsReadAnswer}" Value="False"/>
-                                                            <BindingCondition Binding="{Binding IsAnswer}" Value="True"/>
-                                                        </MultiTrigger.Conditions>
-                                                        <Setter Property="IsVisible" Value="True"/>
-                                                    </MultiTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Label.Style>
-                                    </Label>
-                                    
-                                    <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
-                                </Grid>
+                                        <Image Margin="5" Grid.Column="0" Source="future_debtors_credit.png" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding IsAnswer}" Value="True">
+                                                            <Setter Property="Source" Value="support_out.png"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding IsAnswer}" Value="False">
+                                                            <Setter Property="Source" Value="support_in.png"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+
+                                        <Label Text="{Binding AppealMessage, StringFormat='Сообщение - {0}'}" LineBreakMode="MiddleTruncation" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                            <Label.Style>
+                                                <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsAnswer}" Value="True">
+                                                            <Setter Property="MaxLines" Value="2"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsAnswer}" Value="False">
+                                                            <Setter Property="MaxLines" Value="4"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                        <Label Text="{Binding AnswerMessage, StringFormat='Ответ - {0}'}" IsVisible="{Binding IsAnswer}" Style="{DynamicResource ItemLabel}" FontAttributes="Bold" LineBreakMode="MiddleTruncation" MaxLines="2" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,5,0,0"/>
+
+                                        <Label Text="✔" IsVisible="Collapse" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalOptions="Center" HorizontalOptions="Start">
+                                            <Label.Style>
+                                                <Style TargetType="Label">
+                                                    <Style.Triggers>
+                                                        <MultiTrigger TargetType="Label">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding IsReadAnswer}" Value="False"/>
+                                                                <BindingCondition Binding="{Binding IsAnswer}" Value="True"/>
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter Property="IsVisible" Value="True"/>
+                                                        </MultiTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+
+                                        <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
+                                    </Grid>
+                                </SwipeView>
                                 <ContentView.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="SupportPress_Tapped"/>
                                 </ContentView.GestureRecognizers>

@@ -1,20 +1,8 @@
 ﻿
 namespace Finance.View
 {
-    public class TypeCommission
+    public class TypeCommission : Abstract.AbstractViewStatus<TypeCommission>
     {
-        public int Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
         public decimal OpenCommission
         {
             get;
@@ -32,5 +20,7 @@ namespace Finance.View
             get;
             set;
         }
+
+        private new string Description { get; set; }
     }
 }

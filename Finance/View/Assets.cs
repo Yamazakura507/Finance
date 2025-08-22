@@ -1,18 +1,10 @@
-﻿using MySqlConnector;
-using Finance.Classes;
-using Finance.Models;
-using System.Xml.Serialization;
-
+﻿
 namespace Finance.View
 {
-    public class Assets : DBModel
+    public class Assets : Abstract.AbstractViewStatus<Assets>
     {
         private int idFlowType;
-        public int Id
-        {
-            get;
-            set;
-        }
+
         public bool IsStability
         {
             get;
@@ -28,16 +20,6 @@ namespace Finance.View
             }
         }
         public decimal Sum
-        {
-            get;
-            set;
-        }
-        public string Name
-        {
-            get;
-            set;
-        }
-        public string Use
         {
             get;
             set;

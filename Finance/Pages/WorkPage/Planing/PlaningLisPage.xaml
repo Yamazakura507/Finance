@@ -47,7 +47,7 @@
 
                                     <Label Text="{Binding TargetAmount, StringFormat='Ожидаемый капитал {0:F2}'}" Grid.Row="2" Grid.Column="1" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                    <Label Text="{Binding Commit}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                    <Label Text="{Binding Description}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
                                     <ImageButton Source="delete_cash.png" HeightRequest="50" Pressed="DeletePlan_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
                                 </Grid>

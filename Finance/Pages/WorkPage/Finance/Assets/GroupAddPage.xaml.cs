@@ -76,7 +76,7 @@ public partial class GroupAddPage : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    await ms.ExecSqlAsync($"INSERT INTO `AssetsGroup`(`Name`, `Commit`, `Icon`, `IdUser`) VALUES ('{GrName.Text}',@Commit,@Icon,'{InfoAccount.IdUser}')", new MySqlParameter[] 
+                    await ms.ExecSqlAsync($"INSERT INTO `AssetsGroup`(`Name`, `Description`, `Icon`, `IdUser`) VALUES ('{GrName.Text}',@Commit,@Icon,'{InfoAccount.IdUser}')", new MySqlParameter[] 
                     {
                         new MySqlParameter("@Commit", String.IsNullOrEmpty(GrCommit.Text) ? DBNull.Value : GrCommit.Text),
                         new MySqlParameter("@Icon", isImg ? await ConverFiles.ConvertImageSourceToBytesAsync(addBtImg.Source) : DBNull.Value)

@@ -6,14 +6,12 @@ using Finance.Classes.Enums;
 using Finance.CustomControl;
 using Finance.Models;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Finance.Pages.WorkPage.Credit;
 
 public partial class CreditInfoPage : ContentPage
 {
-    ObservableCollection<CreditStatus> ViewCreditStatus;
+    ObservableCollection<View.CreditStatus> ViewCreditStatus;
     Loading loading;
 
 	public CreditInfoPage()
@@ -40,7 +38,7 @@ public partial class CreditInfoPage : ContentPage
         {
             try
             {
-                ViewCreditStatus = DBModel.GetCollectionModel<CreditStatus>();
+                ViewCreditStatus = DBModel.GetCollectionModel<View.CreditStatus>();
                 await MainThread.InvokeOnMainThreadAsync(() => pickerStatus.ItemsSource = ViewCreditStatus);
 
                 if (this.BindingContext is null)
@@ -91,7 +89,7 @@ public partial class CreditInfoPage : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    ms.ExecSql($"SELECT ins_upd_credit(@StartDate,@EndDate,@Purpoce,'{DBModel.ConvertToMySqlDecimal(percent.Text)}',@Commit,'{DBModel.ConvertToMySqlDecimal(startSum.Text)}','{((CreditStatus)pickerStatus.SelectedItem).Id}','-1',@IdUser)", new[]
+                    ms.ExecSql($"SELECT ins_upd_credit(@StartDate,@EndDate,@Purpoce,'{DBModel.ConvertToMySqlDecimal(percent.Text)}',@Commit,'{DBModel.ConvertToMySqlDecimal(startSum.Text)}','{((View.CreditStatus)pickerStatus.SelectedItem).Id}','-1',@IdUser)", new[]
                     {
                         new MySqlParameter("@StartDate", startDate.Date),
                         new MySqlParameter("@EndDate", endDate.Date),
@@ -113,7 +111,7 @@ public partial class CreditInfoPage : ContentPage
     {
         if (pickerStatus.SelectedItem is null || this.BindingContext is null) return;
 
-        ((Models.Credit)this.BindingContext).IdStatusCredit = ((CreditStatus)pickerStatus.SelectedItem).Id;
+        ((Models.Credit)this.BindingContext).IdStatusCredit = ((View.CreditStatus)pickerStatus.SelectedItem).Id;
     }
 
     private bool CheckInsCredit()

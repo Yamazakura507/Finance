@@ -7,11 +7,11 @@ using System.Data;
 
 namespace Finance.View
 {
-    public class AssetsGroupChart
+    public class AssetsGroupChart : Abstract.AbstractViewStatus<AssetsGroupChart>
     {
         private int id;
 
-        public int Id
+        public new int Id
         {
             get => id;
             set
@@ -31,12 +31,6 @@ namespace Finance.View
                 BackBord = Color.Parse(ChartData.BackgroundColor.ToString());
                 StrokeBord = Color.FromRgba(BackBord.Red*0.8, BackBord.Green*0.8, BackBord.Blue*0.8, BackBord.Alpha);
             }
-        }
-
-        public string Name
-        {
-            get;
-            set;
         }
 
         public byte[] Icon
@@ -141,5 +135,7 @@ namespace Finance.View
 
             return chart;
         }
+
+        private new string Description { get; set; }
     }
 }

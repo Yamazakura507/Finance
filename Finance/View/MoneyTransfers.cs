@@ -3,15 +3,9 @@ using Finance.Models;
 
 namespace Finance.View
 {
-    public class MoneyTransfers : DBModel
+    public class MoneyTransfers : Abstract.AbstractViewModel
     {
         private int idStatusTransfer;
-
-        public int Id
-        {
-            get;
-            set;
-        }
 
         public int IdStatusTransfer
         {

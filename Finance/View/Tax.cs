@@ -2,19 +2,8 @@
 
 namespace Finance.View
 {
-    public class Tax : DBModel
+    public class Tax : Abstract.AbstractViewStatus<Tax>
     {
-        public int Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
 
         public decimal TaxPercent
         {
@@ -27,5 +16,7 @@ namespace Finance.View
             get;
             set;
         }
+
+        private new string Description { get; set; }
     }
 }

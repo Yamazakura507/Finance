@@ -2,11 +2,95 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Finance.Pages.WorkPage.SettingsPage"
-             Title="Настройки">
-    <VerticalStackLayout MaximumWidthRequest="600" HorizontalOptions="Center" VerticalOptions="Center">
-        <Label 
-            Text="В разработке, для смены пользовательских данных обратитесь в поддержку"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:stat="clr-namespace:Finance.Classes.AppSettings"
+             Title="Настройки" Loaded="Loaded">
+    
+    <Grid Margin="20,0,20,0" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" x:Name="GL" Margin="0,0,0,0" MaximumWidthRequest="600">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPL"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Логин" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" Margin="0,0,5,0"/>
+
+            <Entry x:Name="Login" MaxLength="100" Text="{Binding Login}" Grid.Column="1" Margin="0,0,5,0" MaximumWidthRequest="400" HorizontalOptions="FillAndExpand"
+Placeholder="Логин"/>
+
+            <control:Provaider Grid.Column="2" x:Name="loginProvider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid x:Name="GP" Grid.Row="2" Margin="0,10,0,0" MaximumWidthRequest="600">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Пароль" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" Margin="0,0,5,0"/>
+
+            <Entry x:Name="Password" Text="{Binding Password}"
+IsPassword="True" Placeholder="Пароль" MaxLength="100"
+HorizontalOptions="FillAndExpand" 
+ MaximumWidthRequest="350" Margin="0,0,5,0" Grid.Column="1"/>
+
+            <skia:SKLottieView x:Name="btlPass" Margin="0,0,5,0" Grid.Column="2" HorizontalOptions="Start"
+            Style="{AppThemeBinding Light={DynamicResource HideBlack}, Dark={DynamicResource HideWhite}}">
+                <skia:SKLottieView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="HideAnimationOnTapped"/>
+                </skia:SKLottieView.GestureRecognizers>
+            </skia:SKLottieView>
+
+            <control:Provaider Grid.Column="3" x:Name="passwordProvaider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid Grid.Row="3" x:Name="GE" Margin="0,10,0,0" MaximumWidthRequest="600" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPE"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Email" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" Margin="0,0,5,0"/>
+
+            <Entry x:Name="Email" Text="{Binding Email}" Grid.Column="1" MaxLength="100" Margin="0,0,5,0" MaximumWidthRequest="400" HorizontalOptions="FillAndExpand"
+Placeholder="Email">
+                <Entry.Behaviors>
+                    <toolkit:EmailValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}"                                                
+                                                   ValidStyle="{StaticResource ValidEntryStyle}"                                                     
+                                                   Flags="ValidateOnValueChanged" >
+                    </toolkit:EmailValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+
+            <control:Provaider Grid.Column="2" x:Name="emailProvider" HorizontalOptions="Start" IsVisible="Collapse"/>
+        </Grid>
+
+        <Grid Grid.Row="4" x:Name="GLL" Margin="0,10,0,0" MaximumWidthRequest="600" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSLL"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Длина старницы списка" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" Margin="0,0,5,0"/>
+
+            <Entry x:Name="LenghtListPage" Text="{Binding Source={x:Static stat:StartParametrs.LenListPage}}" Grid.Column="1" MaxLength="100" Margin="0,0,5,0" MaximumWidthRequest="400" HorizontalOptions="FillAndExpand"
+Placeholder="Длина старницы списка" TextChanged="LenghtListPage_TextChanged"/>
+        </Grid>
+    </Grid>
 </ContentPage>

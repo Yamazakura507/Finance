@@ -23,7 +23,7 @@
             <Entry Placeholder="Ожидаемая сумма" MaxLength="12" Text="{Binding DesiredResult}" x:Name="AsSum" Grid.Row="2" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center" TextChanged="sum_TextChanged"/>
             <controls:Provaider x:Name="AsSumProvider" IsVisible="False" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <Editor Placeholder="Краткое описание" Text="{Binding Commit}" x:Name="AsCommit" Grid.Row="3" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
+            <Editor Placeholder="Краткое описание" Text="{Binding Description}" x:Name="AsCommit" Grid.Row="3" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
             <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"/>
         </Grid>
     </ScrollView>

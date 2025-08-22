@@ -1,13 +1,8 @@
 ﻿
 namespace Finance.View
 {
-    public class LoanPayments
+    public class LoanPayments : Abstract.AbstractViewModel
     {
-        public int Id
-        {
-            get;
-            set;
-        }
         public decimal Sum
         {
             get;

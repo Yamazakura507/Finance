@@ -40,7 +40,7 @@
                 <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="GrName" Grid.Row="0" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
                 <controls:Provaider x:Name="GrNameProvider" IsVisible="False" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-                <Editor Placeholder="Краткое описание" Text="{Binding Commit}" x:Name="GrCommit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
+                <Editor Placeholder="Краткое описание" Text="{Binding Description}" x:Name="GrCommit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
             </Grid>
         </ScrollView>
     </Grid>

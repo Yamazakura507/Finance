@@ -52,8 +52,8 @@
             <Label Text="Процентная ставка" Margin="0,0,5,0" Grid.Row="7" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
             <Entry Placeholder="Процентная ставка" Text="{Binding Percent, StringFormat='{0:F3}'}" Keyboard="Numeric"  x:Name="percent" MaxLength="7" VerticalOptions="Center" Grid.Row="7" Grid.Column="1" HorizontalOptions="Fill" TextChanged="percent_TextChanged"/>
 
-            <Entry Placeholder="Подпись" Text="{Binding Purpose}" Margin="0,30,0,0" x:Name="purpose" VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill" MaxLength="100"/>
-            <Editor Placeholder="Подробное описание" Text="{Binding Commit}" Margin="0,10,0,0" x:Name="commit" MinimumHeightRequest="100" VerticalOptions="Center" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
+            <Entry Placeholder="Подпись" Text="{Binding Name}" Margin="0,30,0,0" x:Name="purpose" VerticalOptions="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill" MaxLength="100"/>
+            <Editor Placeholder="Подробное описание" Text="{Binding Description}" Margin="0,10,0,0" x:Name="commit" MinimumHeightRequest="100" VerticalOptions="Center" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
 
             <HorizontalStackLayout Grid.Row="10" Grid.Column="0" Margin="10,10,0,30" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center">
                 <Label Text="{Binding MonthSum, StringFormat='Месечная выплата {0:F2}₽'}" Style="{DynamicResource BoldItemLabel}" FontSize="14"/>

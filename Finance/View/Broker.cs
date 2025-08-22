@@ -3,27 +3,9 @@ using System.Drawing;
 
 namespace Finance.View
 {
-    public class Broker : DBModel
+    public class Broker : Abstract.AbstractViewStatus<Broker>
     {
-        public int Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
         public decimal Commission
-        {
-            get;
-            set;
-        }
-
-        public string Description
         {
             get;
             set;

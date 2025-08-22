@@ -4,24 +4,12 @@ using System.Runtime.CompilerServices;
 
 namespace Finance.View
 {
-    public class ScalpingActive : INotifyPropertyChanged
+    public class ScalpingActive : Abstract.AbstractViewStatus<ScalpingActive>, INotifyPropertyChanged
     {
         private int idTypeCommission;
         private TypeCommission typeCommission;
 
-        public int Id
-        {
-            get;
-            set;
-        }
-
         public int CountInFutures
-        {
-            get;
-            set;
-        }
-
-        public string Name
         {
             get;
             set;
@@ -50,7 +38,7 @@ namespace Finance.View
             get => idTypeCommission;
             set
             {
-                TypeCommission = DBModel.GetModel<TypeCommission>(value);
+                TypeCommission = GetModel<TypeCommission>(value);
                 idTypeCommission = value;
             }
         }
@@ -75,5 +63,7 @@ namespace Finance.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private new string Description { get; set; }
     }
 }

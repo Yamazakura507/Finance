@@ -5,7 +5,6 @@ using Finance.Classes.Enums;
 using Finance.CustomControl;
 using Finance.Pages.Tabbed;
 using SkiaSharp.Extended.UI.Controls;
-using System;
 using System.Collections.ObjectModel;
 
 namespace Finance.Pages.WorkPage.Credit;

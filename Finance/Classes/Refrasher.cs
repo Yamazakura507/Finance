@@ -42,14 +42,20 @@ namespace Finance.Classes
         public static G RefrashValue<T,G>(this object obj, string fieldName)
         {
             Type type = typeof(T);
+            FieldInfo field = null;
 
-            FieldInfo field = type.GetField(fieldName.ToLower(), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            while (type != null && field is null)
+            {
+                field = type.GetField(fieldName.ToLower(), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 
-            if (field is null) field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                if (field is null) field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 
-            string baking = $"<{fieldName}>k__BackingField";
+                string baking = $"<{fieldName}>k__BackingField";
 
-            if (field is null) field = type.GetField(baking, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                if (field is null) field = type.GetField(baking, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+                type = type.BaseType;
+            }
 
             if (field is null) throw new Exception($"Не удалось обновить содержимое, отсутствует {fieldName} привязка");
 

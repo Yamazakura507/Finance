@@ -2,14 +2,14 @@
 
 namespace Finance.View
 {
-    public class Scalping : DBModel
+    public class Scalping : Abstract.AbstractViewStatus<Scalping>
     {
         private int id;
         private decimal margin;
         private decimal marginBeforeTax;
         private decimal commission;
 
-        public int Id
+        public new int Id
         {
             get => id;
             set
@@ -17,18 +17,6 @@ namespace Finance.View
                 CountOrder = Convert.ToInt32(ResultRequest($"SELECT count(*) FROM `ScalpingEntries` se WHERE se.`IdScalping` = '{value}'"));
                 id = value;
             }
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Description
-        {
-            get;
-            set;
         }
 
         public decimal Margin

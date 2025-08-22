@@ -14,10 +14,10 @@ public partial class OrderInfoPage : ContentPage
     private int? SelectedIdScalpingActive = null;
     private View.ScalpingActive ScalpActive = null;
 
-    ObservableCollection<BeastStatus> ViewBeastStatus { get; set; }
+    ObservableCollection<View.BeastStatus> ViewBeastStatus { get; set; }
     ObservableCollection<View.TypeCommission> ViewTypeCommission { get; set; }
     ObservableCollection<View.Broker> ViewBroker { get; set; }
-    ObservableCollection<StatusScalping> ViewStatusScalping { get; set; }
+    ObservableCollection<View.StatusScalping> ViewStatusScalping { get; set; }
 
     public int IdScalp { get; set; }
 
@@ -58,10 +58,10 @@ public partial class OrderInfoPage : ContentPage
         {
             try
             {
-                ViewBeastStatus = DBModel.GetCollectionModel<BeastStatus>();
+                ViewBeastStatus = DBModel.GetCollectionModel<View.BeastStatus>();
                 ViewTypeCommission = DBModel.GetCollectionModel<View.TypeCommission>();
                 ViewBroker = DBModel.GetCollectionModel<View.Broker>();
-                ViewStatusScalping = DBModel.GetCollectionModel<StatusScalping>();
+                ViewStatusScalping = DBModel.GetCollectionModel<View.StatusScalping>();
 
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -111,7 +111,7 @@ public partial class OrderInfoPage : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    ms.ExecSql($"SELECT ins_upd_scalp_entries('-1','{IdScalp}','{((BeastStatus)pickerBeastStatus.SelectedItem).Id}',@IdTyCom,'{((View.Broker)pickerBroker.SelectedItem).Id}','{((StatusScalping)pickerStatusScalp.SelectedItem).Id}',NULL,@IdScAct,@PriceEn,'{AsCountLotEntry.Text}',@PriceEx,@CntInFut,@GO,@Name,@PrStep);", new[]
+                    ms.ExecSql($"SELECT ins_upd_scalp_entries('-1','{IdScalp}','{((View.BeastStatus)pickerBeastStatus.SelectedItem).Id}',@IdTyCom,'{((View.Broker)pickerBroker.SelectedItem).Id}','{((View.StatusScalping)pickerStatusScalp.SelectedItem).Id}',NULL,@IdScAct,@PriceEn,'{AsCountLotEntry.Text}',@PriceEx,@CntInFut,@GO,@Name,@PrStep);", new[]
                     {
                         new MySqlParameter("@IdTyCom", this.SelectedIdScalpingActive is null ? ((View.TypeCommission)pickerTypeCommission.SelectedItem).Id : DBNull.Value),
                         new MySqlParameter("@IdScAct", this.SelectedIdScalpingActive is null ? -1 : this.SelectedIdScalpingActive),
@@ -180,11 +180,11 @@ public partial class OrderInfoPage : ContentPage
     {
         Picker typePicker = (Picker)sender;
 
-        this.PickerSelector<BeastStatus, Models.ScalpingEntries>(typePicker, "IdBeastStatus");
+        this.PickerSelector<View.BeastStatus, Models.ScalpingEntries>(typePicker, "IdBeastStatus");
 
         if (this.BindingContext is null)
         {
-            BeastStatus beasStatus = (BeastStatus)typePicker.SelectedItem;
+            View.BeastStatus beasStatus = (View.BeastStatus)typePicker.SelectedItem;
 
             AsBeastStatusProvider.Message = beasStatus.Description;
 
@@ -192,7 +192,7 @@ public partial class OrderInfoPage : ContentPage
 
             if (this.ScalpActive != null)
             {
-                AsGO.Placeholder = (((BeastStatus)pickerBeastStatus.SelectedItem).Id == 1 ? ScalpActive.GOLong.ToString() : ScalpActive.GOShort.ToString()) + " - актив";
+                AsGO.Placeholder = (((View.BeastStatus)pickerBeastStatus.SelectedItem).Id == 1 ? ScalpActive.GOLong.ToString() : ScalpActive.GOShort.ToString()) + " - актив";
             }
         }
     } 
@@ -236,11 +236,11 @@ public partial class OrderInfoPage : ContentPage
     {
         Picker typePicker = (Picker)sender;
 
-        this.PickerSelector<StatusScalping, Models.ScalpingEntries>(typePicker, "IdStatusScalping");
+        this.PickerSelector<View.StatusScalping, Models.ScalpingEntries>(typePicker, "IdStatusScalping");
 
         if (this.BindingContext is null)
         {
-            StatusScalping statusScalping = (StatusScalping)typePicker.SelectedItem;
+            View.StatusScalping statusScalping = (View.StatusScalping)typePicker.SelectedItem;
 
             statusScalpProvider.Message = statusScalping.Description;
         }
@@ -320,7 +320,7 @@ public partial class OrderInfoPage : ContentPage
             AsName.Placeholder = isClear ? "Наименование" : ScalpActive.Name + " - актив";
             AsCntInFut.Placeholder = isClear ? "Маржинальность" : ScalpActive.CountInFutures.ToString() + " - актив";
             AsPrSt.Placeholder = isClear ? "Шаг цены" : ScalpActive.PriceStep.ToString() + " - актив";
-            AsGO.Placeholder = isClear ? "Гаран. обесп." : (((BeastStatus)pickerBeastStatus.SelectedItem).Id == 1 ? ScalpActive.GOLong.ToString() : ScalpActive.GOShort.ToString()) + " - актив";
+            AsGO.Placeholder = isClear ? "Гаран. обесп." : (((View.BeastStatus)pickerBeastStatus.SelectedItem).Id == 1 ? ScalpActive.GOLong.ToString() : ScalpActive.GOShort.ToString()) + " - актив";
             pickerTypeCommission.SelectedIndex = isClear ? 0 : pickerTypeCommission.Items.IndexOf(ScalpActive.TypeCommission.Name);
 
             pickerTypeCommission.BackgroundColor = isClear ? pickerBeastStatus.BackgroundColor : Colors.DarkOliveGreen;

@@ -3,15 +3,13 @@ using MySqlConnector;
 
 namespace Finance.Models
 {
-    public class ScalpingEntries : DBModel
+    public class ScalpingEntries : Abstract.AbstractModelStatus<ScalpingEntries>
     {
-        private int id;
         private int idStatusScalping;
         private int idBeastStatus;
         private int idBroker;
         private int? countInFutures;
         private int countLot;
-        private string name;
         private decimal? goPirPeace;
         private decimal priceEntry;
         private decimal priceExit;
@@ -27,31 +25,18 @@ namespace Finance.Models
         private decimal? taxSum;
         private DateTime? dateExit;
 
-        public delegate void MessageEventHandler(string message);
-        public static event MessageEventHandler ErrorEvent;
-
-        public int Id
-        {
-            get => !IsGet ? GetParametrs<int>("Id", this.GetType()) : id;
-            set
-            {
-                if (!IsGet)
-                {
-                    SetParametrs<ScalpingEntries>("Id", value);
-                }
-                id = value;
-            }
-        }
-
         public int CountLot
         {
             get => !IsGet ? GetParametrs<int>("CountLot", this.GetType()) : countLot;
             set
             {
-                countLot = value;
-                if (!IsGet)
+                if (countLot != value)
                 {
-                    SetParametrs<ScalpingEntries>("CountLot", value);
+                    countLot = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("CountLot", value);
+                    }
                 }
             }
         }
@@ -61,23 +46,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int?>("CountInFutures", this.GetType()) : countInFutures;
             set
             {
-                countInFutures = value;
-                if (!IsGet)
+                if (countInFutures != value)
                 {
-                    SetParametrs<ScalpingEntries>("CountInFutures", value is null ? DBNull.Value : value);
-                }
-            }
-        }
-
-        public string Name
-        {
-            get => !IsGet ? GetParametrs<string>("Name", this.GetType()) : name;
-            set
-            {
-                name = value;
-                if (!IsGet)
-                {
-                    SetParametrs<ScalpingEntries>("Name", value is null ? DBNull.Value : value);
+                    countInFutures = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("CountInFutures", value is null ? DBNull.Value : value);
+                    }
                 }
             }
         }
@@ -87,10 +62,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal?>("GOPirPeace", this.GetType()) : goPirPeace;
             set
             {
-                goPirPeace = value;
-                if (!IsGet)
+                if (goPirPeace != value)
                 {
-                    SetParametrs<ScalpingEntries>("GOPirPeace", value is null ? DBNull.Value : value);
+                    goPirPeace = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("GOPirPeace", value is null ? DBNull.Value : value);
+                    }
                 }
             }
         }
@@ -100,10 +78,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal?>("PriceStep", this.GetType()) : priceStep;
             set
             {
-                priceStep = value;
-                if (!IsGet)
+                if (priceStep != value)
                 {
-                    SetParametrs<ScalpingEntries>("PriceStep", value is null ? DBNull.Value : value);
+                    priceStep = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("PriceStep", value is null ? DBNull.Value : value);
+                    }
                 }
             }
         }
@@ -113,10 +94,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("PriceEntry", this.GetType()) : priceEntry;
             set
             {
-                priceEntry = value;
-                if (!IsGet)
+                if (priceEntry != value)
                 {
-                    SetParametrs<ScalpingEntries>("PriceEntry", value);
+                    priceEntry = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("PriceEntry", value);
+                    }
                 }
             }
         }
@@ -126,10 +110,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("PriceExit", this.GetType()) : priceExit;
             set
             {
-                priceExit = value;
-                if (!IsGet)
+                if (priceExit != value)
                 {
-                    SetParametrs<ScalpingEntries>("PriceExit", value);
+                    priceExit = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("PriceExit", value);
+                    }
                 }
             }
         }
@@ -139,10 +126,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("PointZero", this.GetType()) : pointZero;
             set
             {
-                pointZero = value;
-                if (!IsGet)
+                if (pointZero != value)
                 {
-                    SetParametrs<ScalpingEntries>("PointZero", value);
+                    pointZero = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("PointZero", value);
+                    }
                 }
             }
         }
@@ -152,10 +142,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<DateTime?>("DateExit", this.GetType()) : dateExit;
             set
             {
-                dateExit = value;
-                if (!IsGet)
+                if (dateExit != value)
                 {
-                    SetParametrs<LoanPayments>("DateExit", value is null ? DBNull.Value : value);
+                    dateExit = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<LoanPayments>("DateExit", value is null ? DBNull.Value : value);
+                    }
                 }
             }
         }
@@ -165,13 +158,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int?>("IdTypeCommission", this.GetType()) : idTypeCommission;
             set
             {
-                idTypeCommission = value;
-                if (!IsGet)
+                if (idTypeCommission != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdTypeCommission", value is null ? DBNull.Value : value);
-                }
+                    idTypeCommission = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdTypeCommission", value is null ? DBNull.Value : value);
+                    }
 
-                TypeCommission = value is null ? null : GetModel<TypeCommission>(value);
+                    TypeCommission = value is null ? null : GetModel<TypeCommission>(value);
+                }
             }
         }
 
@@ -180,13 +176,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int>("IdTax", this.GetType()) : idTax;
             set
             {
-                idTax = value;
-                if (!IsGet)
+                if (idTax != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdTax", value);
-                }
+                    idTax = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdTax", value);
+                    }
 
-                Tax = GetModel<Tax>(value);
+                    Tax = GetModel<Tax>(value);
+                }
             }
         }
 
@@ -195,13 +194,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int>("IdStatusScalping", this.GetType()) : idStatusScalping;
             set
             {
-                idStatusScalping = value;
-                if (!IsGet)
+                if (idStatusScalping != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdStatusScalping", value);
-                }
+                    idStatusScalping = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdStatusScalping", value);
+                    }
 
-                StatusScalping = GetModel<StatusScalping>(value);
+                    StatusScalping = GetModel<StatusScalping>(value);
+                }
             }
         }
 
@@ -210,13 +212,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int>("IdBeastStatus", this.GetType()) : idBeastStatus;
             set
             {
-                idBeastStatus = value;
-                if (!IsGet)
+                if (idBeastStatus != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdBeastStatus", value);
-                }
+                    idBeastStatus = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdBeastStatus", value);
+                    }
 
-                BeastStatus = GetModel<BeastStatus>(value);
+                    BeastStatus = GetModel<BeastStatus>(value);
+                }
             }
         }
 
@@ -225,13 +230,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int>("IdBroker", this.GetType()) : idBroker;
             set
             {
-                idBroker = value;
-                if (!IsGet)
+                if (idBroker != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdBroker", value);
-                }
+                    idBroker = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdBroker", value);
+                    }
 
-                Broker = GetModel<Broker>(value);
+                    Broker = GetModel<Broker>(value);
+                }
             }
         }
 
@@ -240,13 +248,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int>("IdScalping", this.GetType()) : idScalping;
             set
             {
-                idScalping = value;
-                if (!IsGet)
+                if (idScalping != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdScalping", value);
-                }
+                    idScalping = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdScalping", value);
+                    }
 
-                Scalping = GetModel<Scalping>(value);
+                    Scalping = GetModel<Scalping>(value);
+                }
             }
         }
 
@@ -255,13 +266,16 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<int?>("IdScalpingActive", this.GetType()) : idScalpingActive;
             set
             {
-                idScalpingActive = value;
-                if (!IsGet)
+                if (idScalpingActive != value)
                 {
-                    SetParametrs<ScalpingEntries>("IdScalpingActive", value is null ? DBNull.Value : value);
-                }
+                    idScalpingActive = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("IdScalpingActive", value is null ? DBNull.Value : value);
+                    }
 
-                ScalpingActive = value is null ? null : GetModel<ScalpingActive>(value);
+                    ScalpingActive = value is null ? null : GetModel<ScalpingActive>(value);
+                }
             }
         }
 
@@ -270,10 +284,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("Margin", this.GetType()) : margin;
             set
             {
-                margin = value;
-                if (!IsGet)
+                if (margin != value)
                 {
-                    SetParametrs<ScalpingEntries>("Margin", value);
+                    margin = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("Margin", value);
+                    }
                 }
             }
         }
@@ -283,10 +300,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("MarginBeforeTax", this.GetType()) : marginBeforeTax;
             set
             {
-                marginBeforeTax = value;
-                if (!IsGet)
+                if (marginBeforeTax != value)
                 {
-                    SetParametrs<ScalpingEntries>("MarginBeforeTax", value);
+                    marginBeforeTax = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("MarginBeforeTax", value);
+                    }
                 }
             }
         }
@@ -296,10 +316,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal>("Commissing", this.GetType()) : commissing;
             set
             {
-                commissing = value;
-                if (!IsGet)
+                if (commissing != value)
                 {
-                    SetParametrs<ScalpingEntries>("Commissing", value);
+                    commissing = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("Commissing", value);
+                    }
                 }
             }
         }
@@ -309,10 +332,13 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<decimal?>("TaxSum", this.GetType()) : taxSum;
             set
             {
-                taxSum = value;
-                if (!IsGet)
+                if (taxSum != value)
                 {
-                    SetParametrs<ScalpingEntries>("TaxSum", value);
+                    taxSum = value;
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("TaxSum", value);
+                    }
                 }
             }
         }
@@ -330,11 +356,6 @@ namespace Finance.Models
         public StatusScalping StatusScalping { get; private set;}
 
         public Broker Broker { get; private set;}
-
-        public override T GetParametrs<T>(string param, Type typeTb, int? Id = null)
-        {
-            return base.GetParametrs<T>(param, typeTb, id);
-        }
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)
         {
@@ -359,28 +380,9 @@ namespace Finance.Models
             }
         }
 
-        public override void DeleteModel<T>(int? Id = null, Dictionary<string, object>? WhereCollection = null)
-        {
-            if (Id is null && WhereCollection is null)
-            {
-                base.DeleteModel<ScalpingEntries>(this.Id);
-            }
-            else
-            {
-                base.DeleteModel<ScalpingEntries>(Id, WhereCollection);
-            }
-        }
+        private new string Description { get; set; }
 
-        public override void UpdateModel<T>(Dictionary<string, object> parametrs, int? Id = null, Dictionary<string, object>? WhereCollection = null)
-        {
-            if (Id is null && WhereCollection is null)
-            {
-                base.UpdateModel<ScalpingEntries>(parametrs, this.Id);
-            }
-            else
-            {
-                base.UpdateModel<ScalpingEntries>(parametrs, Id, WhereCollection);
-            }
-        }
+        private new int? IdUser { get; set; }
+        private new Users User { get; set; }
     }
 }

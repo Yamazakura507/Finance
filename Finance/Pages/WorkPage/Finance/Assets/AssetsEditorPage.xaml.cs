@@ -7,7 +7,6 @@ using Finance.CustomControl;
 using Finance.Models;
 using SkiaSharp.Extended.UI.Controls;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Finance.Pages.FlyautPage;
 
 namespace Finance.Pages.WorkPage.Finance.Assets;

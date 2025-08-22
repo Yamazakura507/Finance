@@ -2,26 +2,8 @@
 
 namespace Finance.View
 {
-    public class Jobs : DBModel
+    public class Jobs : Abstract.AbstractViewStatus<Jobs>
     {
-        public int Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Commit
-        {
-            get;
-            set;
-        }
-
         public decimal SumResult
         {
             get;

@@ -11,7 +11,7 @@ namespace Finance.Pages.WorkPage.Finance.Debtors;
 
 public partial class EditorDebtor : ContentPage
 {
-    ObservableCollection<DebtorStatus> ViewDebtorStatus;
+    ObservableCollection<View.DebtorStatus> ViewDebtorStatus;
     Loading loading { get; set; }
 
     public EditorDebtor()
@@ -45,7 +45,7 @@ public partial class EditorDebtor : ContentPage
         {
             try
             {
-                ViewDebtorStatus = DBModel.GetCollectionModel<DebtorStatus>();
+                ViewDebtorStatus = DBModel.GetCollectionModel<View.DebtorStatus>();
 
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -66,7 +66,7 @@ public partial class EditorDebtor : ContentPage
     {
         if (StatusPicker.SelectedItem is null || this.BindingContext is null) return;
 
-        ((Models.Debtor)this.BindingContext).IdStatusDebtor = ((DebtorStatus)StatusPicker.SelectedItem).Id;
+        ((Models.Debtor)this.BindingContext).IdStatusDebtor = ((View.DebtorStatus)StatusPicker.SelectedItem).Id;
     }
 
     private void AddAssets_Clicked(object? sender, EventArgs e)
@@ -83,7 +83,7 @@ public partial class EditorDebtor : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    ms.ExecSql($"SELECT ins_upd_debtor(-1,'{AsName.Text}',@Sum,'{((DebtorStatus)StatusPicker.SelectedItem).Id}',@Commit,'{InfoAccount.IdUser}')", new[]
+                    ms.ExecSql($"SELECT ins_upd_debtor(-1,'{AsName.Text}',@Sum,'{((View.DebtorStatus)StatusPicker.SelectedItem).Id}',@Commit,'{InfoAccount.IdUser}')", new[]
                     {
                         new MySqlParameter("@Commit", String.IsNullOrEmpty(AsCommit.Text) ? DBNull.Value : AsCommit.Text),
                         new MySqlParameter("@Sum", AsSum.Text)

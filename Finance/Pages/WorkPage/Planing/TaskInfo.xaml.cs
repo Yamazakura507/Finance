@@ -49,7 +49,7 @@ public partial class TaskInfo : ContentPage
             {
                 using (var ms = new Mysql())
                 {
-                    ms.ExecSql(@$"INSERT INTO `Tasks`(`Name`, `Commit`, `DesiredResult`) VALUES ('{AsName.Text}',@Commit,@Sum);
+                    ms.ExecSql(@$"INSERT INTO `Tasks`(`Name`, `Description`, `DesiredResult`) VALUES ('{AsName.Text}',@Commit,@Sum);
                                   INSERT INTO `PlanningTasks`(`IdPlan`, `IdTask`) VALUES ('{IdPlan}',LAST_INSERT_ID())", new[]
                     {
                         new MySqlParameter("@Commit", String.IsNullOrEmpty(AsCommit.Text) ? DBNull.Value : AsCommit.Text),

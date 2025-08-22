@@ -1,47 +1,35 @@
-﻿using Finance.Classes;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Finance.Models
 {
-    public class Users : DBModel
+    public class Users : Abstract.AbstractModel<Users>, INotifyPropertyChanged
     {
-        private int id;
         private string email;
         private string login;
         private string password;
         private bool isEducation;
 
-        public delegate void MessageEventHandler(string message);
-        public static event MessageEventHandler ErrorEvent;
-
-        public int Id
-        {
-            get => !IsGet ? GetParametrs<int>("Id", this.GetType()) : id;
-            set 
-            {
-                if (!IsGet)
-                {
-                    SetParametrs<Users>("Id", value);
-                }
-                id = value;
-            } 
-        }
 
         public string Login
         {
             get => !IsGet ? GetParametrs<string>("Login", this.GetType()) : login;
             set
             {
-                if (!IsGet)
+                if (login != value)
                 {
-                    SetParametrs<Users>("Login", value);
+                    if (login != value)
+                    {
+                        if (!IsGet)
+                        {
+                            SetParametrs<Users>("Login", value);
+                        }
+
+                        login = value;
+                        OnPropertyChanged();
+                    }
                 }
-                login = value;
             }
         }
 
@@ -50,11 +38,14 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<string>("Password", this.GetType()) : password;
             set
             {
-                if (!IsGet)
+                if (password != value)
                 {
-                    SetParametrs<Users>("Password", value);
+                    if (!IsGet)
+                    {
+                        SetParametrs<Users>("Password", value);
+                    }
+                    password = value;
                 }
-                password = value;
             }
         }
 
@@ -63,11 +54,14 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<string>("Email", this.GetType()) : email;
             set
             {
-                if (!IsGet)
+                if (email != value)
                 {
-                    SetParametrs<Users>("Email", String.IsNullOrEmpty(value) ? DBNull.Value : value);
+                    if (!IsGet)
+                    {
+                        SetParametrs<Users>("Email", String.IsNullOrEmpty(value) ? DBNull.Value : value);
+                    }
+                    email = value;
                 }
-                email = value;
             }
         }
 
@@ -76,46 +70,25 @@ namespace Finance.Models
             get => !IsGet ? GetParametrs<bool>("IsEducation", this.GetType()) : isEducation;
             set
             {
-                if (!IsGet)
+                if (isEducation != value)
                 {
-                    SetParametrs<Users>("IsEducation",value);
+                    if (!IsGet)
+                    {
+                        SetParametrs<Users>("IsEducation", value);
+                    }
+                    isEducation = value;
                 }
-                isEducation = value;
             }
         }
 
-        public override T GetParametrs<T>(string param, Type typeTb, int? Id = null)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            return base.GetParametrs<T>(param, typeTb, id);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public override void SetParametrs<T>(string param, object value, int? Id = null)
-        {
-            base.SetParametrs<T>(param, value, id);
-        }
-
-        public override void DeleteModel<T>(int? Id = null, Dictionary<string, object>? WhereCollection = null)
-        {
-            if (Id is null && WhereCollection is null)
-            {
-                base.DeleteModel<Users>(this.Id);
-            }
-            else
-            {
-                base.DeleteModel<Users>(Id, WhereCollection);
-            }
-        }
-
-        public override void UpdateModel<T>(Dictionary<string, object> parametrs, int? Id = null, Dictionary<string, object>? WhereCollection = null)
-        {
-            if (Id is null && WhereCollection is null)
-            {
-                base.UpdateModel<Users>(parametrs, this.Id);
-            }
-            else
-            {
-                base.UpdateModel<Users>(parametrs, Id, WhereCollection);
-            }
-        }
+        private new int? IdUser { get; set; }
+        private new Users User { get; set; }
     }
 }

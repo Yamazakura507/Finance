@@ -132,7 +132,7 @@ public partial class AccountPage : ContentPage
         }));
     }
 
-    private void Quadrants_Tapped(object sender, TappedEventArgs e) => this.Messege(((Quadrants)((ContentView)sender).BindingContext).Commit, ProviderType.Info);
+    private void Quadrants_Tapped(object sender, TappedEventArgs e) => this.Messege(((Quadrants)((ContentView)sender).BindingContext).Description, ProviderType.Info);
 
     private void SupportBt_Pressed(object sender, EventArgs e) => this.Messege(((Quadrants)((ImageButton)sender).BindingContext).DownLimit, ProviderType.Info);
 

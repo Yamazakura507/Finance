@@ -46,7 +46,7 @@ public partial class PlanInfo : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    ms.ExecSql($"INSERT INTO `PlanningJournal`(`Name`, `Commit`, `TargetAmount`, `IdUser`) VALUES ('{AsName.Text}',@Commit,@Sum,'{InfoAccount.IdUser}')", new[]
+                    ms.ExecSql($"INSERT INTO `PlanningJournal`(`Name`, `Description`, `TargetAmount`, `IdUser`) VALUES ('{AsName.Text}',@Commit,@Sum,'{InfoAccount.IdUser}')", new[]
                     {
                         new MySqlParameter("@Commit", String.IsNullOrEmpty(AsCommit.Text) ? DBNull.Value : AsCommit.Text),
                         new MySqlParameter("@Sum", AsSum.Text)

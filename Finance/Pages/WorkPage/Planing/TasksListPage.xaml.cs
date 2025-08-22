@@ -1,6 +1,5 @@
 using CommunityToolkit.Maui.Views;
 using Finance.Classes;
-using Finance.Classes.AppSettings;
 using Finance.Classes.Enums;
 using Finance.CustomControl;
 using Finance.Pages.Tabbed;

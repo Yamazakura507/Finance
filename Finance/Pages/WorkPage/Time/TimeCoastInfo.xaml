@@ -31,7 +31,7 @@
             <Entry Grid.Row="3" Text="{Binding Name}" MaxLength="100" Placeholder="Подпись" Margin="10,5,10,0" x:Name="name"/>
             <control:Provaider Grid.Row="3" Grid.Column="1" VerticalOptions="Center" IsVisible="Collapse" x:Name="nameProvider" HorizontalOptions="Start"/>
 
-            <Editor Grid.Row="4" Text="{Binding Commit}" Placeholder="Подпись" Margin="10,5,10,0" x:Name="commit" MinimumHeightRequest="100"/>
+            <Editor Grid.Row="4" Text="{Binding Description}" Placeholder="Подпись" Margin="10,5,10,0" x:Name="commit" MinimumHeightRequest="100"/>
         </Grid>
     </ScrollView>
 </ContentPage>

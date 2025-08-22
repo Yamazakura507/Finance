@@ -40,7 +40,7 @@ public partial class AssetsGroupPage : ContentPage
                             INNER JOIN `Assets` a ON (a.`Id`,a.`IdUser`) = (ga.`IdAssets`,ag.`IdUser`) OR (a.`Id`,a.`IdUser`) = (ga.`IdAssets`,'{0}')
                             INNER JOIN `DateJournal` d ON d.`Id` = ga.`IdDate` AND d.Year = YEAR(NOW()) AND d.Month = MONTH(NOW())
                             WHERE ag.`IdUser` = '{0}' OR ag.`IdUser` is NULL
-                            GROUP BY ag.`Id`,ag.`Name`,ag.`Commit`,ag.`Icon`,ag.`IdUser`;", InfoAccount.IdUser);
+                            GROUP BY ag.`Id`,ag.`Name`,ag.`Description`,ag.`Icon`,ag.`IdUser`;", InfoAccount.IdUser);
 
                     ViewAssetsGroup = DBModel.GetCollectionModel<View.AssetsGroup>(sql);
 

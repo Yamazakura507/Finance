@@ -42,7 +42,7 @@
 
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource BoldItemLabel}"/>
                                     <Label Grid.Row="1" Grid.Column="1" Text="{Binding Time}" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource BoldItemLabel}" FontSize="15"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Commit}" MaxLines="2" LineBreakMode="MiddleTruncation" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource ItemLabel}"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Description}" MaxLines="2" LineBreakMode="MiddleTruncation" VerticalOptions="Center" HorizontalOptions="Start" Style="{DynamicResource ItemLabel}"/>
 
                                     <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.RowSpan="3" Source="delete_time.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
                                 </Grid>

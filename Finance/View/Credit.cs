@@ -3,26 +3,16 @@ using Finance.Classes;
 
 namespace Finance.View
 {
-    public class Credit
+    public class Credit : Abstract.AbstractViewStatus<Credit>
     {
         private int idStatusCredit {  get; set; }
 
-        public int Id
-        {
-            get;
-            set;
-        }
         public decimal Sum
         {
             get;
             set;
         }
         public decimal Percent
-        {
-            get;
-            set;
-        }
-        public string Purpose
         {
             get;
             set;
@@ -37,7 +27,7 @@ namespace Finance.View
             get => idStatusCredit;
             set
             {
-                CreditStatus = DBModel.GetModel<Models.CreditStatus>(value);
+                CreditStatus = GetModel<Models.CreditStatus>(value);
                 idStatusCredit = value;
             }
         }
@@ -56,5 +46,7 @@ namespace Finance.View
         {
             get; set;
         }
+
+        private new string Description { get; set; }
     }
 }

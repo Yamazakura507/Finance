@@ -1,10 +1,9 @@
-﻿using Finance.Classes;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Finance.View
 {
-    public class ScalpingEntries : DBModel, INotifyPropertyChanged
+    public class ScalpingEntries : Abstract.AbstractViewStatus<ScalpingEntries>, INotifyPropertyChanged
     {
         private int idStatusScalping;
         private int idBroker;
@@ -14,19 +13,9 @@ namespace Finance.View
         private decimal margin;
         private decimal marginBeforeTax;
         private decimal commission;
-        private Models.StatusScalping statusScalping;
+        private StatusScalping statusScalping;
         private DateTime? dateExit;
         private Color color;
-
-
-        public delegate void MessageEventHandler(string message);
-        public static event MessageEventHandler ErrorEvent;
-
-        public int Id
-        {
-            get;
-            set;
-        }
 
         public int CountLot
         {
@@ -35,12 +24,6 @@ namespace Finance.View
         }
 
         public int? CountInFutures
-        {
-            get;
-            set;
-        }
-
-        public string Name
         {
             get;
             set;
@@ -92,7 +75,7 @@ namespace Finance.View
             get => idStatusScalping;
             set
             {
-                StatusScalping = GetModel<Models.StatusScalping>(value);
+                StatusScalping = GetModel<StatusScalping>(value);
                 idStatusScalping = value;
             }
         }
@@ -171,7 +154,7 @@ namespace Finance.View
 
         public ScalpingActive ScalpingActive { get; private set;}
 
-        public Models.StatusScalping StatusScalping
+        public StatusScalping StatusScalping
         {
             get => statusScalping;
             private set
@@ -221,5 +204,7 @@ namespace Finance.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private new string Description { get; set; }
     }
 }

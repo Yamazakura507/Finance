@@ -60,7 +60,7 @@
                                     </Image>
 
                                     <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
-                                        <Label Text="{Binding Purpose}" Style="{DynamicResource BoldItemLabel}"/>
+                                        <Label Text="{Binding Name}" Style="{DynamicResource BoldItemLabel}"/>
                                         <Label Text="{Binding CreditStatus.Name, StringFormat='({0})'}" Style="{DynamicResource BoldItemLabel}"/>
                                     </HorizontalStackLayout>
 

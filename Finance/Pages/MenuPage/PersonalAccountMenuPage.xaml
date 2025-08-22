@@ -104,11 +104,11 @@
                                                 <Setter Property="Text" Value="{Binding Source={x:Static stat:InfoAccount.User},Path=Login, StringFormat='Акаунт {0}'}"/>
                                             </DataTrigger>
                                             <DataTrigger TargetType="Label" Binding="{Binding Title}" Value="Вопросы">
-                                                <Setter Property="Text" Value="{Binding Source={x:Static stat:InfoAccount.CountSupport}, StringFormat='Вопросы({0})'}"/>
+                                                <Setter Property="Text" Value="{Binding Path=ObjectNotify, Source={x:Static stat:InfoAccount.CountSupportNotify}, StringFormat='Вопросы({0})'}"/>
                                             </DataTrigger>
                                             <MultiTrigger TargetType="Label">
                                                 <MultiTrigger.Conditions>
-                                                    <BindingCondition Binding="{Binding Source={x:Static stat:InfoAccount.CountSupport}}" Value="0"/>
+                                                    <BindingCondition Binding="{Binding Path=ObjectNotify, Source={x:Static stat:InfoAccount.CountSupportNotify}}" Value="0"/>
                                                     <BindingCondition Binding="{Binding Title}" Value="Вопросы"/>
                                                 </MultiTrigger.Conditions>
                                                 <Setter Property="Text" Value="{Binding Source={x:Static stat:InfoAccount.User},Path=Login, StringFormat='Вопросы'}"/>

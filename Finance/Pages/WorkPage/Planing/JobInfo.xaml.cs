@@ -53,7 +53,7 @@ public partial class JobInfo : ContentPage
             {
                 using (var ms = new Mysql())
                 {
-                    ms.ExecSql(@$"INSERT INTO `Jobs`(`Name`, `Commit`, `SumResult`, `IsDone`) VALUES ('{AsName.Text}',@Commit,@Sum,@IsDone);
+                    ms.ExecSql(@$"INSERT INTO `Jobs`(`Name`, `Description`, `SumResult`, `IsDone`) VALUES ('{AsName.Text}',@Commit,@Sum,@IsDone);
                                   INSERT INTO `TaskJobs`(`IdTask`, `IdJob`) VALUES ('{IdTask}',LAST_INSERT_ID())", new[]
                     {
                         new MySqlParameter("@Commit", String.IsNullOrEmpty(AsCommit.Text) ? DBNull.Value : AsCommit.Text),

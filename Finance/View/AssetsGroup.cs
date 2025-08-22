@@ -1,26 +1,8 @@
 ﻿
 namespace Finance.View
 {
-    public class AssetsGroup
+    public class AssetsGroup : Abstract.AbstractViewStatus<AssetsGroup>
     {
-        public int Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Commit
-        {
-            get;
-            set;
-        }
-
         public byte[] Icon
         {
             get;
