@@ -4,7 +4,6 @@ using Finance.Classes.Enums;
 using MySqlConnector;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Data.Common;
 
 namespace Finance.Classes
 {
