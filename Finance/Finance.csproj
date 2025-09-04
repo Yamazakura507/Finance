@@ -116,8 +116,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="Mysql">
-	    <HintPath>..\..\..\Lib\Mysql\bin\Release\net8.0\Mysql.dll</HintPath>
+	  <Reference Include="MySql">
+	    <HintPath>Libs\MySql.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

@@ -5,6 +5,7 @@ namespace Finance.View
 {
     public class ScalpingEntries : Abstract.AbstractViewStatus<ScalpingEntries>, INotifyPropertyChanged
     {
+        private bool isProfit;
         private int idStatusScalping;
         private int idBroker;
         private int? idTypeCommission;
@@ -164,13 +165,7 @@ namespace Finance.View
                     statusScalping = value;
                     DateExit = !IsGet ? GetParametrs<DateTime?>("DateExit", this.GetType(), Id) : dateExit;
 
-                    switch (value.Id)
-                    {
-                        case 1: ShadowColorBrush = IsProfit ? Colors.LawnGreen : Colors.OrangeRed; break;
-                        case 2: ShadowColorBrush = Colors.Yellow; break;
-                        case 3: ShadowColorBrush = Colors.Cyan; break;
-                    }
-
+                    Brusher(value.Id);
                     OnPropertyChanged();
                 }
             }
@@ -179,7 +174,20 @@ namespace Finance.View
         public Broker Broker { get; private set;}
 
 
-        public bool IsProfit { get; set; }
+        public bool IsProfit 
+        { 
+            get => isProfit;
+            set
+            {
+                if (isProfit != value)
+                {
+                    isProfit = value;
+
+                    Brusher(idStatusScalping);
+                    OnPropertyChanged();
+                }
+            }
+        }
         public bool IsProfitBeforeTax { get; set; }
         public bool IsCommission { get; set; }
 
@@ -206,5 +214,15 @@ namespace Finance.View
         }
 
         private new string Description { get; set; }
+
+        private void Brusher(int id)
+        {
+            switch (id)
+            {
+                case 1: ShadowColorBrush = isProfit ? Colors.LawnGreen : Colors.OrangeRed; break;
+                case 2: ShadowColorBrush = Colors.Yellow; break;
+                case 3: ShadowColorBrush = Colors.Cyan; break;
+            }
+        }
     }
 }
