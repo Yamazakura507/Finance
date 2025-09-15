@@ -27,6 +27,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <controls:Provaider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ErrProvider" IsVisible="False" HorizontalOptions="Start" VerticalOptions="Center"/>
@@ -75,6 +76,9 @@
                 </controls:Provaider.Style>
             </controls:Provaider>
 
-            </Grid>
+            <Label Text="Тикер на Yahoo Finance" Margin="0,0,5,0" Grid.Row="7" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Тикер на Yahoo Finance" Text="{Binding Ticker}" MaxLength="100" Completed="entry_Completed" x:Name="AsTicker" Grid.Row="7" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsTickerProvider" IsVisible="{Binding Ticker, Converter={StaticResource isNullConverter}, ConverterParameter='False'}" Message="{Binding TickerView}" TypeProvider="Info" Grid.Row="7" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
         </ScrollView>
 </ContentPage>

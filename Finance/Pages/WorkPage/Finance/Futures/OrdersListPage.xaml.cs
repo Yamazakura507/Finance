@@ -10,7 +10,6 @@ namespace Finance.Pages.WorkPage.Finance.Futures;
 
 public partial class OrdersListPage : ContentPage
 {
-    bool is_long_taped = false;
     int offset = 0;
     int count = 0;
     int idSc = -1;

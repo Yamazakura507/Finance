@@ -34,19 +34,19 @@
                                 <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
                                     <FlyoutBase.ContextFlyout>
                                         <MenuFlyout>
-                                            <MenuFlyoutItem IconImageSource="delete_cash.png" Text="Удалить" Clicked="DeleteTask_Pressed"/>
-                                            <MenuFlyoutItem IconImageSource="settings.png" Text="Именить тип" Clicked="EditTypeCommissionMenuFlyoutItem_Clicked"/>
+                                            <MenuFlyoutItem BindingContext="{x:Reference AddOrder}" IsEnabled="{Binding IsVisible}" IconImageSource="delete_cash.png" Text="Удалить" Clicked="DeleteTask_Pressed"/>
+                                            <MenuFlyoutItem BindingContext="{x:Reference AddOrder}" IsEnabled="{Binding IsVisible}" IconImageSource="settings.png" Text="Именить тип" Clicked="EditTypeCommissionMenuFlyoutItem_Clicked"/>
                                         </MenuFlyout>
                                     </FlyoutBase.ContextFlyout>
 
                                     <SwipeView>
                                         <SwipeView.LeftItems>
                                             <SwipeItems>
-                                                <SwipeItem Text="Удалить"
+                                                <SwipeItem Text="Удалить" BindingContext="{x:Reference AddOrder}" IsEnabled="{Binding IsVisible}"
                                                    IconImageSource="delete_cash.png"
                                                    BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
                                                    Invoked="DeleteTask_Pressed"/>
-                                                <SwipeItem Text="Именить тип"
+                                                <SwipeItem Text="Именить тип" BindingContext="{x:Reference AddOrder}" IsEnabled="{Binding IsVisible}"
                                                            IconImageSource="settings.png"
                                                            BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
                                                            Invoked="EditTypeCommissionMenuFlyoutItem_Clicked"/>
@@ -63,6 +63,7 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
 
                                             <Grid.ColumnDefinitions>
@@ -71,7 +72,7 @@
                                                 <ColumnDefinition Width="55"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Image WidthRequest="70" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Source="{Binding TypeCommission.Icon, Converter={StaticResource ByteArrayToImageSourceConverter}}" Margin="0,0,5,0"/>
+                                            <Image WidthRequest="70" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Source="{Binding TypeCommission.Icon, Converter={StaticResource ByteArrayToImageSourceConverter}}" Margin="0,0,5,0"/>
 
                                             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
                                                 <Label Text="{Binding Name}" Style="{DynamicResource BoldItemLabel}" LineBreakMode="MiddleTruncation" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
@@ -87,7 +88,9 @@
                                                 <Label Text="{Binding GOShort, StringFormat='{0:F2}'}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
                                             </HorizontalStackLayout>
 
-                                            <ImageButton HeightRequest="50" Source="delete_cash.png" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                            <Label Grid.Row="4" Grid.Column="1" Style="{DynamicResource ItemLabel}" Text="{Binding TickerView, TargetNullValue='Тикер отсутствует на Yahoo Finance', FallbackValue='Тикер отсутствует на Yahoo Finance'}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                            <ImageButton HeightRequest="50" Source="delete_cash.png" BindingContext="{x:Reference AddOrder}" IsVisible="{Binding IsVisible}" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
                                         </Grid>
                                     </SwipeView>
                                 </ContentView>

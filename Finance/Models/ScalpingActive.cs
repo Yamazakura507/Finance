@@ -9,6 +9,8 @@ namespace Finance.Models
         private decimal goLong;
         private decimal priceStep;
         private int idTypeCommission;
+        private string ticker;
+        private string tickerConv;
 
         public int CountInFutures
         {
@@ -92,8 +94,44 @@ namespace Finance.Models
             }
         }
 
+        public string Ticker
+        {
+            get => !IsGet ? GetParametrs<string>("Ticker", this.GetType()) : ticker;
+            set
+            {
+                if (ticker != value)
+                {
+                    ticker = value;
+                    ConvertTicker();
+
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingActive>("Ticker", value);
+                    }
+                }
+            }
+        }
+
+        public string TickerView
+        {
+            get => tickerConv;
+            private set
+            {
+                if (tickerConv != value)
+                {
+                    tickerConv = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public TypeCommission TypeCommission { get; private set;}
 
         private new string Description { get; set; }
+
+        async private void ConvertTicker()
+        {
+            TickerView = (await Classes.Converters.ConvertYahooFinancePrice.ConvertAsync(ticker)).ToString();
+        }
     }
 }

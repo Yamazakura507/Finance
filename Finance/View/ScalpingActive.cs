@@ -8,6 +8,8 @@ namespace Finance.View
     {
         private int idTypeCommission;
         private TypeCommission typeCommission;
+        private string ticker;
+        private string tickerConv;
 
         public int CountInFutures
         {
@@ -31,6 +33,32 @@ namespace Finance.View
         {
             get;
             set;
+        }
+
+        public string Ticker
+        {
+            get => ticker;
+            set
+            {
+                if (ticker != value)
+                {
+                    ticker = value;
+                    ConvertTicker();
+                }
+            }
+        }
+
+        public string TickerView
+        {
+            get => tickerConv;
+            private set
+            {
+                if (tickerConv != value)
+                {
+                    tickerConv = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public int IdTypeCommission
@@ -62,6 +90,11 @@ namespace Finance.View
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        async private void ConvertTicker()
+        {
+            TickerView = (await Classes.Converters.ConvertYahooFinancePrice.ConvertAsync(ticker)).ToString();
         }
 
         private new string Description { get; set; }

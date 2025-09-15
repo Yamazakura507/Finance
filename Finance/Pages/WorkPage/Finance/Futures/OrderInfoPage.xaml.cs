@@ -3,6 +3,7 @@ using Finance.Classes;
 using Finance.Classes.Enums;
 using Finance.CustomControl;
 using Finance.Models;
+using Microsoft.Maui.Animations;
 using MySqlConnector;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
@@ -111,7 +112,7 @@ public partial class OrderInfoPage : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    ms.ExecSql($"SELECT ins_upd_scalp_entries('-1','{IdScalp}','{((View.BeastStatus)pickerBeastStatus.SelectedItem).Id}',@IdTyCom,'{((View.Broker)pickerBroker.SelectedItem).Id}','{((View.StatusScalping)pickerStatusScalp.SelectedItem).Id}',NULL,@IdScAct,@PriceEn,'{AsCountLotEntry.Text}',@PriceEx,@CntInFut,@GO,@Name,@PrStep);", new[]
+                    ms.ExecSql($"SELECT ins_upd_scalp_entries('-1','{IdScalp}','{((View.BeastStatus)pickerBeastStatus.SelectedItem).Id}',@IdTyCom,'{((View.Broker)pickerBroker.SelectedItem).Id}','{((View.StatusScalping)pickerStatusScalp.SelectedItem).Id}',NULL,@IdScAct,@PriceEn,'{AsCountLotEntry.Text}',@PriceEx,@CntInFut,@GO,@Name,@PrStep,@Ticker);", new[]
                     {
                         new MySqlParameter("@IdTyCom", this.SelectedIdScalpingActive is null ? ((View.TypeCommission)pickerTypeCommission.SelectedItem).Id : DBNull.Value),
                         new MySqlParameter("@IdScAct", this.SelectedIdScalpingActive is null ? -1 : this.SelectedIdScalpingActive),
@@ -120,7 +121,8 @@ public partial class OrderInfoPage : ContentPage
                         new MySqlParameter("@Name", this.SelectedIdScalpingActive is null ? AsName.Text : DBNull.Value),
                         new MySqlParameter("@PrStep", this.SelectedIdScalpingActive is null ? AsPrSt.Text : DBNull.Value),
                         new MySqlParameter("@PriceEn", AsEntrySum.Text),
-                        new MySqlParameter("@PriceEx", AsExitSum.Text)
+                        new MySqlParameter("@PriceEx", AsExitSum.Text),
+                        new MySqlParameter("@Ticker", !String.IsNullOrEmpty(AsTicker.Text) ? AsTicker.Text : DBNull.Value)
                     });
 
                 await MainThread.InvokeOnMainThreadAsync(() => this.BackButtonInNavClick());
@@ -188,7 +190,7 @@ public partial class OrderInfoPage : ContentPage
 
             AsBeastStatusProvider.Message = beasStatus.Description;
 
-            BeastStatusImage.Source = ConverFiles.ToImageConvert(beasStatus.Id == 1 ? Properties.Resources.bull : Properties.Resources.bear);
+            BeastStatusImage.Source = ConverFiles.ToImageConvert(beasStatus.Id == 1 ? Properties.Resources.bull : Properties.Resources.bear, true);
 
             if (this.ScalpActive != null)
             {
@@ -228,7 +230,7 @@ public partial class OrderInfoPage : ContentPage
 
             AsBrokerProvider.Message = broker.Description;
 
-            BrokerImg.Source = ConverFiles.ToImageConvert(broker.Icon);
+            BrokerImg.Source = ConverFiles.ToImageConvert(broker.Icon is null ? Properties.Resources.broker : broker.Icon, broker.Icon is null);
         }
     }
 
@@ -300,34 +302,49 @@ public partial class OrderInfoPage : ContentPage
         return result;
     }
 
-    private void AddActiveTriggerStyle(bool isClear)
+    async private void AddActiveTriggerStyle(bool isClear)
     {
         try
         {
             ScalpActive = this.SelectedIdScalpingActive is null ? null : DBModel.GetModel<View.ScalpingActive>(this.SelectedIdScalpingActive);
 
-            AsName.IsEnabled = AsCntInFut.IsEnabled = pickerTypeCommission.IsEnabled = AsGO.IsEnabled = AsPrSt.IsEnabled = isClear;
-            vScVSL.IsVisible = ClearActiveOrder.IsVisible = !isClear;
+            AsTicker.IsEnabled = AsName.IsEnabled = AsCntInFut.IsEnabled = pickerTypeCommission.IsEnabled = AsGO.IsEnabled = AsPrSt.IsEnabled = isClear;
+            vScVSL.IsVisible = ClearActiveOrder.IsVisible = AsTickerProvider.IsVisible = !isClear;
 
             AsNameActive.Text = ScalpActive is null ? "Нет привязки актива" : ScalpActive.Name;
 
-            AsName.Text = AsCntInFut.Text = AsGO.Text = AsPrSt.Text = null;
-            AsName.BackgroundColor = AsCntInFut.BackgroundColor = AsGO.BackgroundColor = AsPrSt.BackgroundColor =
+            AsTicker.Text = AsName.Text = AsCntInFut.Text = AsGO.Text = AsPrSt.Text = null;
+            AsTicker.BackgroundColor = AsName.BackgroundColor = AsCntInFut.BackgroundColor = AsGO.BackgroundColor = AsPrSt.BackgroundColor =
                 isClear ? Colors.Transparent : Colors.DarkOliveGreen;
-            AsName.PlaceholderColor = AsCntInFut.PlaceholderColor = AsGO.PlaceholderColor = AsPrSt.PlaceholderColor =
+            AsTicker.PlaceholderColor = AsName.PlaceholderColor = AsCntInFut.PlaceholderColor = AsGO.PlaceholderColor = AsPrSt.PlaceholderColor =
                 isClear ? (Application.Current.RequestedTheme == AppTheme.Light ? (Color)Application.Current.Resources["Gray200"] : (Color)Application.Current.Resources["Gray500"]) : Colors.LightGoldenrodYellow;
 
             AsName.Placeholder = isClear ? "Наименование" : ScalpActive.Name + " - актив";
             AsCntInFut.Placeholder = isClear ? "Маржинальность" : ScalpActive.CountInFutures.ToString() + " - актив";
             AsPrSt.Placeholder = isClear ? "Шаг цены" : ScalpActive.PriceStep.ToString() + " - актив";
             AsGO.Placeholder = isClear ? "Гаран. обесп." : (((View.BeastStatus)pickerBeastStatus.SelectedItem).Id == 1 ? ScalpActive.GOLong.ToString() : ScalpActive.GOShort.ToString()) + " - актив";
-            pickerTypeCommission.SelectedIndex = isClear ? 0 : pickerTypeCommission.Items.IndexOf(ScalpActive.TypeCommission.Name);
+            AsTicker.Placeholder = isClear ? "Тикер на Yahoo Finance" : String.IsNullOrEmpty(ScalpActive.Ticker) ? "Не указан" : ScalpActive.Ticker + " - актив";
 
+            pickerTypeCommission.SelectedIndex = isClear ? 0 : pickerTypeCommission.Items.IndexOf(ScalpActive.TypeCommission.Name);
             pickerTypeCommission.BackgroundColor = isClear ? pickerBeastStatus.BackgroundColor : Colors.DarkOliveGreen;
+
+            if (!isClear)
+            {
+                AsTickerProvider.Message = ScalpActive.TickerView ?? (await Classes.Converters.ConvertYahooFinancePrice.ConvertAsync(ScalpActive.Ticker)).ToString();
+            } 
         }
         catch (Exception ex)
         {
             ErrProvider.WorkProvider(ProviderType.Error, ex.Message);
+        }
+    }
+
+    async private void AsTicker_Completed(object sender, EventArgs e)
+    {
+        if (this.SelectedIdScalpingActive is null && !String.IsNullOrEmpty(AsTicker.Text))
+        {
+            string message = (await Classes.Converters.ConvertYahooFinancePrice.ConvertAsync(AsTicker.Text)).ToString();
+            AsTickerProvider.Message = message;
         }
     }
 }

@@ -1,23 +1,40 @@
 ﻿using CommunityToolkit.Maui.Views;
 using SkiaSharp;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Reflection;
+using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
 
 namespace Finance.Classes
 {
     public static class ConverFiles
     {
-        public static ImageSource ToImageConvert(byte[] imageArr) => ImageSource.FromStream(() => new MemoryStream(imageArr));
+        public static ImageSource ToImageConvert(byte[] imageArr, bool isSVG = false) => ImageSource.FromStream(() => isSVG ? imageArr.SVGToPNG() : new MemoryStream(imageArr));
        
         public static byte[] ToByteConvert(string path) => File.ReadAllBytes(path);
+
+        private static Stream SVGToPNG(this byte[] svg)
+        {
+            using (var stream = new MemoryStream(svg))
+            {
+                SKSvg svgSkia = new SKSvg();
+                svgSkia.Load(stream);
+
+                SKBitmap bitmap = new SKBitmap((int)svgSkia.CanvasSize.Width, (int)svgSkia.CanvasSize.Height);
+                SKCanvas canvas = new SKCanvas(bitmap);
+
+                canvas.DrawPicture(svgSkia.Picture);
+                SKData? skData = SKImage.FromBitmap(bitmap).Encode(SKEncodedImageFormat.Png, 100);
+
+                return skData.AsStream();
+            }
+        }
 
         public static async Task<byte[]> ConvertImageSourceToBytesAsync(ImageSource imageSource)
         {
             Stream stream = await ((StreamImageSource)imageSource).Stream(CancellationToken.None);
             byte[] bytesAvailable = new byte[stream.Length];
-            stream.Read(bytesAvailable, 0, bytesAvailable.Length);
+            await stream.ReadAsync(bytesAvailable, 0, bytesAvailable.Length);
 
             return bytesAvailable;
         }

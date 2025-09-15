@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Finance.View
@@ -17,6 +18,8 @@ namespace Finance.View
         private StatusScalping statusScalping;
         private DateTime? dateExit;
         private Color color;
+        private string ticker;
+        private string tickerConv;
 
         public int CountLot
         {
@@ -46,6 +49,32 @@ namespace Finance.View
         {
             get;
             set;
+        }
+
+        public string Ticker
+        {
+            get => ticker;
+            set
+            {
+                if (ticker != value)
+                {
+                    ticker = value;
+                    ConvertTicker();
+                }
+            }
+        }
+
+        public string TickerView
+        {
+            get => tickerConv;
+            private set
+            {
+                if (tickerConv != value)
+                {
+                    tickerConv = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public DateTime? DateExit
@@ -223,6 +252,11 @@ namespace Finance.View
                 case 2: ShadowColorBrush = Colors.Yellow; break;
                 case 3: ShadowColorBrush = Colors.Cyan; break;
             }
+        }
+
+        async private void ConvertTicker()
+        {
+            TickerView = (await Classes.Converters.ConvertYahooFinancePrice.ConvertAsync(ticker)).ToString();
         }
     }
 }

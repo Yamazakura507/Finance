@@ -24,6 +24,8 @@ namespace Finance.Models
         private decimal commissing;
         private decimal? taxSum;
         private DateTime? dateExit;
+        private string ticker;
+        private string tickerConv;
 
         public int CountLot
         {
@@ -147,7 +149,7 @@ namespace Finance.Models
                     dateExit = value;
                     if (!IsGet)
                     {
-                        SetParametrs<LoanPayments>("DateExit", value is null ? DBNull.Value : value);
+                        SetParametrs<ScalpingEntries>("DateExit", value is null ? DBNull.Value : value);
                     }
                 }
             }
@@ -343,6 +345,37 @@ namespace Finance.Models
             }
         }
 
+        public string Ticker
+        {
+            get => !IsGet ? GetParametrs<string>("Ticker", this.GetType()) : ticker;
+            set
+            {
+                if (ticker != value)
+                {
+                    ticker = value;
+                    ConvertTicker();
+
+                    if (!IsGet)
+                    {
+                        SetParametrs<ScalpingEntries>("Ticker", value);
+                    }
+                }
+            }
+        }
+
+        public string TickerView
+        {
+            get => tickerConv;
+            private set
+            {
+                if (tickerConv != value)
+                {
+                    tickerConv = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public TypeCommission TypeCommission { get; private set;}
 
         public Tax Tax { get; private set;}
@@ -361,12 +394,14 @@ namespace Finance.Models
         {
             if (new[] { "Id", "IdTax", "Margin", "MarginBeforeTax", "Commissing", "TaxSum" }.Contains(param))
                 return;
+            else if (param == "Ticker")
+                base.SetParametrs<T>(param, value, id);
             else
             {
                 CheckPolice(false, typeof(T));
 
                 using (var ms = new Mysql())
-                    ms.ExecSql($"SELECT ins_upd_scalp_entries('{id}','{idScalping}','{idBeastStatus}',@IdTyCom,'{idBroker}','{idStatusScalping}','{idTax}',@IdScAct,@PriceEn,'{countLot}',@PriceEx,@CntInFut,@GO,@Name,@PrStep);", new[]
+                    ms.ExecSql($"SELECT ins_upd_scalp_entries('{id}','{idScalping}','{idBeastStatus}',@IdTyCom,'{idBroker}','{idStatusScalping}','{idTax}',@IdScAct,@PriceEn,'{countLot}',@PriceEx,@CntInFut,@GO,@Name,@PrStep,@Ticker);", new[]
                     {
                         new MySqlParameter("@IdTyCom", idTypeCommission is null ? DBNull.Value : idTypeCommission),
                         new MySqlParameter("@IdScAct", idScalpingActive is null ? -1 : idScalpingActive),
@@ -375,7 +410,8 @@ namespace Finance.Models
                         new MySqlParameter("@Name", String.IsNullOrEmpty(name) ? DBNull.Value : name),
                         new MySqlParameter("@PrStep", priceStep is null ? DBNull.Value : priceStep),
                         new MySqlParameter("@PriceEn", priceEntry),
-                        new MySqlParameter("@PriceEx", priceExit)
+                        new MySqlParameter("@PriceEx", priceExit),
+                        new MySqlParameter("@Ticker", !String.IsNullOrEmpty(ticker) ? ticker : DBNull.Value)
                     });
             }
         }
@@ -384,5 +420,10 @@ namespace Finance.Models
 
         private new int? IdUser { get; set; }
         private new Users User { get; set; }
+
+        async private void ConvertTicker()
+        {
+            TickerView = (await Classes.Converters.ConvertYahooFinancePrice.ConvertAsync(ticker)).ToString();
+        } 
     }
 }

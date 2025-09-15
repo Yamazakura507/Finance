@@ -75,6 +75,7 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
 
                                             <Grid.ColumnDefinitions>
@@ -238,6 +239,21 @@
                                                 </Label>
                                                 <Label Text="{Binding PointZero, StringFormat='-безуб. {0:F2}'}" TextColor="Cyan" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0"/>
                                             </HorizontalStackLayout>
+
+                                            <Label Grid.Row="5" Grid.Column="1" Text="{Binding TickerView}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                <Label.Style>
+                                                    <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                                                <Setter Property="Text" Value="{Binding TickerView, TargetNullValue='Тикер отсутствует на Yahoo Finance', FallbackValue='Тикер отсутствует на Yahoo Finance'}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                                                <Setter Property="Text" Value="{Binding ScalpingActive.TickerView, TargetNullValue='Тикер отсутствует на Yahoo Finance', FallbackValue='Тикер отсутствует на Yahoo Finance'}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Label.Style>
+                                            </Label>
 
                                             <ImageButton HeightRequest="50" Source="delete_cash.png" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" Aspect="AspectFit" Margin="0,0,10,0"/>
                                         </Grid>

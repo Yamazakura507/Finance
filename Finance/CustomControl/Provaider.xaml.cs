@@ -48,7 +48,11 @@ public partial class Provaider : ContentView
     public string Message
     {
         get => (string)GetValue(Provaider.MessageProperty);
-        set => SetValue(Provaider.MessageProperty, value);
+        set
+        {
+            this.IsVisible = !String.IsNullOrEmpty(value);
+            SetValue(Provaider.MessageProperty, value);
+        } 
     }
     public ProviderType TypeProvider 
     { 
@@ -112,7 +116,11 @@ public partial class Provaider : ContentView
 
     private void Loaded(object sender, EventArgs e)
     {
-        if (this.Message.Length > 500)
+        if (String.IsNullOrEmpty(this.Message))
+        {
+            this.IsVisible = false;
+        }
+        else if (this.Message.Length > 500)
         {
             this.IsVisible = false;
 

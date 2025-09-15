@@ -50,6 +50,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
             <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
@@ -305,9 +306,42 @@
                     </Style>
                 </Entry.Style>
             </Entry>
-            <controls:Provaider x:Name="AsPrStProvider" IsVisible="False" Grid.Row="10" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsPrStProvider" IsVisible="False" Grid.Row="12" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center" x:Name="vScVSL" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="3">
+            <Label Text="Тикер на Yahoo Finance" Margin="0,0,5,0" Grid.Row="13" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Entry Placeholder="Тикер на Yahoo Finance" Text="{Binding Ticker}" MaxLength="100" Completed="AsTicker_Completed" x:Name="AsTicker" Grid.Row="13" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center">
+                <Entry.Style>
+                    <Style TargetType="Entry">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="PlaceholderColor" Value="LightGoldenrodYellow"/>
+                                <Setter Property="BackgroundColor" Value="DarkOliveGreen"/>
+                                <Setter Property="Placeholder" Value="{Binding ScalpingActive.Ticker, StringFormat='{0} - актив', TargetNullValue='Не указан', Mode=OneWay}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Entry" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource Gray200}, Dark={DynamicResource Gray500}}"/>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Placeholder" Value="Тикер на Yahoo Finance"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Entry.Style>
+            </Entry>
+            <controls:Provaider x:Name="AsTickerProvider" Message="{Binding TickerView}" IsVisible="{Binding TickerView, Converter={StaticResource isNullConverter}}" TypeProvider="Info" Grid.Row="13" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center">
+                <controls:Provaider.Style>
+                    <Style TargetType="controls:Provaider">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="controls:Provaider" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                <Setter Property="Message" Value="{Binding ScalpingActive.TickerView}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:Provaider.Style>
+            </controls:Provaider>
+
+            <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center" x:Name="vScVSL" Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="3">
                 <Label Text="{Binding Margin, StringFormat='Маржа {0:F2}'}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,25,0,0">
                     <Label.Style>
                         <Style TargetType="Label" BasedOn="{StaticResource BoldItemLabel}">
@@ -359,6 +393,22 @@
                             <Binding Path="Tax.TaxPercent"/>
                         </MultiBinding>
                     </Label.Text>
+                </Label>
+                <Label Text="{Binding TickerView}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0">
+                    <Label.Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="True">
+                                    <Setter Property="IsVisible" Value="{Binding TickerView, Converter={StaticResource isNullConverter}, ConverterParameter='True'}"/>
+                                    <Setter Property="Text" Value="{Binding TickerView, TargetNullValue='Тикер отсутствует на Yahoo Finance', FallbackValue='Тикер отсутствует на Yahoo Finance'}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdScalpingActive, Converter={StaticResource isNullConverter}}" Value="False">
+                                    <Setter Property="IsVisible" Value="{Binding ScalpingActive.TickerView, Converter={StaticResource isNullConverter}, ConverterParameter='True'}"/>
+                                    <Setter Property="Text" Value="{Binding ScalpingActive.TickerView, TargetNullValue='Тикер отсутствует на Yahoo Finance', FallbackValue='Тикер отсутствует на Yahoo Finance'}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
                 </Label>
                 <Label Text="{Binding DateExit, StringFormat='Дата закрытия {0:dd MMMM yyyy}', TargetNullValue=''}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0"/>
             </VerticalStackLayout>
