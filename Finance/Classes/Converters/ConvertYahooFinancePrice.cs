@@ -1,5 +1,4 @@
 ﻿using YahooFinanceApi;
-using System.Linq;
 
 namespace Finance.Classes.Converters
 {

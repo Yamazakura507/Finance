@@ -54,6 +54,9 @@
                                                     <DataTrigger TargetType="Image" Binding="{Binding IdStatusCredit}" Value="3">
                                                         <Setter Property="Source" Value="credit_test.png"/>
                                                     </DataTrigger>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding IdStatusCredit}" Value="4">
+                                                        <Setter Property="Source" Value="fuck.png"/>
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Image.Style>

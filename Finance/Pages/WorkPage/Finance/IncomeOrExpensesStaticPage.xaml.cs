@@ -45,7 +45,7 @@ public partial class IncomeOrExpensesStaticPage : ContentPage
                             INNER JOIN `Assets` a ON (a.`Id`,a.`IdUser`) = (ga.`IdAssets`,ag.`IdUser`) OR (a.`Id`,a.`IdUser`) = (ga.`IdAssets`,'{0}')
                             INNER JOIN `DateJournal` d ON d.`Id` = ga.`IdDate` AND d.`Id` = {1}
                             WHERE ag.`IdUser` = '{0}' OR ag.`IdUser` is NULL
-                            GROUP BY ag.`Id`,ag.`Name`,ag.`Commit`,ag.`Icon`,ag.`IdUser`;", InfoAccount.IdUser, IdDate);
+                            GROUP BY ag.`Id`,ag.`Name`,ag.`Description`,ag.`Icon`,ag.`IdUser`;", InfoAccount.IdUser, IdDate);
 
             var ViewAssetsGroup = DBModel.GetCollectionModel<View.AssetsGroup>(sql);
 

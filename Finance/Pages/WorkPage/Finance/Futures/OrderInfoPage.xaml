@@ -98,7 +98,7 @@
                                             <MultiBinding Converter="{StaticResource isCommpressionConverter}">
                                                 <Binding Path="PriceExit"/>
                                                 <Binding Path="PointZero"/>
-                                                <Binding Path="IdBeastStatus"/><!--проверка на лонг, шорт-->
+                                                <Binding Path="IdBeastStatus"/><!--проверка на лонг, шорт. Может быть опущена для обычного сравнения-->
                                                 <Binding Source="#072900"/><!--цвет если первый аргумент больше второго-->
                                                 <Binding Source="#2d2e00"/><!--цвет если первый аргумент равен второму-->
                                                 <Binding Source="#2b0300"/><!--цвет если первый аргумент меньше второго-->

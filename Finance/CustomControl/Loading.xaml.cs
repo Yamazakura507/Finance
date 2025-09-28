@@ -8,7 +8,7 @@ public partial class Loading : Popup
 {
     public bool IsProcess { get; private set; } = false;
     public bool IsNetworking = false;
-    public BackgroundWorker LoadingBackgorundWorker = new BackgroundWorker();
+    public BackgroundWorker LoadingBackgorundWorker = new BackgroundWorker(); 
 
     private SKFileLottieImageSource[] loadingsFiles = 
 		{ 

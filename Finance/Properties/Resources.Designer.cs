@@ -749,5 +749,12 @@ namespace Finance.Properties {
                 return ((byte[])(obj));
             }
         }
+		
+		internal static byte[] fuck {
+            get {
+                object obj = ResourceManager.GetObject("fuck", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
