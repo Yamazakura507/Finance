@@ -11,16 +11,19 @@ namespace Finance.Classes
     {
         protected static bool IsGet { get; set; } = false;
 
-        public static void InsertModel<T>(Dictionary<string, object> parametrs)
+        public static DataTable InsertModel<T>(Dictionary<string, object> parametrs)
         {
             try
             {
+                DataTable dt;
                 CheckPolice(false, typeof(T));
 
                 using (var ms = new Mysql())
                 {
-                    ms.Insert(typeof(T).Name, parametrs);
+                    dt = ms.Insert(typeof(T).Name, parametrs);
                 }
+
+                return dt;
             }
             catch (Exception ex)
             {

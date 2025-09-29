@@ -32,7 +32,7 @@ namespace Finance.Models
                 {
                     if (!IsGet)
                     {
-                        SetParametrs<AssetsGroup>("Icon", value is null ? DBNull.Value : value);
+                        SetParametrs<Broker>("Icon", value is null ? DBNull.Value : value);
                     }
                     icon = value;
                 }
