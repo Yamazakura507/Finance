@@ -2,7 +2,7 @@ using Finance.Classes;
 using Finance.Classes.AppSettings;
 using Finance.CustomControl;
 
-namespace Finance.Pages.WorkPage;
+namespace Finance.Pages.WorkPage.Setting;
 
 public partial class SettingsPage : ContentPage
 {

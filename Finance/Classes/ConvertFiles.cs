@@ -202,6 +202,10 @@ namespace Finance.Classes
             {
                 return (T)((SwipeItem)sender).Parent.Parent.BindingContext;
             }
+            else if (sender.GetType() == typeof(ContentView))
+            {
+                return (T)((ContentView)sender).Parent.BindingContext;
+            }
             else
             {
                 return (T)((ImageButton)sender).BindingContext;

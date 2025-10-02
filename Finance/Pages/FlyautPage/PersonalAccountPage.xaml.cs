@@ -1,6 +1,6 @@
 using Finance.Classes.AppSettings;
 using Finance.Pages.FlyautPage.FlyautModel;
-using Finance.Pages.WorkPage;
+using Finance.Pages.Tabbed;
 
 namespace Finance.Pages.FlyautPage;
 
@@ -20,7 +20,7 @@ public partial class PersonalAccountPage : FlyoutPage
         {
             Page page = (Page)Activator.CreateInstance(item.TargetType);
 
-            if (item.TargetType == typeof(SettingsPage))
+            if (item.TargetType == typeof(SettingTabbedPage))
                 page.BindingContext = InfoAccount.User;
 
             Detail = new NavigationPage(page);

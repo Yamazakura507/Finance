@@ -11,7 +11,7 @@ namespace Finance.Classes
     {
         protected static bool IsGet { get; set; } = false;
 
-        public static DataTable InsertModel<T>(Dictionary<string, object> parametrs)
+        public static DataTable InsertModel<T>(Dictionary<string, object> parametrs, string reterning="")
         {
             try
             {
@@ -20,7 +20,7 @@ namespace Finance.Classes
 
                 using (var ms = new Mysql())
                 {
-                    dt = ms.Insert(typeof(T).Name, parametrs);
+                    dt = ms.Insert(typeof(T).Name, parametrs, reterning);
                 }
 
                 return dt;
@@ -286,7 +286,7 @@ namespace Finance.Classes
             }
         }
 
-        public static object ResultRequest(string sql)
+        public static T ResultRequest<T>(string sql)
         {
             try
             {
@@ -294,10 +294,22 @@ namespace Finance.Classes
 
                 using (var ms = new Mysql())
                 {
-                    obj = ms.GetValue(sql);
+                    obj = ms.GetValue<T>(sql);
                 }
 
-                return obj == DBNull.Value ? null : obj;
+                return (T)(obj == DBNull.Value ? null : obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static object ResultRequest(string sql)
+        {
+            try
+            {
+                return ResultRequest<object>(sql);
             }
             catch (Exception ex)
             {

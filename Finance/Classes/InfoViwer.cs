@@ -38,12 +38,12 @@ namespace Finance.Classes
 
         async public static Task<string> SheetMessege(this Page page, string title, string[] sheets, bool isDelete = false)
         {
-            return (await Messege(page, null, title, "ОТМЕНА", isDelete ? "УДАЛИТЬ" : null, default, true, sheets)).ToString();
+            return ((await Messege(page, null, title, "ОТМЕНА", isDelete ? "УДАЛИТЬ" : null, default, true, sheets)) ?? String.Empty).ToString();
         }
 
         async public static Task<string> InputMessege(this Page page, string messege, string placeholder = null, int maxLenght = -1, Keyboard keyboard = null, string initilValue = null)
         {
-            return (await Messege(page, messege, "ВВОД", "ОТМЕНА", "ОК", true, default, default, placeholder, maxLenght, keyboard, initilValue)).ToString();
+            return ((await Messege(page, messege, "ВВОД", "ОТМЕНА", "ОК", true, default, default, placeholder, maxLenght, keyboard, initilValue)) ?? String.Empty).ToString();
         }
 
         async public static Task<bool> QuestionMessege(this Page page,string messege, string cancel = "ОТМЕНА", string accept = "ОК")

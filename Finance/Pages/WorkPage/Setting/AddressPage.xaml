@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             x:Class="Finance.Pages.WorkPage.Setting.AddressPage" Loaded="ContentPage_Loaded" Title="Вопросы">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Editor Placeholder="Адрес" MinimumHeightRequest="100" x:Name="NewSupport" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5,10,5"/>
+
+        <skia:SKLottieView x:Name="btlSendSupport" Margin="0,0,5,0" Style="{DynamicResource LottieDefault}" Grid.Row="0"  Grid.Column="1" HorizontalOptions="Start" Source="RightLottie.json">
+            <skia:SKLottieView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SendSupport_Tapped"/>
+            </skia:SKLottieView.GestureRecognizers>
+        </skia:SKLottieView>
+
+        <skia:SKLottieView x:Name="mapSendSupport" Margin="0,0,5,0" Style="{DynamicResource LottieDefault}" Grid.Row="0"  Grid.Column="2" HorizontalOptions="Start" Source="Map.json">
+            <skia:SKLottieView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_Map"/>
+            </skia:SKLottieView.GestureRecognizers>
+        </skia:SKLottieView>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Padding="10,5,10,5">
+            <VerticalStackLayout x:Name="supportVSL" BindableLayout.ItemsSource="{Binding ViewAddress}" Margin="0,10,0,10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="3" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="🖊Редактировать" Clicked="MenuFlyoutItem_Clicked_IsEdit"/>
+                                        <MenuFlyoutItem Text="🚩Карта" Clicked="MenuFlyoutItem_Clicked_Map"/>
+                                        <MenuFlyoutItem Text="🗑️Удалить" Clicked="DeleteButton_Pressed"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
+
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="🗑️Удалить"
+                                                       IconImageSource="delete_support.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                                                       Invoked="DeleteButton_Pressed"/>
+                                            <SwipeItem Text="🚩Карта"
+                                                       IconImageSource="address.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                       Invoked="MenuFlyoutItem_Clicked_IsEdit"/>
+                                            <SwipeItem Text="🖊Редактировать"
+                                                       IconImageSource="support.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                       Invoked="MenuFlyoutItem_Clicked_IsEdit"/>        
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="70"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Margin="5" Source="address.png" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70"/>
+
+                                        <Label Text="{Binding Address, StringFormat='Адрес - {0}'}" MaxLines="4" Style="{DynamicResource ItemLabel}" LineBreakMode="MiddleTruncation" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        <Label Text="{Binding AddressType, StringFormat='На карте - {0}', TargetNullValue='Картография отсутствует'}" Style="{DynamicResource ItemLabel}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
+                                    </Grid>
+                                </SwipeView>
+                                <ContentView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="SupportPress_Tapped"/>
+                                </ContentView.GestureRecognizers>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

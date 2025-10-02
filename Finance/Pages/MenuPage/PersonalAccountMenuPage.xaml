@@ -10,6 +10,7 @@
 			 xmlns:pageCredit="clr-namespace:Finance.Pages.WorkPage.Credit"
 			 xmlns:pageTime="clr-namespace:Finance.Pages.WorkPage.Time"
 			 xmlns:pagePlan="clr-namespace:Finance.Pages.WorkPage.Planing"
+			 xmlns:pageImuh="clr-namespace:Finance.Pages.WorkPage.Imuh"
              xmlns:pageFutures="clr-namespace:Finance.Pages.WorkPage.Finance.Futures"
              Title="PersonalAccountMenuPage" Shell.NavBarIsVisible="False">
     <ScrollView Padding="5,50,0,0">
@@ -37,12 +38,18 @@
                         <local:FlyautAccountModel Title="Планирование"
                                   IconSource="planing.png"
                                   TargetType="{x:Type pagePlan:PlaningLisPage}" />
+                        <local:FlyautAccountModel Title="Собственность"
+                                  IconSource="imuh.png"
+                                  TargetType="{x:Type pageImuh:EstateListPage}"/>
+                        <local:FlyautAccountModel Title="Шаблоны"
+                                  IconSource="shablon.png"
+                                  TargetType="{x:Type pagePlan:PlaningLisPage}"/>
                         <local:FlyautAccountModel Title="Вопросы"
                                   IconSource="support.png"
                                   TargetType="{x:Type pageSuport:SupportPage}" />
                         <local:FlyautAccountModel Title="Настройки"
                                   IconSource="settings.png"
-                                  TargetType="{x:Type page:SettingsPage}" />
+                                  TargetType="{x:Type pageTab:SettingTabbedPage}" />
                     </x:Array>
                 </CollectionView.ItemsSource>
                 <CollectionView.ItemTemplate>

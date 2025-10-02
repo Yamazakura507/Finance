@@ -1,12 +1,16 @@
 ﻿
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Finance.View
 {
-    public class Estate : Abstract.AbstractViewStatus<Estate> 
+    public class Estate : Abstract.AbstractViewStatus<Estate>, INotifyPropertyChanged
     {
         private int idTypeEstate;
         private int idStatusEstate;
         private int idOwner;
+        private EstateStatus estateStatus;
 
         public int IdTypeEstate
         {
@@ -30,6 +34,7 @@ namespace Finance.View
                 {
                     EstateStatus = GetModel<EstateStatus>(value);
                     idStatusEstate = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -48,7 +53,26 @@ namespace Finance.View
         }
 
         public EstateType EstateType { get; private set; }
-        public EstateStatus EstateStatus { get; private set; }
+        public EstateStatus EstateStatus
+        {
+            get => estateStatus;
+            private set
+            {
+                if (idStatusEstate != value.Id)
+                {
+                    estateStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public Owners Owners { get; private set; }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

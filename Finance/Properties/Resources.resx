@@ -128,6 +128,9 @@
   <data name="WhiteHideLottie" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Raw\WhiteHideLottie.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Raw\Map.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="mailActiv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Files\mailActiv.tpl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -304,5 +307,20 @@
   </data>
       <data name="fuck" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\fuck.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shablon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\shablon.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="regimuh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\regimuh.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="unregimuh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\unregimuh.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\address.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="colors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\colors.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

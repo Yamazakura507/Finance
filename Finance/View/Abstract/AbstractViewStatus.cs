@@ -7,7 +7,6 @@ namespace Finance.View.Abstract
     {
         protected string name;
 
-
         public string Name
         {
             get => name;

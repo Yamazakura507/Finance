@@ -111,6 +111,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="9.0.0" />
 		<PackageReference Include="MySqlConnector" Version="2.4.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
 		<PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
 		<PackageReference Include="System.Drawing.Common" Version="9.0.0" />
@@ -118,6 +119,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="MapLib">
+	    <HintPath>Libs\MapLib.dll</HintPath>
+	  </Reference>
 	  <Reference Include="MySql">
 	    <HintPath>Libs\MySql.dll</HintPath>
 	  </Reference>
@@ -126,6 +130,9 @@
 	<ItemGroup>
 	  <Compile Update="Pages\Tabbed\ScalpUpInfoPage.xaml.cs">
 	    <DependentUpon>ScalpUpInfoPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Tabbed\SettingTabbedPage.xaml.cs">
+	    <DependentUpon>SettingTabbedPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Finance\Futures\ScalpActiveInfoPage.xaml.cs">
 	    <DependentUpon>ScalpActiveInfoPage.xaml</DependentUpon>
@@ -145,6 +152,15 @@
 	  <Compile Update="Pages\WorkPage\Finance\Futures\OrdersListPage.xaml.cs">
 	    <DependentUpon>OrdersListPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\WorkPage\Imuh\EstateListPage.xaml.cs">
+	    <DependentUpon>EstateListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Setting\MapPage.xaml.cs">
+	    <DependentUpon>MapPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Setting\AddressPage.xaml.cs">
+	    <DependentUpon>AddressPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Properties\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -161,6 +177,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\Tabbed\ScalpUpInfoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Tabbed\SettingTabbedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Finance\Futures\ScalpActiveInfoPage.xaml">
@@ -182,6 +201,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\GroupCharPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Imuh\EstateListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Setting\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Setting\AddressPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Support\SupportInfoPage.xaml">

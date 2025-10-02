@@ -369,6 +369,13 @@ namespace Finance.Properties {
             }
         }
 		
+		internal static byte[] Map {
+            get {
+                object obj = ResourceManager.GetObject("Map", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
 		/// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
@@ -753,6 +760,41 @@ namespace Finance.Properties {
 		internal static byte[] fuck {
             get {
                 object obj = ResourceManager.GetObject("fuck", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] shablon {
+            get {
+                object obj = ResourceManager.GetObject("shablon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] regimuh {
+            get {
+                object obj = ResourceManager.GetObject("regimuh", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] unregimuh {
+            get {
+                object obj = ResourceManager.GetObject("unregimuh", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] address {
+            get {
+                object obj = ResourceManager.GetObject("address", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] colors {
+            get {
+                object obj = ResourceManager.GetObject("colors", resourceCulture);
                 return ((byte[])(obj));
             }
         }
