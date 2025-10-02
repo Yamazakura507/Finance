@@ -112,6 +112,7 @@
 		<PackageReference Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="9.0.0" />
 		<PackageReference Include="MySqlConnector" Version="2.4.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="nor0x.Maui.ColorPicker" Version="2.0.4" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
 		<PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
 		<PackageReference Include="System.Drawing.Common" Version="9.0.0" />
@@ -119,6 +120,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="ColorLib">
+	    <HintPath>Libs\ColorLib.dll</HintPath>
+	  </Reference>
 	  <Reference Include="MapLib">
 	    <HintPath>Libs\MapLib.dll</HintPath>
 	  </Reference>
@@ -154,6 +158,12 @@
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Imuh\EstateListPage.xaml.cs">
 	    <DependentUpon>EstateListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Setting\ColorsPage.xaml.cs">
+	    <DependentUpon>ColorsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Setting\ColorWebPage.xaml.cs">
+	    <DependentUpon>ColorWebPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Setting\MapPage.xaml.cs">
 	    <DependentUpon>MapPage.xaml</DependentUpon>
@@ -204,6 +214,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Imuh\EstateListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Setting\ColorsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Setting\ColorWebPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Setting\MapPage.xaml">

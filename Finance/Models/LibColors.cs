@@ -21,5 +21,7 @@ namespace Finance.Models
                 }
             }
         }
+
+        private new string Description { get; set; }
     }
 }

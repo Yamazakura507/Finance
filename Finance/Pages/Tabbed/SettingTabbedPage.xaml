@@ -8,5 +8,5 @@
             BarTextColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}" Loaded="TabbedPage_Loaded">
             <setingPage:SettingsPage Title="Настройки" IconImageSource="settings.png" BindingContext="{Binding}"/>
             <setingPage:AddressPage Title="Адреса" IconImageSource="address.png" BindingContext="{Binding}"/>
-            <setingPage:SettingsPage Title="Цвета" IconImageSource="colors.png" BindingContext="{Binding}"/>
+            <setingPage:ColorsPage Title="Цвета" IconImageSource="colors.png" BindingContext="{Binding}"/>
 </TabbedPage>

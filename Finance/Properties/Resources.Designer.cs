@@ -376,6 +376,13 @@ namespace Finance.Properties {
             }
         }
 		
+		internal static byte[] ColorDisk {
+            get {
+                object obj = ResourceManager.GetObject("ColorDisk", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
 		/// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
