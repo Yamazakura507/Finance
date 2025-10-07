@@ -1,16 +1,26 @@
 ﻿
+using Finance.Classes;
+
 namespace Finance.View
 {
     public class Car : Abstract.AbstractViewModel
     {
         private int idTypeCar;
         private int idColor;
+        private string make;
 
 
         public string Make
         {
-            get;
-            set;
+            get => make;
+            set
+            {
+                if (make != value)
+                {
+                    ImgManufactureLink = CarInfo.LinkImageMakeCar(value);
+                    make = value;
+                }
+            }
         }
 
         public string Model
@@ -44,7 +54,7 @@ namespace Finance.View
             set;
         }
 
-        public int Mileage
+        public int? Mileage
         {
             get;
             set;
@@ -77,5 +87,7 @@ namespace Finance.View
 
         public TypeCar TypeCar { get; private set; }
         public LibColors LibColors { get; private set; }
+
+        public Uri ImgManufactureLink { get; set; }
     }
 }

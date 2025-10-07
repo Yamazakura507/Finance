@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Finance.CustomControl"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:cl="clr-namespace:Finance.Classes"
+             x:Class="Finance.Pages.WorkPage.Imuh.EditorCars" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.Style>
+        <Style TargetType="ContentPage">
+            <Style.Triggers>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="True">
+                    <Setter Property="Title" Value="Новое авто"/>
+                </DataTrigger>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="False">
+                    <Setter Property="Title">
+                        <Setter.Value>
+                            <MultiBinding StringFormat="{}{0} {1} {2}">
+                                <Binding Path="Make"/>
+                                <Binding Path="Model"/>
+                                <Binding Path="YearOfManufacture"/>
+                            </MultiBinding>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentPage.Style>
+
+    <ScrollView HorizontalOptions="Center">
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Entry Placeholder="Марка авто" Text="{Binding Make}" MaxLength="100" x:Name="AsMake" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsMakeProvider" IsVisible="False" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Модель авто" Text="{Binding Model}" MaxLength="100" x:Name="AsModel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsModelProvider" IsVisible="False" Grid.Row="1" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="VIN номер" Text="{Binding VIN}" TextChanged="AsUppder_TextChanged" MaxLength="17" x:Name="AsVIN" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsVINProvider" IsVisible="False" Grid.Row="2" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                <Image Margin="5,0,5,0" Aspect="AspectFit" HeightRequest="50" WidthRequest="50" x:Name="ImgType">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdTypeCar}" Value="1">
+                                    <Setter Property="Source" Value="{Binding Source={x:Static cl:CarInfo.PassangerCarIcon}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdTypeCar}" Value="2">
+                                    <Setter Property="Source" Value="{Binding Source={x:Static cl:CarInfo.TruckIcon}}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding IdTypeCar}" Value="3">
+                                    <Setter Property="Source" Value="{Binding Source={x:Static cl:CarInfo.BusIcon}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Picker x:Name="TypePicker" SelectedIndexChanged="TypePicker_SelectedIndexChanged" ItemDisplayBinding="{Binding Name}" Margin="5,5,5,0" VerticalOptions="Center" HorizontalOptions="Fill"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsTypeProvider" TypeProvider="Info" Message="{Binding TypeCar.Description}" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Год выпуска" Text="{Binding YearOfManufacture}" TextChanged="Int_TextChanged" MaxLength="4" x:Name="AsYearOfManufacture" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                <Entry Placeholder="Пробег" Text="{Binding Mileage}" TextChanged="Int_TextChanged" MaxLength="6" x:Name="AsMileage" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsYearOfManufactureProvider" IsVisible="False" Grid.Row="4" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Мощность ДВС" Text="{Binding EnginePower}" MaxLength="7" TextChanged="Decimal_TextChanged" x:Name="AsEnginePower" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                <Entry Placeholder="Объем ДВС" Text="{Binding WorkingVolume}" MaxLength="8" TextChanged="Decimal_TextChanged" x:Name="AsWorkingVolume" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsEngineStateProvider" IsVisible="False" Grid.Row="5" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Модель ДВС" Text="{Binding EngineModel}" MaxLength="10" x:Name="AsEngineModel" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                <Entry Placeholder="Номер ДВС" Text="{Binding EngineNumber}" MaxLength="20" x:Name="AsEngineNumber" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsEngineUrNumsProvider" IsVisible="False" Grid.Row="6" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Номер шаси" Text="{Binding ChassisNumber}" TextChanged="AsUppder_TextChanged" MaxLength="17" x:Name="AsChassisNumber" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                <ImageButton Source="copy.png" x:Name="BtCopyVinToChassis" ClassId="CN" Clicked="BtCopyVin_Clicked" MaximumHeightRequest="15" Margin="5,5,0,0" HorizontalOptions="Start" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Номер кузова" Text="{Binding BodyNumber}" TextChanged="AsUppder_TextChanged" MaxLength="17" x:Name="AsBodyNumber" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                <ImageButton Source="copy.png" x:Name="BtCopyVinToBody" ClassId="BN" Clicked="BtCopyVin_Clicked" MaximumHeightRequest="15" Margin="5,5,0,0" HorizontalOptions="Start" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="🏁" Style="{DynamicResource BoldItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry Placeholder="ЕГРН" Text=" {Binding StateNumber, TargetNullValue='', FallbackValue=''}" TextChanged="StateNumGosCar_TextChanged" MaxLength="18" x:Name="AsStateNumber" HorizontalOptions="Fill" VerticalOptions="Center">
+                    <Entry.Behaviors>
+                        <toolkit:MaskedBehavior Mask="X XXX XX XXX"/>
+                    </Entry.Behaviors>
+                </Entry>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsStateNumberProvider" IsVisible="False" Grid.Row="9" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Цена" Text="{Binding Price}" TextChanged="AsDigitNull_TextChanged" MaxLength="11" x:Name="AsPrice" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizerColor"/>
+                </HorizontalStackLayout.GestureRecognizers>
+
+                <Label Text="Цвет" Style="{DynamicResource ItemLabel}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0"/>
+                <Border x:Name="AsColorBr" Margin="5" BackgroundColor="{Binding LibColors.Colors}" IsVisible="{Binding Converter={StaticResource isNullConverter}, ConverterParameter='True'}" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="DarkOliveGreen"/>
+                    </Border.Shadow>
+                </Border>
+                <Image Source="colors.png" x:Name="ImgColor" Margin="5" IsVisible="{Binding Converter={StaticResource isNullConverter}}" HeightRequest="25" WidthRequest="25" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Text="{Binding LibColors.Name, TargetNullValue='Не выбран', FallbackValue='Не выбран'}" x:Name="AsColorName" MaximumWidthRequest="150" Style="{DynamicResource ItemLabel}" LineBreakMode="MiddleTruncation" MaxLines="4" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsColorProvider" IsVisible="False" Grid.Row="11" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="ПТС" Style="{DynamicResource ItemLabel}" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0"/>
+            <HorizontalStackLayout Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Серия" Text="{Binding PTSSeries}" MaxLength="5" x:Name="AsPTSSeries" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center">
+                    <Entry.Behaviors>
+                        <toolkit:MaskedBehavior Mask="XX XX"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry Placeholder="Номер" Text="{Binding PTSNumber}" MaxLength="6" x:Name="AsPTSNumber" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsPTSNumProvider" IsVisible="False" Grid.Row="13" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Дата выдачи ПТС" Margin="0,5,0,0" Grid.Row="14" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <DatePicker Date="{Binding PTSDateReg}" x:Name="AsPTSDateReg" PropertyChanged="AsPTSDateReg_PropertyChanged" Margin="5,10,0,0" MaximumDate="{Binding Source={x:Static sys:DateTime.Now}}" Format="d MMMM yyyy" Grid.Row="14" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <Editor Placeholder="Организация выдавшая ПТС" Text="{Binding PTSOrgIssuedDoc}" Margin="0,10,0,0" x:Name="AsPTSOrgIssuedDoc" MinimumHeightRequest="70" VerticalOptions="Center" Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
+            <controls:Provaider x:Name="AsPTSOrgIssuedDocProvider" IsVisible="False" Grid.Row="15" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="СТС" Style="{DynamicResource ItemLabel}" Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0"/>
+            <HorizontalStackLayout Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Entry Placeholder="Серия" Text="{Binding STSSeries}" MaxLength="5" x:Name="AsSTSSeries" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center">
+                    <Entry.Behaviors>
+                        <toolkit:MaskedBehavior Mask="XX XX"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry Placeholder="Номер" Text="{Binding STSNumber}" MaxLength="6" x:Name="AsSTSNumber" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsSTSNumProvider" IsVisible="False" Grid.Row="18" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Label Text="Дата выдачи СТС" Margin="0,5,0,0" Grid.Row="19" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            <DatePicker Date="{Binding STSDateReg}" x:Name="AsSTSDateReg" Margin="5,10,0,0" MaximumDate="{Binding Source={x:Static sys:DateTime.Now}}" Format="d MMMM yyyy" Grid.Row="19" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <Editor Placeholder="Организация выдавшая СТС" Text="{Binding STSOrgIssuedDoc}" Margin="0,10,0,0" x:Name="AsSTSOrgIssuedDoc" MinimumHeightRequest="70" VerticalOptions="Center" Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
+            <controls:Provaider x:Name="AsSTSOrgIssuedDocProvider" IsVisible="False" Grid.Row="20" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center"/>`
+        </Grid>
+    </ScrollView>
+</ContentPage>

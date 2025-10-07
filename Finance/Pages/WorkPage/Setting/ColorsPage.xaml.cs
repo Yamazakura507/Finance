@@ -12,13 +12,34 @@ public partial class ColorsPage : ContentPage
     Loading loading { get; set; }
     ObservableCollection<View.LibColors> ViewColors;
 
+    private bool IsSelected = false;
+    public int SelectedIdColor = -1;
+
     public ColorsPage()
     {
         InitializeComponent();
+
+        this.IsSelected = false;
+    }
+
+    public ColorsPage(bool isSelected)
+    {
+        InitializeComponent();
+
+        this.IsSelected = isSelected;
     }
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
+        if (IsSelected)
+        {
+            #if !ANDROID && !IOS
+                ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
+                toolbarItem.Clicked += Back_Clicked;
+                this.ToolbarItems.Add(toolbarItem);
+            #endif
+        }
+
         loading = new Loading();
 
         this.ShowPopup(loading);
@@ -71,7 +92,20 @@ public partial class ColorsPage : ContentPage
         ViewColors.Remove(color);
     }
 
-    async private void ColorPress_Tapped(object sender, TappedEventArgs e) => await EditColor(sender);
+    async private void ColorPress_Tapped(object sender, TappedEventArgs e)
+    {
+        if (!IsSelected)
+        {
+            await EditColor(sender);
+        }
+        else
+        {
+            View.LibColors color = sender.ContextConvert<View.LibColors>();
+
+            SelectedIdColor = color.Id;
+            this.BackButtonInNavClick();
+        }
+    }
 
     async private Task EditColor(object sender, bool isColor = false)
     {
@@ -155,4 +189,6 @@ public partial class ColorsPage : ContentPage
 
         await Navigation.PushAsync(new NavigationPage(new ColorWebPage(color.MyColor)));
     }
+
+    private void Back_Clicked(object? sender, EventArgs e) => this.BackButtonInNavClick();
 }

@@ -55,7 +55,7 @@ namespace Finance.Models
                         SetParametrs<Assets>("IdFlowType", value);
                     }
 
-                    FlowType = GetModel<FlowType>(value);
+                    FlowType = GetModel<View.FlowType>(value);
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Finance.Models
             }
         }
 
-        public FlowType FlowType { get; private set; }
+        public View.FlowType FlowType { get; private set; }
         private string AssetsGroup { get; set; }
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)

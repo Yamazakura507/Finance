@@ -2,7 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Finance.CustomControl"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Finance.Pages.WorkPage.Imuh.EstateListPage" Title="Журнал собственности" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter" />
+        <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+    </ContentPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
@@ -10,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
-            <ImageButton WidthRequest="50" Source="imuh.png" Pressed="AddPlan_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <ImageButton WidthRequest="50" Source="imuh.png" Pressed="AddEstate_Pressed" x:Name="AddAsset" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
             <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
         </HorizontalStackLayout>
 
@@ -50,6 +57,7 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
                                         <Grid.ColumnDefinitions>
@@ -58,7 +66,7 @@
                                             <ColumnDefinition Width="55"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70">
+                                        <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="5" HeightRequest="70" WidthRequest="70">
                                             <Image.Style>
                                                 <Style TargetType="Image">
                                                     <Style.Triggers>
@@ -82,7 +90,29 @@
                                             <Label Text="{Binding EstateStatus.Name, StringFormat='{0})'}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
                                         </HorizontalStackLayout>
 
-                                        <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                        <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Image Source="{Binding Car.ImgManufactureLink}" Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="5" HeightRequest="40" WidthRequest="40"/>
+                                            <Label HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                <Label.Style>
+                                                    <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdTypeEstate}" Value="1">
+                                                                <Setter Property="Text">
+                                                                    <Setter.Value>
+                                                                        <MultiBinding StringFormat="{}{0} {1}">
+                                                                            <Binding Path="Car.Make"/>
+                                                                            <Binding Path="Car.Model"/>
+                                                                        </MultiBinding>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Label.Style>
+                                            </Label>
+                                        </HorizontalStackLayout>
+
+                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
                                             <HorizontalStackLayout.Style>
                                                 <Style TargetType="HorizontalStackLayout">
                                                     <Style.Triggers>
@@ -99,14 +129,15 @@
                                             <Label Text="{Binding Owners.Birthday, StringFormat='({0:dd.MM.yyyy})'}" LineBreakMode="MiddleTruncation" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
                                         </HorizontalStackLayout>
 
-                                        <Label Text="{Binding Description}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        <Label Text="{Binding Description}" Style="{DynamicResource ItemLabel}" MaxLines="2" LineBreakMode="MiddleTruncation" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                        <ImageButton Source="delete_cash.png" HeightRequest="50" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                        <ImageButton Source="delete_cash.png" HeightRequest="50" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" Aspect="AspectFit" Margin="0,0,10,0"/>
+
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Estate_Tapped"/>
+                                        </Grid.GestureRecognizers>
                                     </Grid>
                                 </SwipeView>
-                                <ContentView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="Plan_Tapped"/>
-                                </ContentView.GestureRecognizers>
                             </ContentView>
                         </Border>
                     </DataTemplate>

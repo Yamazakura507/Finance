@@ -135,6 +135,9 @@
 	  <Compile Update="Pages\Tabbed\ScalpUpInfoPage.xaml.cs">
 	    <DependentUpon>ScalpUpInfoPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\Tabbed\EstateTabedPage.xaml.cs">
+	    <DependentUpon>EstateTabedPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Tabbed\SettingTabbedPage.xaml.cs">
 	    <DependentUpon>SettingTabbedPage.xaml</DependentUpon>
 	  </Compile>
@@ -155,6 +158,21 @@
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Finance\Futures\OrdersListPage.xaml.cs">
 	    <DependentUpon>OrdersListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Imuh\EditorCars.xaml.cs">
+	    <DependentUpon>EditorCars.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Imuh\EditorOwners.xaml.cs">
+	    <DependentUpon>EditorOwners.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Imuh\EditorEstate.xaml.cs">
+	    <DependentUpon>EditorEstate.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Imuh\CarListPage.xaml.cs">
+	    <DependentUpon>CarListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Imuh\OwnersList.xaml.cs">
+	    <DependentUpon>OwnersList.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Imuh\EstateListPage.xaml.cs">
 	    <DependentUpon>EstateListPage.xaml</DependentUpon>
@@ -189,6 +207,9 @@
 	  <MauiXaml Update="Pages\Tabbed\ScalpUpInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Tabbed\EstateTabedPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Tabbed\SettingTabbedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -211,6 +232,21 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\GroupCharPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Imuh\EditorCars.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Imuh\EditorOwners.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Imuh\EditorEstate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Imuh\CarListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Imuh\OwnersList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Imuh\EstateListPage.xaml">

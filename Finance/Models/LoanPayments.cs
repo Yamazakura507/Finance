@@ -28,7 +28,7 @@ namespace Finance.Models
                         SetParametrs<LoanPayments>("IdCredit", value);
                     }
 
-                    Credit = GetModel<Credit>(value);
+                    Credit = GetModel<View.Credit>(value);
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace Finance.Models
                         SetParametrs<LoanPayments>("IdAssets", value is null ? DBNull.Value : value);
                     }
 
-                    Assets = value is null ? null : GetModel<Assets>(value);
+                    Assets = value is null ? null : GetModel<View.Assets>(value);
                     idAssets = value;
                 }
             }
@@ -154,8 +154,8 @@ namespace Finance.Models
                 }
             }
         }
-        public Credit Credit { get; private set; }
-        public Assets Assets { get; private set; }
+        public View.Credit Credit { get; private set; }
+        public View.Assets Assets { get; private set; }
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)
         {

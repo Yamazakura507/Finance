@@ -1,5 +1,6 @@
 ﻿
 
+using Finance.Classes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -10,6 +11,7 @@ namespace Finance.View
         private int idTypeEstate;
         private int idStatusEstate;
         private int idOwner;
+        private int? idCar;
         private EstateStatus estateStatus;
 
         public int IdTypeEstate
@@ -52,6 +54,19 @@ namespace Finance.View
             }
         }
 
+        public int? IdCar
+        {
+            get => idCar;
+            set
+            {
+                if (idCar != value)
+                {
+                    Car = GetModel<Car>(value);
+                    idCar = value;
+                }
+            }
+        }
+
         public EstateType EstateType { get; private set; }
         public EstateStatus EstateStatus
         {
@@ -66,6 +81,7 @@ namespace Finance.View
             }
         }
         public Owners Owners { get; private set; }
+        public Car Car { get; private set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -11,19 +11,41 @@ namespace Finance.Classes
     {
         protected static bool IsGet { get; set; } = false;
 
-        public static DataTable InsertModel<T>(Dictionary<string, object> parametrs, string reterning="")
+        public static G InsertModel<T,G>(Dictionary<string, object> parametrs, string reterning)
         {
             try
             {
-                DataTable dt;
+                G returningVal;
                 CheckPolice(false, typeof(T));
 
                 using (var ms = new Mysql())
                 {
-                    dt = ms.Insert(typeof(T).Name, parametrs, reterning);
+                    returningVal = (G)ms.Insert(typeof(T).Name, parametrs, reterning); ;
                 }
 
-                return dt;
+                return returningVal;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static T InsertModel<T>(Dictionary<string, object> parametrs) where T : new ()
+        {
+            try
+            {
+                T returningVal;
+                CheckPolice(false, typeof(T));
+
+                using (var ms = new Mysql())
+                {
+                    int? id = (int)ms.Insert(typeof(T).Name, parametrs, "Id");
+
+                    returningVal = GetModel<T>(id);
+                }
+
+                return returningVal;
             }
             catch (Exception ex)
             {
@@ -204,6 +226,24 @@ namespace Finance.Classes
             
         }
 
+        public static void DeleteModel<T>(int Id)
+        {
+            try
+            {
+                CheckPolice(false, typeof(T));
+
+                using (var ms = new Mysql())
+                {
+                    ms.ExecSql(@$"DELETE FROM `{typeof(T).Name}` WHERE `Id` = '{Id}'");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         public virtual T GetParametrs<T>(string param, Type typeTb, int? Id = null)
         {
             try
@@ -286,10 +326,19 @@ namespace Finance.Classes
             }
         }
 
-        public static T ResultRequest<T>(string sql)
+        public static T ResultRequest<T,G>(string sql = null, string param = null, int? id = null, char? separatorManyParametr = null)
         {
             try
             {
+                if (sql is null)
+                {
+                    param = separatorManyParametr is null ? 
+                        $"`t`.`{param}`" : 
+                        $"CONCAT_WS('{separatorManyParametr}',{String.Join(", ", param.Split((char)separatorManyParametr).Select(i => $"`t`.`{i}`"))})";
+
+                    sql = $"SELECT {param} FROM `{typeof(G).Name}` t WHERE `t`.`Id` = '{id}'";
+                }
+
                 object obj;
 
                 using (var ms = new Mysql())
@@ -298,6 +347,18 @@ namespace Finance.Classes
                 }
 
                 return (T)(obj == DBNull.Value ? null : obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static T ResultRequest<T>(string sql)
+        {
+            try
+            {
+                return ResultRequest<T, object>(sql);
             }
             catch (Exception ex)
             {
@@ -348,9 +409,5 @@ namespace Finance.Classes
 
             return result;
         }
-
-        public static string ConvertToMySqlDate(DateTime value) => value.ToString("yyyy-MM-dd HH:mm:ss").Replace(" ", "T");
-        public static string ConvertToMySqlDecimal(decimal value) => value.ToString().Replace(",", ".");
-        public static string ConvertToMySqlDecimal(string value) => value.Replace(",", ".");
     }
 }

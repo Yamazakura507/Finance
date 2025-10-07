@@ -20,7 +20,7 @@ namespace Finance.Models
                         SetParametrs<TaskJobs>("IdTask", value);
                     }
 
-                    Task = GetModel<Tasks>(value);
+                    Task = GetModel<View.Tasks>(value);
                     idTask = value;
                 }
             }
@@ -38,14 +38,14 @@ namespace Finance.Models
                         SetParametrs<TaskJobs>("IdJob", value);
                     }
 
-                    Job = GetModel<Jobs>(value);
+                    Job = GetModel<View.Jobs>(value);
                     idJob = value;
                 }
             }
         }
 
-        public Jobs Job { get; private set; }
-        public Tasks Task { get; private set; }
+        public View.Jobs Job { get; private set; }
+        public View.Tasks Task { get; private set; }
 
         private new int? IdUser { get; set; }
         private new Users User { get; set; }

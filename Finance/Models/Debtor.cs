@@ -36,12 +36,12 @@ namespace Finance.Models
                         SetParametrs<Debtor>("IdStatusDebtor", value);
                     }
 
-                    DebtorStatus = GetModel<DebtorStatus>(value);
+                    DebtorStatus = GetModel<View.DebtorStatus>(value);
                 }
             }
         }
 
-        public DebtorStatus DebtorStatus { get; private set; }
+        public View.DebtorStatus DebtorStatus { get; private set; }
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)
         {

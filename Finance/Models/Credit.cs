@@ -134,7 +134,7 @@ namespace Finance.Models
                         SetParametrs<Credit>("IdStatusCredit", value);
                     }
 
-                    CreditStatus = GetModel<CreditStatus>(value);
+                    CreditStatus = GetModel<View.CreditStatus>(value);
                     idStatusCredit = value;
                 }
             }
@@ -185,7 +185,7 @@ namespace Finance.Models
             }
         }
 
-        public CreditStatus CreditStatus { get; private set; }
+        public View.CreditStatus CreditStatus { get; private set; }
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)
         {

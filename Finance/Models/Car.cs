@@ -1,7 +1,10 @@
 ﻿
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Finance.Models
 {
-    public class Car : Abstract.AbstractModel<Car>
+    public class Car : Abstract.AbstractModel<Car>, INotifyPropertyChanged
     {
         private string make;
         private string model;
@@ -22,11 +25,11 @@ namespace Finance.Models
         private decimal? price;
         private int idTypeCar;
         private int idColor;
-        private int idEstate;
         private int yearOfManufacture;
-        private int mileage;
+        private int? mileage;
         private DateTime ptsDateReg;
         private DateTime stsDateReg;
+        private View.LibColors color;
 
 
         public string Make
@@ -41,6 +44,7 @@ namespace Finance.Models
                         SetParametrs<Car>("Make", value);
                     }
                     make = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -57,6 +61,7 @@ namespace Finance.Models
                         SetParametrs<Car>("Model", value);
                     }
                     model = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -89,7 +94,7 @@ namespace Finance.Models
                         SetParametrs<Car>("IdTypeCar", value);
                     }
 
-                    TypeCar = GetModel<TypeCar>(value);
+                    TypeCar = GetModel<View.TypeCar>(value);
                     idTypeCar = value;
                 }
             }
@@ -107,13 +112,14 @@ namespace Finance.Models
                         SetParametrs<Car>("YearOfManufacture", value);
                     }
                     yearOfManufacture = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
-        public int Mileage
+        public int? Mileage
         {
-            get => !IsGet ? GetParametrs<int>("Mileage", this.GetType()) : mileage;
+            get => !IsGet ? GetParametrs<int?>("Mileage", this.GetType()) : mileage;
             set
             {
                 if (mileage != value)
@@ -171,7 +177,7 @@ namespace Finance.Models
                         SetParametrs<Car>("IdColor", value);
                     }
 
-                    LibColors = GetModel<LibColors>(value);
+                    LibColors = GetModel<View.LibColors>(value);
                     idColor = value;
                 }
             }
@@ -401,26 +407,25 @@ namespace Finance.Models
             }
         }
 
-        public int IdEstate
-        {
-            get => !IsGet ? GetParametrs<int>("IdEstate", this.GetType()) : idEstate;
-            set
+        public View.TypeCar TypeCar { get; private set; }
+        public View.LibColors LibColors 
+        { 
+            get => color;
+            private set
             {
-                if (idEstate != value)
+                if (idColor != value.Id)
                 {
-                    if (!IsGet)
-                    {
-                        SetParametrs<Car>("IdEstate", value);
-                    }
-
-                    Estate = GetModel<Estate>(value);
-                    idEstate = value;
+                    color = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
-        public TypeCar TypeCar { get; private set; }
-        public LibColors LibColors { get; private set; }
-        public Estate Estate { get; private set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

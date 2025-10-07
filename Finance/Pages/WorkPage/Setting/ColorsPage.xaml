@@ -4,6 +4,7 @@
              xmlns:controls="clr-namespace:Maui.ColorPicker;assembly=Maui.ColorPicker"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              x:Class="Finance.Pages.WorkPage.Setting.ColorsPage" Loaded="ContentPage_Loaded" Title="Библиотека цвета">
+    <ScrollView>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -55,62 +56,60 @@
                                     </MenuFlyout>
                                 </FlyoutBase.ContextFlyout>
 
-                                <SwipeView>
-                                    <SwipeView.LeftItems>
-                                        <SwipeItems>
-                                            <SwipeItem Text="🗑️Удалить"
-                                                       IconImageSource="delete_support.png"
+                                    <SwipeView>
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem Text="🗑️Удалить"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
                                                        Invoked="DeleteButton_Pressed"/>
-                                            <SwipeItem Text="💦Редактировать цвет"
-                                                       IconImageSource="colors.png"
+                                                <SwipeItem Text="💦Редактировать цвет"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
                                                        Invoked="MenuFlyoutItemСolorEdit_Clicked"/>
-                                            <SwipeItem Text="ℹИнформация о цвете"
-                                                       IconImageSource="support.png"
+                                                <SwipeItem Text="ℹИнформация о цвете"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
                                                        Invoked="MenuFlyoutItemColorInformation_Clicked"/>
-                                            <SwipeItem Text="🖊Редактировать"
-                                                       IconImageSource="support.png"
+                                                <SwipeItem Text="🖊Редактировать"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
-                                                       Invoked="MenuFlyoutItem_Clicked_IsEdit"/>        
-                                        </SwipeItems>
-                                    </SwipeView.LeftItems>
+                                                       Invoked="MenuFlyoutItem_Clicked_IsEdit"/>
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
 
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="60"/>
-                                            <ColumnDefinition Width="70"/>
-                                        </Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="70"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Border Margin="5" BackgroundColor="{Binding Colors}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" HorizontalOptions="Center">
-                                            <Border.Shadow>
-                                                <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="DarkOliveGreen"/>
-                                            </Border.Shadow>
-                                        </Border>
+                                            <Border Margin="5" BackgroundColor="{Binding Colors}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" HorizontalOptions="Center">
+                                                <Border.Shadow>
+                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="DarkOliveGreen"/>
+                                                </Border.Shadow>
+                                            </Border>
 
-                                        <Label Text="{Binding Name, StringFormat='{0}'}" Style="{DynamicResource BoldItemLabel}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                        <Label Text="{Binding MyColor, StringFormat='HEX - {0}'}" Style="{DynamicResource ItemLabel}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding Name, StringFormat='{0}'}" Style="{DynamicResource BoldItemLabel}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding MyColor, StringFormat='HEX - {0}'}" Style="{DynamicResource ItemLabel}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                        <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
-                                    </Grid>
-                                </SwipeView>
-                                <ContentView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="ColorPress_Tapped"/>
-                                </ContentView.GestureRecognizers>
-                            </ContentView>
+                                            <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
+
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="ColorPress_Tapped"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </SwipeView>
+                                </ContentView>
                         </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
+    </ScrollView>
 </ContentPage>

@@ -206,6 +206,10 @@ namespace Finance.Classes
             {
                 return (T)((ContentView)sender).Parent.BindingContext;
             }
+            else if (sender.GetType() == typeof(Grid))
+            {
+                return (T)((Grid)sender).BindingContext;
+            }
             else
             {
                 return (T)((ImageButton)sender).BindingContext;

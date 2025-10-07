@@ -103,7 +103,7 @@ public partial class AssetsEditorPage : ContentPage
                 string strGroupAsset = String.Join(",", asGrVSL.Where(i => ((CheckBox)((Grid)((Border)((Grid)i).Children[0]).Content).Children[2]).IsChecked).Select(i => ((View.AssetsGroup)((Grid)i).BindingContext).Id));
 
                 using (var ms = new Mysql())
-                    await ms.ExecSqlAsync($"SELECT ins_upd_asset_or_pasive('{IdDate}','{((FlowType)FlowTypePicker.SelectedItem).Id}','{DBModel.ConvertToMySqlDecimal(AsSum.Text)}','{AsName.Text}',@Use,@IsStability,@IsAsset,-1,'{strGroupAsset}',@StatusTransfer,'{InfoAccount.IdUser}')", new MySqlParameter[]
+                    await ms.ExecSqlAsync($"SELECT ins_upd_asset_or_pasive('{IdDate}','{((FlowType)FlowTypePicker.SelectedItem).Id}','{AsSum.Text.ConvertToMySqlDecimal()}','{AsName.Text}',@Use,@IsStability,@IsAsset,-1,'{strGroupAsset}',@StatusTransfer,'{InfoAccount.IdUser}')", new MySqlParameter[]
                     {
                         new MySqlParameter("@Use", String.IsNullOrEmpty(AsCommit.Text) ? DBNull.Value : AsCommit.Text),
                         new MySqlParameter("@IsStability", cbStability.IsChecked),

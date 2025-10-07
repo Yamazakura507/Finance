@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:cl="clr-namespace:Finance.Classes"
+             x:Class="Finance.Pages.WorkPage.Imuh.CarListPage" Title="Журнал авто" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter" />
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
+            <ImageButton WidthRequest="50" Source="car.png" Pressed="AddCar_Pressed" x:Name="AddCar" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+
+        <ScrollView Grid.Row="1" Grid.Column="0" Padding="10,5,10,5">
+            <VerticalStackLayout x:Name="debVSL" BindableLayout.ItemsSource="{Binding ViewCar}" Margin="0,10,0,10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem IconImageSource="delete_cash.png" Text="Удалить" Clicked="DeleteTask_Pressed"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
+
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="Удалить"
+                                                       IconImageSource="delete_cash.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                                                       Invoked="DeleteTask_Pressed"/>
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="55"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Source="{Binding ImgManufactureLink}"
+                                               Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="7" HeightRequest="70" WidthRequest="70"/>
+
+                                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Label Text="{Binding Make}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding Model}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding YearOfManufacture}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        </HorizontalStackLayout>
+
+                                        <Label Text="{Binding VIN, StringFormat='VIN {0}'}" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Image Margin="5,0,5,0" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" HeightRequest="50" WidthRequest="50">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IdTypeCar}" Value="1">
+                                                                <Setter Property="Source" Value="{Binding Source={x:Static cl:CarInfo.PassangerCarIcon}}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IdTypeCar}" Value="2">
+                                                                <Setter Property="Source" Value="{Binding Source={x:Static cl:CarInfo.TruckIcon}}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IdTypeCar}" Value="3">
+                                                                <Setter Property="Source" Value="{Binding Source={x:Static cl:CarInfo.BusIcon}}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                            <Label Text="{Binding TypeCar.Name}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Border Margin="5" BackgroundColor="{Binding LibColors.Colors}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" HorizontalOptions="Center">
+                                                <Border.Shadow>
+                                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="DarkOliveGreen"/>
+                                                </Border.Shadow>
+                                            </Border>
+                                            <Label Text="{Binding LibColors.Name}" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                        </HorizontalStackLayout>
+
+                                        <Label Text="{Binding Mileage, StringFormat='Пробег {0} км'}" IsVisible="{Binding Mileage, Converter={StaticResource isNullConverter}, ConverterParameter='True'}" Grid.Row="4" Grid.Column="1" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <Label Text="{Binding StateNumber}" Grid.Row="5" Grid.Column="1" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,5,0,0"/>
+
+                                        <Label Text="{Binding Price, StringFormat='Цена {0}₽'}" IsVisible="{Binding Price, Converter={StaticResource isNullConverter}, ConverterParameter='True'}" Grid.Row="6" Grid.Column="1" Style="{DynamicResource ItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+
+                                        <ImageButton Source="delete_cash.png" HeightRequest="50" Pressed="DeleteTask_Pressed" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Aspect="AspectFit" Margin="0,0,10,0"/>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Car_Tapped"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </SwipeView>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

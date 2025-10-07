@@ -805,5 +805,12 @@ namespace Finance.Properties {
                 return ((byte[])(obj));
             }
         }
+		
+		internal static byte[] car {
+            get {
+                object obj = ResourceManager.GetObject("car", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

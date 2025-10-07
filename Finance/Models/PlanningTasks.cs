@@ -19,7 +19,7 @@ namespace Finance.Models
                         SetParametrs<PlanningTasks>("IdTask", value);
                     }
 
-                    Task = GetModel<Tasks>(value);
+                    Task = GetModel<View.Tasks>(value);
                     idTask = value;
                 }
             }
@@ -37,13 +37,13 @@ namespace Finance.Models
                         SetParametrs<PlanningTasks>("IdPlan", value);
                     }
 
-                    Plan = GetModel<PlanningJournal>(value);
+                    Plan = GetModel<View.PlanningJournal>(value);
                     idPlan = value;
                 }
             }
         }
 
-        public PlanningJournal Plan { get; private set; }
-        public Tasks Task { get; private set; }
+        public View.PlanningJournal Plan { get; private set; }
+        public View.Tasks Task { get; private set; }
     }
 }

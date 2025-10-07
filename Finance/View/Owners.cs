@@ -4,6 +4,7 @@ namespace Finance.View
     public class Owners : Abstract.AbstractViewModel
     {
         private int idBirthdayAddress;
+        private bool ownerIsUser;
 
         public string FullName
         {
@@ -32,8 +33,15 @@ namespace Finance.View
 
         public bool OwnerIsUser
         {
-            get;
-            set;
+            get => ownerIsUser;
+            set
+            {
+                if (ownerIsUser != value)
+                {
+                    ownerIsUser = value;
+                    ShadowColorBrush = value ? Colors.DarkOliveGreen : Colors.Transparent;
+                }
+            }
         }
 
         public string Phone
@@ -42,7 +50,7 @@ namespace Finance.View
             set;
         }
 
-        public string PostIndex
+        public int? PostIndex
         {
             get;
             set;
@@ -54,8 +62,13 @@ namespace Finance.View
             set;
         }
 
+        public Color ShadowColorBrush
+        {
+            get;
+            private set;
+        }
+
 
         public LibAddress BirthdayAddress { get; private set; }
-        public LibAddress RegAddress { get; private set; }
     }
 }

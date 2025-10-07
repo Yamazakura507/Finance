@@ -88,7 +88,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingActive>("IdTypeCommission", value);
                     }
 
-                    TypeCommission = GetModel<TypeCommission>(value);
+                    TypeCommission = GetModel<View.TypeCommission>(value);
                     idTypeCommission = value;
                 }
             }
@@ -125,7 +125,7 @@ namespace Finance.Models
             }
         }
 
-        public TypeCommission TypeCommission { get; private set;}
+        public View.TypeCommission TypeCommission { get; private set;}
 
         private new string Description { get; set; }
 

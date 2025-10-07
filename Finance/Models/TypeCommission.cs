@@ -49,7 +49,7 @@ namespace Finance.Models
                 {
                     if (!IsGet)
                     {
-                        SetParametrs<AssetsGroup>("Icon", value is null ? DBNull.Value : value);
+                        SetParametrs<TypeCommission>("Icon", value is null ? DBNull.Value : value);
                     }
                     icon = value;
                 }

@@ -74,7 +74,7 @@ public partial class OrdersListPage : ContentPage
     async private void AddOrder_Pressed(object sender, EventArgs e) => await Navigation.PushAsync(new NavigationPage(new OrderInfoPage() { BindingContext = null, IdScalp = idSc }));
     async private void Order_Tapped(object sender, TappedEventArgs e)
     {
-        var order = (View.ScalpingEntries)((Grid)sender).BindingContext;
+        var order = sender.ContextConvert<View.ScalpingEntries>();
 
         var r = DBModel.GetModel<Models.ScalpingEntries>(order.Id);
 

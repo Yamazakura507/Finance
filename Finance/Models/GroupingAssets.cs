@@ -21,7 +21,7 @@ namespace Finance.Models
                         SetParametrs<GroupingAssets>("IdAssets", value);
                     }
 
-                    Assets = GetModel<Assets>(value);
+                    Assets = GetModel<View.Assets>(value);
                     idAssets = value;
                 }
             }
@@ -39,7 +39,7 @@ namespace Finance.Models
                         SetParametrs<GroupingAssets>("IdGroupAssets", value);
                     }
 
-                    AssetsGroup = GetModel<AssetsGroup>(value);
+                    AssetsGroup = GetModel<View.AssetsGroup>(value);
                     idGroupAssets = value;
                 }
             }
@@ -63,8 +63,8 @@ namespace Finance.Models
             }
         }
 
-        public Assets Assets { get; private set; }
-        public AssetsGroup AssetsGroup { get; private set; }
+        public View.Assets Assets { get; private set; }
+        public View.AssetsGroup AssetsGroup { get; private set; }
         public DateJournal DateJournal { get; private set; }
 
         private new int? IdUser { get; set; }

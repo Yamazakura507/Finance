@@ -60,12 +60,12 @@ public partial class EstateListPage : ContentPage
             MainThread.BeginInvokeOnMainThread(() => ViewEstate.Remove(estaet));
         }));
     }
-    async private void AddPlan_Pressed(object sender, EventArgs e) => await Navigation.PushAsync(new NavigationPage(new PlaningInfoPage() { BindingContext = null }));
-    async private void Plan_Tapped(object sender, TappedEventArgs e)
+    async private void AddEstate_Pressed(object sender, EventArgs e) => await Navigation.PushAsync(new NavigationPage(new EditorEstate() { BindingContext = null }));
+    async private void Estate_Tapped(object sender, TappedEventArgs e)
     {
-        //var plan = (View.PlanningJournal)((ContentView)sender).BindingContext;
+        View.Estate estate = sender.ContextConvert<View.Estate>();
 
-        //await Navigation.PushAsync(new NavigationPage(new PlaningInfoPage() { BindingContext = DBModel.GetModel<Models.PlanningJournal>(plan.Id) }));
+        await Navigation.PushAsync(new NavigationPage(new EditorEstate() { BindingContext = DBModel.GetModel<Models.Estate>(estate.Id) }));
     }
 
     private void EditStatusEstateMenuFlyoutItem_Clicked(object sender, EventArgs e)

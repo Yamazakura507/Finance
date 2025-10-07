@@ -23,14 +23,14 @@ public partial class ScalpActiveListPage : ContentPage
     {
         InitializeComponent();
 
-        IsSelected = false;
+        this.IsSelected = false;
     }
 
-    public ScalpActiveListPage(bool isSelected = false)
+    public ScalpActiveListPage(bool isSelected)
     {
         InitializeComponent();
 
-        IsSelected = isSelected;
+        this.IsSelected = isSelected;
     }
 
     private void ContentPage_Loaded(object sender, EventArgs e)

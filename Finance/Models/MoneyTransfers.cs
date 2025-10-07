@@ -21,7 +21,7 @@ namespace Finance.Models
                         SetParametrs<MoneyTransfers>("IdAssets", value);
                     }
 
-                    Assets = GetModel<Assets>(value);
+                    Assets = GetModel<View.Assets>(value);
                     idAssets = value;
                 }
             }
@@ -80,7 +80,7 @@ namespace Finance.Models
         }
 
 
-        public Assets Assets { get; private set; }
+        public View.Assets Assets { get; private set; }
         public TransferStatus TransferStatus { get; private set; }
 
         private new int? IdUser { get; set; }

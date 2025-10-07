@@ -89,7 +89,7 @@ public partial class CreditInfoPage : ContentPage
             loading.LoadingBackgorundWorker.RunWorkerAsync(new Thread(async () =>
             {
                 using (var ms = new Mysql())
-                    ms.ExecSql($"SELECT ins_upd_credit(@StartDate,@EndDate,@Purpoce,'{DBModel.ConvertToMySqlDecimal(percent.Text)}',@Commit,'{DBModel.ConvertToMySqlDecimal(startSum.Text)}','{((View.CreditStatus)pickerStatus.SelectedItem).Id}','-1',@IdUser)", new[]
+                    ms.ExecSql($"SELECT ins_upd_credit(@StartDate,@EndDate,@Purpoce,'{percent.Text.ConvertToMySqlDecimal()}',@Commit,'{startSum.Text.ConvertToMySqlDecimal()}','{((View.CreditStatus)pickerStatus.SelectedItem).Id}','-1',@IdUser)", new[]
                     {
                         new MySqlParameter("@StartDate", startDate.Date),
                         new MySqlParameter("@EndDate", endDate.Date),

@@ -40,7 +40,10 @@
                                   TargetType="{x:Type pagePlan:PlaningLisPage}" />
                         <local:FlyautAccountModel Title="Собственность"
                                   IconSource="imuh.png"
-                                  TargetType="{x:Type pageImuh:EstateListPage}"/>
+                                  TargetType="{x:Type pageTab:EstateTabedPage}"/>
+                        <local:FlyautAccountModel Title="Собственики"
+                                  IconSource="account_admin.png"
+                                  TargetType="{x:Type pageImuh:OwnersList}"/>   
                         <local:FlyautAccountModel Title="Шаблоны"
                                   IconSource="shablon.png"
                                   TargetType="{x:Type pagePlan:PlaningLisPage}"/>

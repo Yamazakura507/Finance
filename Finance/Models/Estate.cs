@@ -7,6 +7,9 @@ namespace Finance.Models
         private int idTypeEstate;
         private int idStatusEstate;
         private int idOwner;
+        private int? idCar;
+        private View.Car car;
+        private View.Owners owner;
 
         public int IdTypeEstate
         {
@@ -18,9 +21,10 @@ namespace Finance.Models
                     if (!IsGet)
                     {
                         SetParametrs<Estate>("IdTypeEstate", value);
+                        IdCar = null;
                     }
 
-                    EstateType = GetModel<EstateType>(value);
+                    EstateType = GetModel<View.EstateType>(value);
                     idTypeEstate = value;
                 }
             }
@@ -38,7 +42,7 @@ namespace Finance.Models
                         SetParametrs<Estate>("IdStatusEstate", value);
                     }
 
-                    EstateStatus = GetModel<EstateStatus>(value);
+                    EstateStatus = GetModel<View.EstateStatus>(value);
                     idStatusEstate = value;
                 }
             }
@@ -56,14 +60,56 @@ namespace Finance.Models
                         SetParametrs<Estate>("IdOwner", value);
                     }
 
-                    Owners = GetModel<Owners>(value);
+                    Owners = GetModel<View.Owners>(value);
                     idOwner = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
-        public EstateType EstateType { get; private set; }
-        public EstateStatus EstateStatus { get; private set; }
-        public Owners Owners { get; private set; }
+        public int? IdCar
+        {
+            get => !IsGet ? GetParametrs<int?>("IdCar", this.GetType()) : idOwner;
+            set
+            {
+                if (idCar != value)
+                {
+                    if (!IsGet)
+                    {
+                        SetParametrs<Estate>("IdCar", value is null ? DBNull.Value : value);
+                    }
+
+                    Car = GetModel<View.Car>(value);
+                    idCar = value;
+                }
+            }
+        }
+
+        public View.EstateType EstateType { get; private set; }
+        public View.EstateStatus EstateStatus { get; private set; }
+        public View.Car Car
+        {
+            get => car;
+            private set
+            {
+                if (idCar != value.Id)
+                {
+                    car = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public View.Owners Owners 
+        { 
+            get => owner;
+            private set
+            {
+                if (idOwner != value.Id)
+                {
+                    owner = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
     }
 }

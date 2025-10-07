@@ -1,7 +1,10 @@
 ﻿
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Finance.Models
 {
-    public class Owners : Abstract.AbstractModel<Owners>
+    public class Owners : Abstract.AbstractModel<Owners>, INotifyPropertyChanged
     {
         private string fullName;
         private string seriesPass;
@@ -9,7 +12,7 @@ namespace Finance.Models
         private string departmentCodePass;
         private string orgIssuedPass;
         private string phone;
-        private string postIndex;
+        private int? postIndex;
         private string email;
         private int idBirthdayAddress;
         private int idRegAddress;
@@ -30,6 +33,7 @@ namespace Finance.Models
                         SetParametrs<Owners>("FullName", value);
                     }
                     fullName = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -142,7 +146,7 @@ namespace Finance.Models
                         SetParametrs<Owners>("IdBirthdayAddress", value);
                     }
 
-                    BirthdayAddress = GetModel<LibAddress>(value);
+                    BirthdayAddress = GetModel<View.LibAddress>(value);
                     idBirthdayAddress = value;
                 }
             }
@@ -160,7 +164,7 @@ namespace Finance.Models
                         SetParametrs<Owners>("IdRegAddress", value);
                     }
 
-                    RegAddress = GetModel<LibAddress>(value);
+                    RegAddress = GetModel<View.LibAddress>(value);
                     idRegAddress = value;
                 }
             }
@@ -191,16 +195,16 @@ namespace Finance.Models
                 {
                     if (!IsGet)
                     {
-                        SetParametrs<Owners>("Phone", value is null ? DBNull.Value : value);
+                        SetParametrs<Owners>("Phone", String.IsNullOrEmpty(value) ? DBNull.Value : value);
                     }
                     phone = value;
                 }
             }
         }
 
-        public string PostIndex
+        public int? PostIndex
         {
-            get => !IsGet ? GetParametrs<string>("PostIndex", this.GetType()) : postIndex;
+            get => !IsGet ? GetParametrs<int?>("PostIndex", this.GetType()) : postIndex;
             set
             {
                 if (postIndex != value)
@@ -223,7 +227,7 @@ namespace Finance.Models
                 {
                     if (!IsGet)
                     {
-                        SetParametrs<Owners>("Email", value is null ? DBNull.Value : value);
+                        SetParametrs<Owners>("Email", String.IsNullOrEmpty(value) ? DBNull.Value : value);
                     }
                     email = value;
                 }
@@ -231,7 +235,14 @@ namespace Finance.Models
         }
 
 
-        public LibAddress BirthdayAddress { get; private set; }
-        public LibAddress RegAddress { get; private set; }
+        public View.LibAddress BirthdayAddress { get; private set; }
+        public View.LibAddress RegAddress { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

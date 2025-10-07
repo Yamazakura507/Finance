@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              x:Class="Finance.Pages.WorkPage.Setting.AddressPage" Loaded="ContentPage_Loaded" Title="Библиотека адресов">
+    <ScrollView>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -45,54 +46,56 @@
                                     </MenuFlyout>
                                 </FlyoutBase.ContextFlyout>
 
-                                <SwipeView>
-                                    <SwipeView.LeftItems>
-                                        <SwipeItems>
-                                            <SwipeItem Text="🗑️Удалить"
+                                    <SwipeView>
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem Text="🗑️Удалить"
                                                        IconImageSource="delete_support.png"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
                                                        Invoked="DeleteButton_Pressed"/>
-                                            <SwipeItem Text="🚩Карта"
+                                                <SwipeItem Text="🚩Карта"
                                                        IconImageSource="address.png"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
                                                        Invoked="MenuFlyoutItem_Clicked_Map"/>
-                                            <SwipeItem Text="🖊Редактировать"
+                                                <SwipeItem Text="🖊Редактировать"
                                                        IconImageSource="support.png"
                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
-                                                       Invoked="MenuFlyoutItem_Clicked_IsEdit"/>        
-                                        </SwipeItems>
-                                    </SwipeView.LeftItems>
+                                                       Invoked="MenuFlyoutItem_Clicked_IsEdit"/>
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
 
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="60"/>
-                                            <ColumnDefinition Width="70"/>
-                                        </Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="70"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Image Margin="5" Source="address.png" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70"/>
+                                            <Image Margin="5" Source="address.png" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70"/>
 
-                                        <Label Text="{Binding Address, StringFormat='Адрес - {0}'}" MaxLines="4" Style="{DynamicResource ItemLabel}" LineBreakMode="MiddleTruncation" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
-                                        <Label Text="{Binding AddressType, StringFormat='На карте - {0}', TargetNullValue='Картография отсутствует'}" Style="{DynamicResource ItemLabel}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding Address, StringFormat='Адрес - {0}'}" MaxLines="4" Style="{DynamicResource ItemLabel}" LineBreakMode="MiddleTruncation" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding AddressType, StringFormat='На карте - {0}', TargetNullValue='Картография отсутствует'}" Style="{DynamicResource ItemLabel}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
 
-                                        <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
-                                    </Grid>
-                                </SwipeView>
-                                <ContentView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="SupportPress_Tapped"/>
-                                </ContentView.GestureRecognizers>
-                            </ContentView>
+                                            <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
+
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="SupportPress_Tapped"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </SwipeView>
+                                </ContentView>
                         </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
+        </ScrollView>
 </ContentPage>

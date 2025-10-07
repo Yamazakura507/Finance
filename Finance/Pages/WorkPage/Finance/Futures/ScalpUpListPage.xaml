@@ -59,7 +59,7 @@
                                         <ColumnDefinition Width="55"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70" Source="scalp.png"/>
+                                    <Image Margin="5" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="5" HeightRequest="70" WidthRequest="70" Source="scalp.png"/>
 
                                     <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
                                         <Label Text="{Binding Name}" Style="{DynamicResource BoldItemLabel}" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>

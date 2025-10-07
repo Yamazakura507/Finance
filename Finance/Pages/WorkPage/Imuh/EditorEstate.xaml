@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Finance.CustomControl"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Finance.Pages.WorkPage.Imuh.EditorEstate" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter" />
+        <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.Style>
+        <Style TargetType="ContentPage">
+            <Style.Triggers>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="True">
+                    <Setter Property="Title" Value="Новая собственность"/>
+                </DataTrigger>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="False">
+                    <Setter Property="Title" Value="{Binding Name}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentPage.Style>
+
+    <ScrollView HorizontalOptions="Center">
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton WidthRequest="50" Source="account_admin.png" Pressed="OwnerSelect_Pressed" x:Name="OwnerSelect" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+                <Label x:Name="AsNameOwner" Text="{Binding Owners.FullName, TargetNullValue='Нет привязки собственика', FallbackValue='Нет привязки собственика'}" Margin="0,0,5,0" Grid.Row="2" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsOwnerProvider" IsVisible="False" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Picker x:Name="StatusPicker" SelectedIndexChanged="pickerStatus_SelectedIndexChanged" ItemDisplayBinding="{Binding Name}" Margin="5,5,5,0" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Fill"/>
+            <controls:Provaider x:Name="AsStatusPickerProvider" TypeProvider="Info" Message="{Binding EstateStatus.Description}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Margin="5,5,5,0" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Fill">
+                <ImageButton Clicked="ImuhImg_Clicked" WidthRequest="40" x:Name="ImuhImg" Margin="0,0,5,0" HorizontalOptions="Start" VerticalOptions="Center">
+                    <ImageButton.Style>
+                        <Style TargetType="ImageButton">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="ImageButton" Binding="{Binding IdStatusEstate}" Value="1">
+                                    <Setter Property="Source" Value="{Binding Car.ImgManufactureLink}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="ImageButton" Binding="{Binding IdStatusEstate}" Value="2">
+                                    <Setter Property="Source" Value="{Binding EstateType.Icon,Converter={StaticResource ByteArrayToImageSourceConverter}, TargetNullValue='imuh.png'}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ImageButton.Style>
+                </ImageButton>
+                <Picker x:Name="TypePicker" SelectedIndexChanged="TypePicker_SelectedIndexChanged" ItemDisplayBinding="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                <Label x:Name="ImuhLb" Text="Не выбран" VerticalOptions="Center" HorizontalOptions="Center" Margin="5,0,0,0">
+                    <Label.Style>
+                        <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdTypeEstate}" Value="1">
+                                    <Setter Property="Text">
+                                        <Setter.Value>
+                                            <MultiBinding StringFormat="{}{0} {1} {2}">
+                                                <Binding Path="Car.Make"/>
+                                                <Binding Path="Car.Model"/>
+                                                <Binding Path="Car.YearOfManufacture"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+            </HorizontalStackLayout>
+            <controls:Provaider x:Name="AsTypePickerProvider" TypeProvider="Info" Message="{Binding EstateType.Description}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="AsName" Grid.Row="3" Grid.Column="0" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+            <controls:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Editor Placeholder="Краткое описание" Text="{Binding Description}" x:Name="AsCommit" Grid.Row="4" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
+            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

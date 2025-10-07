@@ -11,16 +11,38 @@ namespace Finance.Pages.WorkPage.Setting;
 
 public partial class AddressPage : ContentPage
 {
+    private bool IsSelected = false;
+
     Loading loading { get; set; }
     ObservableCollection<View.LibAddress> ViewAddress;
+
+    public int SelectedIdAddress = -1;
 
     public AddressPage()
     {
         InitializeComponent();
+
+        this.IsSelected = false;
+    }
+
+    public AddressPage(bool isSelected)
+    {
+        InitializeComponent();
+
+        this.IsSelected = isSelected;
     }
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
+        if (IsSelected)
+        {
+            #if !ANDROID && !IOS
+                ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
+                toolbarItem.Clicked += Back_Clicked;
+                this.ToolbarItems.Add(toolbarItem);
+            #endif
+        }
+
         loading = new Loading();
 
         this.ShowPopup(loading);
@@ -73,7 +95,20 @@ public partial class AddressPage : ContentPage
         ViewAddress.Remove(address);
     }
 
-    async private void SupportPress_Tapped(object sender, TappedEventArgs e) => await EditAddress(sender);
+    async private void SupportPress_Tapped(object sender, TappedEventArgs e)
+    {
+        if (!IsSelected)
+        {
+            await EditAddress(sender);
+        }
+        else
+        {
+            View.LibAddress address = sender.ContextConvert<View.LibAddress>();
+
+            SelectedIdAddress = address.Id;
+            this.BackButtonInNavClick();
+        }
+    }
 
     async private Task EditAddress(object sender, MapObject map = null)
     {
@@ -204,4 +239,6 @@ public partial class AddressPage : ContentPage
             }));
         }
     }
+
+    private void Back_Clicked(object? sender, EventArgs e) => this.BackButtonInNavClick();
 }

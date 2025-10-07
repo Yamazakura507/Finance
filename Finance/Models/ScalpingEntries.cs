@@ -168,7 +168,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdTypeCommission", value is null ? DBNull.Value : value);
                     }
 
-                    TypeCommission = value is null ? null : GetModel<TypeCommission>(value);
+                    TypeCommission = value is null ? null : GetModel<View.TypeCommission>(value);
                 }
             }
         }
@@ -186,7 +186,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdTax", value);
                     }
 
-                    Tax = GetModel<Tax>(value);
+                    Tax = GetModel<View.Tax>(value);
                 }
             }
         }
@@ -204,7 +204,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdStatusScalping", value);
                     }
 
-                    StatusScalping = GetModel<StatusScalping>(value);
+                    StatusScalping = GetModel<View.StatusScalping>(value);
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdBeastStatus", value);
                     }
 
-                    BeastStatus = GetModel<BeastStatus>(value);
+                    BeastStatus = GetModel<View.BeastStatus>(value);
                 }
             }
         }
@@ -240,7 +240,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdBroker", value);
                     }
 
-                    Broker = GetModel<Broker>(value);
+                    Broker = GetModel<View.Broker>(value);
                 }
             }
         }
@@ -258,7 +258,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdScalping", value);
                     }
 
-                    Scalping = GetModel<Scalping>(value);
+                    Scalping = GetModel<View.Scalping>(value);
                 }
             }
         }
@@ -276,7 +276,7 @@ namespace Finance.Models
                         SetParametrs<ScalpingEntries>("IdScalpingActive", value is null ? DBNull.Value : value);
                     }
 
-                    ScalpingActive = value is null ? null : GetModel<ScalpingActive>(value);
+                    ScalpingActive = value is null ? null : GetModel<View.ScalpingActive>(value);
                 }
             }
         }
@@ -376,19 +376,19 @@ namespace Finance.Models
             }
         }
 
-        public TypeCommission TypeCommission { get; private set;}
+        public View.TypeCommission TypeCommission { get; private set;}
 
-        public Tax Tax { get; private set;}
+        public View.Tax Tax { get; private set;}
 
-        public Scalping Scalping { get; private set;}
+        public View.Scalping Scalping { get; private set;}
 
-        public ScalpingActive ScalpingActive { get; private set;}
+        public View.ScalpingActive ScalpingActive { get; private set;}
 
-        public BeastStatus BeastStatus { get; private set;}
+        public View.BeastStatus BeastStatus { get; private set;}
 
-        public StatusScalping StatusScalping { get; private set;}
+        public View.StatusScalping StatusScalping { get; private set;}
 
-        public Broker Broker { get; private set;}
+        public View.Broker Broker { get; private set;}
 
         public override void SetParametrs<T>(string param, object value, int? Id = null)
         {

@@ -127,7 +127,14 @@ namespace Finance.Classes
             return rand;
         }
 
-        public static void IsDecimalNumberEntry(this Entry entry) => entry.Text = Regex.Replace(entry.Text, "[^\\d,.]", "");
-        public static void IsIntNumberEntry(this Entry entry) => entry.Text = Regex.Replace(entry.Text, "[^\\d]", "");
+        public static void IsDecimalNumberEntry(this Entry entry, string chartersRegx = null) => entry.Text = Regex.Replace(entry.Text, $@"[^\d,.{chartersRegx}]", "");
+        public static void IsIntNumberEntry(this Entry entry, string chartersRegx = null) => entry.Text = Regex.Replace(entry.Text, $@"[^\d{chartersRegx}]", "");
+
+        public static void IsPhoneEntry(this Entry entry) => entry.Text = Regex.Replace(entry.Text, "[^\\d\\s\\+()-]", "");
+
+        public static string ConvertToMySqlDateTime(this DateTime value) => value.ToString("yyyy-MM-dd HH:mm:ss").Replace(" ", "T");
+        public static string ConvertToMySqlDate(this DateTime value) => value.ToString("yyyy-MM-dd");
+        public static string ConvertToMySqlDecimal(this decimal value) => value.ToString().Replace(",", ".");
+        public static string ConvertToMySqlDecimal(this string value) => value.Replace(",", ".");
     }
 }
