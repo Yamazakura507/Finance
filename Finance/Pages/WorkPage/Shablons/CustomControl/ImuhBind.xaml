@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:control="clr-namespace:Finance.CustomControl" x:Name="this"
+             x:Class="Finance.Pages.WorkPage.Shablons.CustomControl.ImuhBind" Loaded="ContentView_Loaded">
+
+    <FlyoutBase.ContextFlyout>
+        <MenuFlyout>
+            <MenuFlyoutItem IconImageSource="delete_cash.png" Text="Удалить" Clicked="Delete_Task"/>
+        </MenuFlyout>
+    </FlyoutBase.ContextFlyout>
+
+    <SwipeView BindingContext="{x:Reference this}">
+        <SwipeView.LeftItems>
+            <SwipeItems>
+                <SwipeItem Text="Удалить"
+                        IconImageSource="delete_cash.png"
+                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                        Invoked="Delete_Task"/>
+            </SwipeItems>
+        </SwipeView.LeftItems>
+
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapSelectOwner_Tapped"/>
+            </Grid.GestureRecognizers>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <HorizontalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image WidthRequest="30" Source="imuh.png" x:Name="EstateImg" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding Estate.IdStatusEstate}" Value="1">
+                                    <Setter Property="Source" Value="regimuh.png"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding Estate.IdStatusEstate}" Value="2">
+                                    <Setter Property="Source" Value="unregimuh.png"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding Estate.IdStatusEstate}" Value="3">
+                                    <Setter Property="Source" Value="imuh.png"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Label x:Name="AsNameEstate" Text="{Binding Estate.Name, TargetNullValue='Нет привязки собствености', FallbackValue='Нет привязки собствености'}" Margin="0,0,5,0" Grid.Row="2" Grid.Column="0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+            <control:Provaider x:Name="AsNameProvider" x:FieldModifier="Public" IsVisible="False" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
+    </SwipeView>
+</ContentView>

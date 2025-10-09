@@ -56,7 +56,6 @@ public partial class EditorOwners : ContentPage
     {
         try
         {
-            DBModel.CheckPolice(false, typeof(Models.Estate));
             if (!CheckInsEstate()) return;
 
             loading = new Loading();

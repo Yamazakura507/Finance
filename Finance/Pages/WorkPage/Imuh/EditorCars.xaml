@@ -186,7 +186,7 @@
             <Editor Placeholder="Организация выдавшая СТС" Text="{Binding STSOrgIssuedDoc}" Margin="0,10,0,0" x:Name="AsSTSOrgIssuedDoc" MinimumHeightRequest="70" VerticalOptions="Center" Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
             <controls:Provaider x:Name="AsSTSOrgIssuedDocProvider" IsVisible="False" Grid.Row="20" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center"/>`
+            <controls:Provaider x:Name="ErrProvider" IsVisible="False" Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center"/>
         </Grid>
     </ScrollView>
 </ContentPage>

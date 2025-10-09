@@ -7,8 +7,6 @@ using Finance.Models;
 using Finance.Pages.WorkPage.Setting;
 using System.Collections.ObjectModel;
 using System.Text;
-using static Microsoft.Maui.ApplicationModel.Permissions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Finance.Pages.WorkPage.Imuh;
 

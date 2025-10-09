@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             x:Class="Finance.Pages.WorkPage.Shablons.ShablonEdit" Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.Style>
+        <Style TargetType="ContentPage">
+            <Style.Triggers>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="True">
+                    <Setter Property="Title" Value="Новый шаблон"/>
+                </DataTrigger>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="False">
+                    <Setter Property="Title" Value="{Binding Name}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentPage.Style>
+    
+    <ScrollView HorizontalOptions="Center">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <HorizontalStackLayout Grid.Row="0" HeightRequest="55">
+                <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <ScrollView HorizontalOptions="Center" Grid.Row="1">
+                <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition x:Name="colSPP"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ImageButton x:Name="addBtFile" Pressed="AddBtFile_Pressed" Aspect="AspectFit" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0">
+                        <ImageButton.Style>
+                            <Style TargetType="ImageButton">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="True">
+                                        <Setter Property="Source" Value="add_file.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="ImageButton" Binding="{Binding Converter={StaticResource isNullConverter}}" Value="False">
+                                        <Setter Property="Source" Value="shablon.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ImageButton.Style>
+                    </ImageButton>
+
+                    <Entry Placeholder="Наименование" Text="{Binding Name}" MaxLength="100" x:Name="AsName" Grid.Row="0" Grid.Column="1" Margin="5,5,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    <control:Provaider x:Name="AsNameProvider" IsVisible="False" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+                    <Editor Placeholder="Краткое описание" Text="{Binding Description}" x:Name="AsCommit" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Center" Margin="5,5,0,0" MinimumHeightRequest="100"/>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

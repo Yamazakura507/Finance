@@ -20,7 +20,7 @@ namespace Finance.Classes
 
                 using (var ms = new Mysql())
                 {
-                    returningVal = (G)ms.Insert(typeof(T).Name, parametrs, reterning); ;
+                    returningVal = (G)ms.Insert(typeof(T).Name, parametrs, reterning);
                 }
 
                 return returningVal;
@@ -326,6 +326,16 @@ namespace Finance.Classes
             }
         }
 
+        /// <summary>
+        /// Получение значнеия запроса
+        /// </summary>
+        /// <typeparam name="T">Возвращаемый тип</typeparam>
+        /// <typeparam name="G">Тип модели таблицы</typeparam>
+        /// <param name="sql">Запрос-приоритетное выполнение</param>
+        /// <param name="param">Наименование столбца или столбцов(через разделитель) таблицы</param>
+        /// <param name="id">Идентификатор строки</param>
+        /// <param name="separatorManyParametr">Разделитель и соеденитель</param>
+        /// <returns></returns>
         public static T ResultRequest<T,G>(string sql = null, string param = null, int? id = null, char? separatorManyParametr = null)
         {
             try

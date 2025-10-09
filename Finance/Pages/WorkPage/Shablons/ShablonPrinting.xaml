@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Finance.CustomControl"
+             xmlns:controlShablon="clr-namespace:Finance.Pages.WorkPage.Shablons.CustomControl"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             x:Class="Finance.Pages.WorkPage.Shablons.ShablonPrinting" Loaded="ContentPage_Loaded" Title="{Binding Name}">
+    <ContentPage.Resources>
+        <converters:IsNullConverter x:Key="isNullConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView HorizontalOptions="Center">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <HorizontalStackLayout Grid.Row="0" HeightRequest="55" VerticalOptions="Start">
+                <control:Provaider IsVisible="Collapse" x:Name="ErrProvider" HorizontalOptions="Start" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <ScrollView HorizontalOptions="Center" Grid.Row="1" VerticalOptions="Start">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start" x:Name="VLBind">
+                    <HorizontalStackLayout x:Name="BarHorzontal" HorizontalOptions="Center" VerticalOptions="Start">
+                        <DatePicker x:Name="AsDocDate" Margin="5,5,0,0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <ImageButton Source="account_admin.png" WidthRequest="20" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start" Clicked="AddBindOwner_Clicked"/>
+                        <ImageButton Source="imuh.png" WidthRequest="20" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start" Clicked="AddBindImuh_Clicked"/>
+                        <ImageButton Source="address.png" WidthRequest="20" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start" Clicked="AddBindAddress_Clicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <CheckBox x:Name="cbTargetNull" IsChecked="False" CheckedChanged="cbTargetNull_CheckedChanged"/>
+                        <Entry Placeholder="Замена пустого значения" IsEnabled="{Binding Source={x:Reference cbTargetNull}, Path=IsChecked}" MaxLength="50" x:Name="AsTargetNull" Margin="-85,0,0,0" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <controlShablon:OwnersBind/>
+                    <controlShablon:ImuhBind/>
+                    <controlShablon:LibAddressBind/>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

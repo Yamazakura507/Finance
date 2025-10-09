@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:control="clr-namespace:Finance.CustomControl" x:Name="this"
+             x:Class="Finance.Pages.WorkPage.Shablons.CustomControl.LibAddressBind" Loaded="ContentView_Loaded">
+
+    <FlyoutBase.ContextFlyout>
+        <MenuFlyout>
+            <MenuFlyoutItem IconImageSource="delete_cash.png" Text="Удалить" Clicked="Delete_Task"/>
+        </MenuFlyout>
+    </FlyoutBase.ContextFlyout>
+
+    <SwipeView BindingContext="{x:Reference this}">
+        <SwipeView.LeftItems>
+            <SwipeItems>
+                <SwipeItem Text="Удалить"
+                    IconImageSource="delete_cash.png"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                    Invoked="Delete_Task"/>
+            </SwipeItems>
+        </SwipeView.LeftItems>
+
+        <Grid MaximumWidthRequest="600" HorizontalOptions="Center" Margin="10">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapSelectOwner_Tapped"/>
+            </Grid.GestureRecognizers>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="colSPP"/>
+            </Grid.ColumnDefinitions>
+            <HorizontalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image WidthRequest="30" Source="address.png" x:Name="AddressImg" Aspect="AspectFit" Margin="15,5,5,5" VerticalOptions="Center" HorizontalOptions="Start"/>
+                <Label x:Name="AsAddress" MaximumWidthRequest="250" Text="{Binding Address.Address, TargetNullValue='Нет привязки адреса', FallbackValue='Нет привязки адреса'}" LineBreakMode="MiddleTruncation" MaxLines="4" Margin="0,0,5,0" Style="{DynamicResource ItemLabel}" VerticalOptions="Center" HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+            <control:Provaider x:Name="AsNameProvider" x:FieldModifier="Public" IsVisible="False" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
+    </SwipeView>
+</ContentView>

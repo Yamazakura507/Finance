@@ -11,6 +11,7 @@
 			 xmlns:pageTime="clr-namespace:Finance.Pages.WorkPage.Time"
 			 xmlns:pagePlan="clr-namespace:Finance.Pages.WorkPage.Planing"
 			 xmlns:pageImuh="clr-namespace:Finance.Pages.WorkPage.Imuh"
+			 xmlns:pageShablon="clr-namespace:Finance.Pages.WorkPage.Shablons"
              xmlns:pageFutures="clr-namespace:Finance.Pages.WorkPage.Finance.Futures"
              Title="PersonalAccountMenuPage" Shell.NavBarIsVisible="False">
     <ScrollView Padding="5,50,0,0">
@@ -46,7 +47,7 @@
                                   TargetType="{x:Type pageImuh:OwnersList}"/>   
                         <local:FlyautAccountModel Title="Шаблоны"
                                   IconSource="shablon.png"
-                                  TargetType="{x:Type pagePlan:PlaningLisPage}"/>
+                                  TargetType="{x:Type pageShablon:ShablonListPage}"/>
                         <local:FlyautAccountModel Title="Вопросы"
                                   IconSource="support.png"
                                   TargetType="{x:Type pageSuport:SupportPage}" />

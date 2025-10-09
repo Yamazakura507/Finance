@@ -224,7 +224,7 @@ namespace Finance.Models
                 {
                     if (!IsGet)
                     {
-                        SetParametrs<Car>("ChassisNumber", value);
+                        SetParametrs<Car>("ChassisNumber", String.IsNullOrEmpty(value) ? DBNull.Value : value);
                     }
                     chassisNumber = value;
                 }

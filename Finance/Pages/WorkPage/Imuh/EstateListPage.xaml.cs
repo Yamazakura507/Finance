@@ -10,16 +10,39 @@ namespace Finance.Pages.WorkPage.Imuh;
 
 public partial class EstateListPage : ContentPage
 {
+    private bool IsSelected = false;
     ObservableCollection<View.Estate> ViewEstate;
     Loading loading { get; set; }
+
+    public int SelectedIdEstate = -1;
 
     public EstateListPage()
     {
         InitializeComponent();
+
+        this.IsSelected = false;
+    }
+
+    public EstateListPage(bool isSelected)
+    {
+        InitializeComponent();
+
+        this.IsSelected = isSelected;
     }
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
+        if (IsSelected)
+        {
+            AddAsset.IsVisible = false;
+
+            #if !ANDROID && !IOS
+                ToolbarItem toolbarItem = new ToolbarItem() { IconImageSource = ConverFiles.ToImageConvert(Properties.Resources.back) };
+                toolbarItem.Clicked += Back_Clicked;
+                this.ToolbarItems.Add(toolbarItem);
+            #endif
+        }
+
         loading = new Loading();
 
         this.ShowPopup(loading);
@@ -65,7 +88,15 @@ public partial class EstateListPage : ContentPage
     {
         View.Estate estate = sender.ContextConvert<View.Estate>();
 
-        await Navigation.PushAsync(new NavigationPage(new EditorEstate() { BindingContext = DBModel.GetModel<Models.Estate>(estate.Id) }));
+        if (!IsSelected)
+        {
+            await Navigation.PushAsync(new NavigationPage(new EditorEstate() { BindingContext = DBModel.GetModel<Models.Estate>(estate.Id) }));
+        }
+        else
+        {
+            SelectedIdEstate = estate.Id;
+            this.BackButtonInNavClick();
+        }
     }
 
     private void EditStatusEstateMenuFlyoutItem_Clicked(object sender, EventArgs e)
@@ -95,4 +126,6 @@ public partial class EstateListPage : ContentPage
             }
         }));
     }
+
+    private void Back_Clicked(object? sender, EventArgs e) => this.BackButtonInNavClick();
 }

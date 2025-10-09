@@ -105,11 +105,13 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="DocX" Version="5.0.0" />
 		<PackageReference Include="MailKit" Version="4.8.0" />
 		<PackageReference Include="Microcharts.Maui" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="9.0.0" />
+		<PackageReference Include="MoneyToWords" Version="2.2.2" />
 		<PackageReference Include="MySqlConnector" Version="2.4.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="nor0x.Maui.ColorPicker" Version="2.0.4" />
@@ -123,11 +125,17 @@
 	  <Reference Include="ColorLib">
 	    <HintPath>Libs\ColorLib.dll</HintPath>
 	  </Reference>
+	  <Reference Include="DocxDocWorkingLib">
+	    <HintPath>Libs\DocxDocWorkingLib.dll</HintPath>
+	  </Reference>
 	  <Reference Include="MapLib">
 	    <HintPath>Libs\MapLib.dll</HintPath>
 	  </Reference>
 	  <Reference Include="MySql">
 	    <HintPath>Libs\MySql.dll</HintPath>
+	  </Reference>
+	  <Reference Include="WordDigitLib">
+	    <HintPath>Libs\WordDigitLib.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 
@@ -188,6 +196,24 @@
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Setting\AddressPage.xaml.cs">
 	    <DependentUpon>AddressPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Shablons\CustomControl\ImuhBind.xaml.cs">
+	    <DependentUpon>ImuhBind.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Shablons\CustomControl\LibAddressBind.xaml.cs">
+	    <DependentUpon>LibAddressBind.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Shablons\CustomControl\OwnersBind.xaml.cs">
+	    <DependentUpon>OwnersBind.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Shablons\ShablonPrinting.xaml.cs">
+	    <DependentUpon>ShablonPrinting.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Shablons\ShablonEdit.xaml.cs">
+	    <DependentUpon>ShablonEdit.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Shablons\ShablonListPage.xaml.cs">
+	    <DependentUpon>ShablonListPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Properties\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
@@ -262,6 +288,24 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Setting\AddressPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Shablons\CustomControl\ImuhBind.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Shablons\CustomControl\LibAddressBind.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Shablons\CustomControl\OwnersBind.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Shablons\ShablonPrinting.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Shablons\ShablonEdit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Shablons\ShablonListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Support\SupportInfoPage.xaml">
