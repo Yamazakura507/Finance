@@ -34,7 +34,7 @@
                     <cart:ChartView x:Name="chartInc" HeightRequest="300" WidthRequest="600"/>
                     <cart:ChartView x:Name="chartExc" HeightRequest="300" WidthRequest="600"/>
                     <cart:ChartView x:Name="chartResPr"  HeightRequest="300" WidthRequest="600"/>
-                </VerticalStackLayout>
+            </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="2" Grid.Column="0" x:Name="quadrantsVSL" BindableLayout.ItemsSource="{Binding ViewQuadrants}" Margin="0,10,0,10" HorizontalOptions="Center">
                     <BindableLayout.ItemTemplate>

@@ -383,6 +383,13 @@ namespace Finance.Properties {
             }
         }
 		
+		internal static byte[] Linked {
+            get {
+                object obj = ResourceManager.GetObject("Linked", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
 		/// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
@@ -809,6 +816,13 @@ namespace Finance.Properties {
 		internal static byte[] car {
             get {
                 object obj = ResourceManager.GetObject("car", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+		
+		internal static byte[] link {
+            get {
+                object obj = ResourceManager.GetObject("link", resourceCulture);
                 return ((byte[])(obj));
             }
         }

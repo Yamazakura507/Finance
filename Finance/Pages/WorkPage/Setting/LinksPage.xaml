@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:converters="clr-namespace:Finance.Classes.Converters"
+             x:Class="Finance.Pages.WorkPage.Setting.LinksPage" Loaded="ContentPage_Loaded" Title="Библиотека ссылок">
+    <ContentPage.Resources>
+        <converters:BooleanInvent x:Key="boolInvent"/>
+    </ContentPage.Resources>
+    <ScrollView>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Editor Placeholder="Ссылка" MinimumHeightRequest="100" x:Name="NewSupport" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5,10,5"/>
+
+        <skia:SKLottieView x:Name="btlSendSupport" Margin="0,0,5,0" Style="{DynamicResource LottieDefault}" Grid.Row="0"  Grid.Column="1" HorizontalOptions="Start" Source="RightLottie.json">
+            <skia:SKLottieView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SendSupport_Tapped"/>
+            </skia:SKLottieView.GestureRecognizers>
+        </skia:SKLottieView>
+
+        <skia:SKLottieView x:Name="linkSendSupport" Margin="0,0,5,0" Style="{DynamicResource LottieDefault}" Grid.Row="0"  Grid.Column="2" HorizontalOptions="Start" Source="Linked.json">
+            <skia:SKLottieView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_Link"/>
+            </skia:SKLottieView.GestureRecognizers>
+        </skia:SKLottieView>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Padding="10,5,10,5">
+                <VerticalStackLayout x:Name="supportVSL" BindableLayout.ItemsSource="{Binding ViewLinks}" Margin="0,10,0,10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="3" Stroke="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray700}}" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                    <Shadow Offset="-1,-1" Radius="15" Opacity="0.8" Brush="{Binding ShadowColorBrush}"/>
+                            </Border.Shadow>
+                                <ContentView Margin="3" BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}">
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="🖊Редактировать" Clicked="MenuFlyoutItem_Clicked_IsEdit"/>
+                                            <MenuFlyoutItem Text="✔Вывести на главную" IsEnabled="{Binding IsMainMenu, Converter={StaticResource boolInvent}}" Clicked="MenuFlyoutItem_Clicked_IsMain"/>
+                                            <MenuFlyoutItem Text="❌Убрать с главной" IsEnabled="{Binding IsMainMenu}" Clicked="MenuFlyoutItem_Clicked_IsMain"/>
+                                            <MenuFlyoutItem Text="🌎Браузер" Clicked="MenuFlyoutItem_Clicked_Brouser"/>
+                                        <MenuFlyoutItem Text="🗑️Удалить" Clicked="DeleteButton_Pressed"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
+
+                                    <SwipeView VerticalOptions="Fill"
+                                                HorizontalOptions="Fill">
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem Text="✔Вывести" IsVisible="{Binding IsMainMenu, Converter={StaticResource boolInvent}}"
+                                                        IconImageSource="account.png"
+                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                        Invoked="MenuFlyoutItem_Clicked_IsMain"/>
+                                                <SwipeItem Text="❌Убрать" IsVisible="{Binding IsMainMenu}"
+                                                        IconImageSource="account.png"
+                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                        Invoked="MenuFlyoutItem_Clicked_IsMain"/>
+                                                <SwipeItem Text="🌎Браузер"
+                                                        IconImageSource="link.png"
+                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                        Invoked="MenuFlyoutItem_Clicked_Brouser"/>
+                                                <SwipeItem Text="🖊Редактировать"
+                                                        IconImageSource="support.png"
+                                                        BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}"
+                                                        Invoked="MenuFlyoutItem_Clicked_IsEdit"/>
+                                                <SwipeItem Text="🗑️Удалить"
+                                                       IconImageSource="delete_support.png"
+                                                       BackgroundColor="{AppThemeBinding Light={DynamicResource LightPrimary}, Dark={DynamicResource Gray800}}" 
+                                                       Invoked="DeleteButton_Pressed"/>
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="70"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Margin="5" Source="{Binding Icon, TargetNullValue='link.png', FallbackValue='link.png'}" Grid.Column="0" Grid.Row="0" Aspect="AspectFit" Grid.RowSpan="4" HeightRequest="70" WidthRequest="70"/>
+
+                                            <Label Text="{Binding Name}" Style="{DynamicResource BoldItemLabel}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0"/>
+                                            <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="5,0,0,0">
+                                                <Label.Style>
+                                                    <Style TargetType="Label" BasedOn="{StaticResource ItemLabel}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsMainMenu}" Value="True">
+                                                                <Setter Property="Text" Value="Выводится на главной странице аккаунта"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsMainMenu}" Value="False">
+                                                                <Setter Property="Text" Value="Не выводится на главной странице аккаунта"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Label.Style>
+                                            </Label>
+
+                                            <ImageButton Grid.Row="0" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="3" Grid.RowSpan="3" Source="delete_support.png" Pressed="DeleteButton_Pressed" Margin="0,0,20,0"/>
+
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="SupportPress_Tapped"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </SwipeView>
+                                </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+        </ScrollView>
+</ContentPage>

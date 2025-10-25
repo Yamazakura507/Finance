@@ -51,7 +51,7 @@ public partial class AddressPage : ContentPage
         {
             try
             {
-                ViewAddress = DBModel.GetCollectionModel<View.LibAddress>(default,default,default,new Dictionary<string, OrderType>() { { "Id", OrderType.Desc } });
+                ViewAddress = DBModel.GetCollectionModel<View.LibAddress>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } },default,default,new Dictionary<string, OrderType>() { { "Id", OrderType.Desc } });
 
                 if (ViewAddress is null || ViewAddress.Count() == 0) return;
                 else MainThread.BeginInvokeOnMainThread(() => BindableLayout.SetItemsSource(supportVSL, ViewAddress));

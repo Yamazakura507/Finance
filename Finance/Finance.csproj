@@ -111,7 +111,6 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="9.0.0" />
-		<PackageReference Include="MoneyToWords" Version="2.2.2" />
 		<PackageReference Include="MySqlConnector" Version="2.4.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="nor0x.Maui.ColorPicker" Version="2.0.4" />
@@ -145,6 +144,9 @@
 	  </Compile>
 	  <Compile Update="Pages\Tabbed\EstateTabedPage.xaml.cs">
 	    <DependentUpon>EstateTabedPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Tabbed\AccountTabbed.xaml.cs">
+	    <DependentUpon>AccountTabbed.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\Tabbed\SettingTabbedPage.xaml.cs">
 	    <DependentUpon>SettingTabbedPage.xaml</DependentUpon>
@@ -184,6 +186,12 @@
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Imuh\EstateListPage.xaml.cs">
 	    <DependentUpon>EstateListPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Setting\BrouserPage.xaml.cs">
+	    <DependentUpon>BrouserPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\WorkPage\Setting\LinksPage.xaml.cs">
+	    <DependentUpon>LinksPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\WorkPage\Setting\ColorsPage.xaml.cs">
 	    <DependentUpon>ColorsPage.xaml</DependentUpon>
@@ -236,6 +244,9 @@
 	  <MauiXaml Update="Pages\Tabbed\EstateTabedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Tabbed\AccountTabbed.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Tabbed\SettingTabbedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -276,6 +287,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Imuh\EstateListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Setting\BrouserPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\WorkPage\Setting\LinksPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WorkPage\Setting\ColorsPage.xaml">

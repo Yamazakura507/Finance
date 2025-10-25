@@ -23,7 +23,7 @@
                     <x:Array Type="{x:Type local:FlyautAccountModel}">
                         <local:FlyautAccountModel Title="Акаунт"
                                   IconSource="account.png"
-                                  TargetType="{x:Type page:AccountPage}" />
+                                  TargetType="{x:Type pageTab:AccountTabbed}" />
                         <local:FlyautAccountModel Title="Кредиты"
                                   IconSource="credit.png"
                                   TargetType="{x:Type pageCredit:CreditPage}" />

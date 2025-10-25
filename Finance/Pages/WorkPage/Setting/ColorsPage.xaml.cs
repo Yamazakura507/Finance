@@ -48,7 +48,7 @@ public partial class ColorsPage : ContentPage
         {
             try
             {
-                ViewColors = DBModel.GetCollectionModel<View.LibColors>(default,default,default,new Dictionary<string, OrderType>() { { "Id", OrderType.Desc } });
+                ViewColors = DBModel.GetCollectionModel<View.LibColors>(new Dictionary<string, object>() { { "IdUser", InfoAccount.IdUser } }, default,default,new Dictionary<string, OrderType>() { { "Id", OrderType.Desc } });
 
                 if (ViewColors is null || ViewColors.Count() == 0) return;
                 else MainThread.BeginInvokeOnMainThread(() => BindableLayout.SetItemsSource(supportVSL, ViewColors));

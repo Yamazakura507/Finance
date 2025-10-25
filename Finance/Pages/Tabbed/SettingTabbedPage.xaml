@@ -9,4 +9,5 @@
             <setingPage:SettingsPage Title="Настройки" IconImageSource="settings.png" BindingContext="{Binding}"/>
             <setingPage:AddressPage Title="Адреса" IconImageSource="address.png" BindingContext="{Binding}"/>
             <setingPage:ColorsPage Title="Цвета" IconImageSource="colors.png" BindingContext="{Binding}"/>
+            <setingPage:LinksPage Title="Ссылки" IconImageSource="link.png" BindingContext="{Binding}"/>
 </TabbedPage>

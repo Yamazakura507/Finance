@@ -81,8 +81,8 @@ namespace Finance.Classes
                 using (var ms = new Mysql())
                 {
                     var sql = @$"SELECT * FROM `{typeof(T).Name}`
-                    WHERE {(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"`{i.Key}` = '{i.Value}'")))} 
-                    {(OrderCollection is null ? null : $" ORDER BY {String.Join(", ", OrderCollection.Select(i => $"`{i.Key}` {(i.Value.OrderString())}"))}")} 
+                    WHERE {(WhereCollection is null ? "true" : String.Join(" AND ", WhereCollection.Select(i => $"`{i.Key}` = {(i.Value.GetType() == typeof(bool) ? i.Value : String.Concat('\'',i.Value,'\''))}")))} 
+                    {(OrderCollection is null ? null : $" ORDER BY {String.Join(", ", OrderCollection.Select(i => $"`{i.Key}` {i.Value.OrderString()}"))}")} 
                     {(Limit == 0 ? Offset == 0 ? null : $"OFFSET {Offset}" : Offset == 0 ? $"LIMIT {Limit}" : $"LIMIT {Limit} OFFSET {Offset}")}";
                         var dt = ms.GetTable(sql.Trim());
 
@@ -192,12 +192,12 @@ namespace Finance.Classes
                 if (dr is null)
                     throw new Exception(errMess);
 
-                bool isGet = IsGet;
+                //bool isGet = IsGet;
                 IsGet = true;
 
                 T obj = dr.ToObject<T>(new T());
 
-                IsGet = isGet;
+                IsGet = false;
 
                 return obj;
             }

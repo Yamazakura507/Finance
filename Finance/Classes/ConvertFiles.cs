@@ -9,9 +9,24 @@ namespace Finance.Classes
 {
     public static class ConverFiles
     {
-        public static ImageSource ToImageConvert(byte[] imageArr, bool isSVG = false) => ImageSource.FromStream(() => isSVG ? imageArr.SVGToPNG() : new MemoryStream(imageArr));
+        public static ImageSource ToImageConvert(this byte[] imageArr, bool isSVG = false) => ImageSource.FromStream(() => isSVG ? imageArr.SVGToPNG() : new MemoryStream(imageArr));
        
         public static byte[] ToByteConvert(string path) => File.ReadAllBytes(path);
+
+        public static byte[] ToByteArray(this Stream stream)
+        {
+            if (stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+
+                return ms.ToArray();
+            }
+        }
 
         private static Stream SVGToPNG(this byte[] svg)
         {
@@ -215,5 +230,32 @@ namespace Finance.Classes
                 return (T)((ImageButton)sender).BindingContext;
             }
         }
+
+        async public static Task<byte[]> ImageLinked(this Uri uri)
+        {
+            try
+            {
+                string faviconUrl = $"http://www.google.com/s2/favicons?domain={uri.Host}";
+
+                using (HttpClient client = new HttpClient())
+                {
+                    using (HttpResponseMessage response = await client.GetAsync(faviconUrl))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        using (Stream stream = await response.Content.ReadAsStreamAsync())
+                        {
+                            return stream.ToByteArray();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при получении иконки: {ex.Message}");
+                return null;
+            }
+        }
+
+        async public static Task<ImageSource> ImageLinked(this Uri uri, bool isSource) => (await uri.ImageLinked()).ToImageConvert();
     }
 }

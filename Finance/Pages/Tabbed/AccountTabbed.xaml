@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:stat="clr-namespace:Finance.Classes.AppSettings"
+            xmlns:workPage="clr-namespace:Finance.Pages.WorkPage"
+             x:Class="Finance.Pages.Tabbed.AccountTabbed"
+             UnselectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+            SelectedTabColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}"
+            BarTextColor="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource TabDark}}" Loaded="TabbedPage_Loaded">
+    
+    <workPage:AccountPage Title="{Binding Source={x:Static stat:InfoAccount.User},Path=Login, StringFormat='Акаунт {0}'}" 
+                          IconImageSource="account.png" BindingContext="{Binding}"/>
+</TabbedPage>
